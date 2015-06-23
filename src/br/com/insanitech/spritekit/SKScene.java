@@ -1,4 +1,4 @@
-package br.com.oitodigital.eletrix.spritekit;
+package br.com.insanitech.spritekit;
 
 import android.annotation.SuppressLint;
 import android.graphics.PointF;

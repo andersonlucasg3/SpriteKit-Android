@@ -1,10 +1,6 @@
-package br.com.oitodigital.eletrix.spritekit;
+package br.com.insanitech.spritekit;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;

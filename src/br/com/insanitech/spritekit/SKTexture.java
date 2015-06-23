@@ -1,4 +1,4 @@
-package br.com.oitodigital.eletrix.spritekit;
+package br.com.insanitech.spritekit;
 
 public class SKTexture {
 	
