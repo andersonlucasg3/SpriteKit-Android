@@ -4,5 +4,11 @@
           android:versionCode="0"
           android:versionName="0.1.0">
 
+        <application android:debuggable="true"
+                     android:label="SKTestApp" >
+
+
+
+        </application>
 
 </manifest>
