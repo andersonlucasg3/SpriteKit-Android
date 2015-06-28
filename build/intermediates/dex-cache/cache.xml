@@ -5,7 +5,7 @@
         jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/exploded-aar/SpriteKit/SpriteKitLib/unspecified/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="5a221406cd7d5309597e1d5e5648fd18b857b145">
+        sha1="8f11c9c0e9a46967ed5bb135aa5dccc660c2ba22">
         <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/classes-9d65c506662ab994fbd23fb520fa3827d33d2dfe.jar" />
     </item>
     <item
@@ -16,32 +16,11 @@
         <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-aa374c6d9698923231fe3c893f062a57220bc1e1.jar" />
     </item>
     <item
-        jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-4ce8716e57901391e465600abe79ec4d6b437565.jar" />
-    </item>
-    <item
-        jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/pre-dexed/debug/classes-e4f3de17eb9759b91acd70e2879cf09d52ac2e57.jar" />
-    </item>
-    <item
         jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
         <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/classes-7b98157907a3146d726d1722fce3b43ab8a5c6d7.jar" />
-    </item>
-    <item
-        jar="/Volumes/Mac OS X/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-f45248a7ff27e62d2587a5c7218648a9523f9829.jar" />
     </item>
     <item
         jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/exploded-aar/SpriteKit/SpriteKitLib/unspecified/libs/easing.jar"
@@ -51,25 +30,18 @@
         <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/easing-e2805ed94c51b25d55bb0b91ce71cd7142462255.jar" />
     </item>
     <item
+        jar="/Volumes/Mac OS X/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-f45248a7ff27e62d2587a5c7218648a9523f9829.jar" />
+    </item>
+    <item
         jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
         <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/TestApp/build/intermediates/pre-dexed/debug/classes-774f28609f77780a643ed1cb0449ff8d0c2d3653.jar" />
-    </item>
-    <item
-        jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/libs/easing.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6ec3c34c6f624cb1982c96c1b89f7c2f04766cb0">
-        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/pre-dexed/debug/easing-c406c5256d4d4fd00e05e05875e459a301820305.jar" />
-    </item>
-    <item
-        jar="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/Volumes/Mac OS X/Users/anderson/Programming/Java/SpriteKit/SpriteKitLib/build/intermediates/pre-dexed/debug/classes-e8cd4d0f29247d0090635dc1101316aea3c6c0cc.jar" />
     </item>
 
 </items>
