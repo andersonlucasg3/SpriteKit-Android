@@ -2,6 +2,7 @@ package br.com.insanitech.testapp;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Bundle;
 import br.com.insanitech.spritekit.*;
 
@@ -26,9 +27,11 @@ public class TestAppActivity extends Activity {
 
         if (scene == null) {
             scene = new SKScene(new SKSizeF(view.getWidth(), view.getHeight()));
+            scene.setBackgroundColor(Color.WHITE);
 
             SKNode father = SKNode.node();
             SKSpriteNode child = SKSpriteNode.spriteNode(Color.RED, new SKSizeF(30, 30));
+            child.setAnchorPoint(new PointF(0.5f, 0.5f));
 
             father.addChild(child);
 
@@ -38,6 +41,9 @@ public class TestAppActivity extends Activity {
             rotate(child);
 
             view.presentScene(scene);
+
+            rotate(father);
+            rotate(child);
         }
     }
 
