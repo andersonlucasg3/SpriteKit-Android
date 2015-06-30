@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SpriteKit.iml" filepath="$PROJECT_DIR$/SpriteKit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpriteKit-Android.iml" filepath="$PROJECT_DIR$/SpriteKit-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpriteKitLib/SpriteKitLib.iml" filepath="$PROJECT_DIR$/SpriteKitLib/SpriteKitLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestApp/TestApp.iml" filepath="$PROJECT_DIR$/TestApp/TestApp.iml" />
     </modules>

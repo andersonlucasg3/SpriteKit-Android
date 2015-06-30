@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="easing">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/SpriteKitLib/libs/easing.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
