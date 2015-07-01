@@ -5,26 +5,29 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.media.Image;
+import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
-import android.view.SurfaceView;
+import br.com.insanitech.spritekit.logger.Logger;
+import br.com.insanitech.spritekit.opengl.context.GL30ContextFactory;
+import br.com.insanitech.spritekit.opengl.context.GLContextFactory;
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
-public class SKView extends SurfaceView {
+public class SKView extends GLSurfaceView {
 	protected static long beginOfTime = 0;
 
 	private boolean paused;
 	private SKScene sceneToBePresented;
 	private Thread thread;
+	private GLContextFactory factory;
 
 	public SKView(Context context) {
 		super(context);
+		initView();
 	}
 
 	public SKView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-	}
-
-	public SKView(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
+		initView();
 	}
 
 	@Override
@@ -38,15 +41,28 @@ public class SKView extends SurfaceView {
 	}
 
 	public void initView() {
-		setWillNotDraw(false);
-		setWillNotCacheDrawing(true);
-		if (!isInEditMode()) {
-			setZOrderOnTop(true);
-		}
-		getHolder().setFormat(PixelFormat.TRANSPARENT);
+//		setWillNotDraw(false);
+//		setWillNotCacheDrawing(true);
+//		if (!isInEditMode()) {
+//			setZOrderOnTop(true);
+//		}
+//		getHolder().setFormat(PixelFormat.TRANSPARENT);
+
+		// initializing OpenGL ES parameters
+		factory = new GL30ContextFactory();
+		factory.setContextReadyListener(new GLContextFactory.GLContextFactoryReadyListener() {
+			@Override
+			public void onContextReady(GLContextFactory factory) {
+				setRenderer(factory.getRenderer());
+				requestRender();
+			}
+		});
+		setEGLContextFactory(factory);
+		// end OpenGL parameters
 
 		beginOfTime = System.currentTimeMillis();
 
+		Logger.log("SKView", "Starting time thread...");
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -72,29 +88,37 @@ public class SKView extends SurfaceView {
 		return System.currentTimeMillis() - beginOfTime;
 	}
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		if (sceneToBePresented != null) {
-			canvas.save();
-
-			canvas.rotate(180, getWidth() / 2, getHeight() / 2);
-
-			sceneToBePresented.draw(canvas);
-
-			canvas.restore();
-
-			invalidate();
-		}
-	}
+	// unusable on OpenGL implementation
+//	@Override
+//	protected void onDraw(Canvas canvas) {
+//		if (sceneToBePresented != null) {
+//			canvas.save();
+//
+//			canvas.rotate(180, getWidth() / 2, getHeight() / 2);
+//
+//			sceneToBePresented.draw(canvas);
+//
+//			canvas.restore();
+//
+//			invalidate();
+//		}
+//	}
 
 	public void presentScene(final SKScene scene) {
-		sceneToBePresented = scene;
-		setOnTouchListener(scene);
-		if (Thread.currentThread().getName().equals("main")) {
-			invalidate();
-		} else {
-			postInvalidate();
+//		sceneToBePresented = scene;
+//		setOnTouchListener(scene);
+
+		// needs new implementation of scene presentation
+		if (factory.isReady()) {
+			requestRender();
 		}
+
+		// unused with OpenGL implementation
+//		if (Thread.currentThread().getName().equals("main")) {
+//			invalidate();
+//		} else {
+//			postInvalidate();
+//		}
 	}
 
 	@Override
