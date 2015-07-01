@@ -25,26 +25,26 @@ public class TestAppActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        if (scene == null) {
-            scene = new SKScene(new SKSizeF(view.getWidth(), view.getHeight()));
-            scene.setBackgroundColor(Color.WHITE);
-
-            SKNode father = SKNode.node();
-            SKSpriteNode child = SKSpriteNode.spriteNode(Color.RED, new SKSizeF(30, 30));
-            child.setAnchorPoint(new PointF(0.5f, 0.5f));
-
-            father.addChild(child);
-
-            scene.addChild(father);
-
-            rotate(father);
-            rotate(child);
-
-            view.presentScene(scene);
-
-            rotate(father);
-            rotate(child);
-        }
+//        if (scene == null) {
+//            scene = new SKScene(new SKSizeF(view.getWidth(), view.getHeight()));
+//            scene.setBackgroundColor(Color.WHITE);
+//
+//            SKNode father = SKNode.node();
+//            SKSpriteNode child = SKSpriteNode.spriteNode(Color.RED, new SKSizeF(30, 30));
+//            child.setAnchorPoint(new PointF(0.5f, 0.5f));
+//
+//            father.addChild(child);
+//
+//            scene.addChild(father);
+//
+//            rotate(father);
+//            rotate(child);
+//
+//            view.presentScene(scene);
+//
+//            rotate(father);
+//            rotate(child);
+//        }
     }
 
     private void rotate(final SKNode node) {

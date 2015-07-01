@@ -19,11 +19,17 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
         public static final float GL30 = 3.0f;
     }
 
+    public interface GLContextFactoryReadyListener {
+        void onContextReady(GLContextFactory factory);
+    }
+
     private static final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
     protected float glVersion = 0;
+    private boolean isReady = false;
     private EGLContext context;
     private GLRenderer renderer;
+    private GLContextFactoryReadyListener listener;
 
     @Override
     public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
@@ -51,6 +57,14 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
         return context;
     }
 
+    public void setContextReadyListener(GLContextFactoryReadyListener listener) {
+        this.listener = listener;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
     private void setupRenderer(GL10 gl) {
         switch ((int)glVersion) {
             case (int)GLVersion.GL10:
@@ -69,6 +83,13 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
             case (int)GLVersion.GL30:
                 renderer = new GL30Renderer();
                 break;
+        }
+
+        isReady = true;
+
+        if (listener != null) {
+            listener.onContextReady(this);
+
         }
     }
 

@@ -18,7 +18,7 @@ public class SKView extends GLSurfaceView {
 	private boolean paused;
 	private SKScene sceneToBePresented;
 	private Thread thread;
-	private GLRenderer renderer;
+	private GLContextFactory factory;
 
 	public SKView(Context context) {
 		super(context);
@@ -49,9 +49,15 @@ public class SKView extends GLSurfaceView {
 //		getHolder().setFormat(PixelFormat.TRANSPARENT);
 
 		// initializing OpenGL ES parameters
-		GLContextFactory factory = new GL30ContextFactory();
+		factory = new GL30ContextFactory();
+		factory.setContextReadyListener(new GLContextFactory.GLContextFactoryReadyListener() {
+			@Override
+			public void onContextReady(GLContextFactory factory) {
+				setRenderer(factory.getRenderer());
+				requestRender();
+			}
+		});
 		setEGLContextFactory(factory);
-		setRenderer(factory.getRenderer());
 		// end OpenGL parameters
 
 		beginOfTime = System.currentTimeMillis();
@@ -99,11 +105,13 @@ public class SKView extends GLSurfaceView {
 //	}
 
 	public void presentScene(final SKScene scene) {
-		sceneToBePresented = scene;
-		setOnTouchListener(scene);
+//		sceneToBePresented = scene;
+//		setOnTouchListener(scene);
 
 		// needs new implementation of scene presentation
-		requestRender();
+		if (factory.isReady()) {
+			requestRender();
+		}
 
 		// unused with OpenGL implementation
 //		if (Thread.currentThread().getName().equals("main")) {
