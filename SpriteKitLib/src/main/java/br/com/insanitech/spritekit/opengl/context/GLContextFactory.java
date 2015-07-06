@@ -1,5 +1,6 @@
 package br.com.insanitech.spritekit.opengl.context;
 
+import android.opengl.GLES10;
 import android.opengl.GLSurfaceView;
 import br.com.insanitech.spritekit.logger.Logger;
 import br.com.insanitech.spritekit.opengl.renderer.*;
@@ -11,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by anderson on 6/29/15.
  */
 public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactory {
-    protected class GLVersion {
+    public class GLVersion {
         public static final float GL10 = 1.0f;
         public static final float GL11 = 1.1f;
         public static final float GL14 = 1.4f;
@@ -19,8 +20,8 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
         public static final float GL30 = 3.0f;
     }
 
-    public interface GLContextFactoryReadyListener {
-        void onContextReady(GLContextFactory factory);
+    public interface GLContextReadyListener {
+        void onContextReady();
     }
 
     private static final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
@@ -28,8 +29,8 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
     protected float glVersion = 0;
     private boolean isReady = false;
     private EGLContext context;
-    private GLRenderer renderer;
-    private GLContextFactoryReadyListener listener;
+    private GLGenericRenderer renderer;
+    private GLContextReadyListener listener;
 
     @Override
     public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
@@ -38,7 +39,8 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
 
     @Override
     public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
-        Logger.log("GLContextFactory", "Destroying gles context version: " + glVersion);
+        Logger.log("GLContextFactory", "Destroying gles context version: " + glVersion + ", error: " + GLES10.glGetError());
+        isReady = false;
     }
 
     protected EGLContext createGLContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
@@ -46,54 +48,34 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
 
         int[] attr_list = { EGL_CONTEXT_CLIENT_VERSION, (int)glVersion, EGL10.EGL_NONE };
         context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attr_list);
-        GL10 gl = (GL10)context.getGL();
-
-        Logger.log("GLContextFactory", "Created OGL Version: " + gl.glGetString(GL10.GL_VERSION));
 
         if (context != null) {
-            setupRenderer(gl);
+            Logger.log("GLContextFactory", "Successfully created OGL version: " + glVersion);
+            renderer.setGLVersion(glVersion);
+            isReady = true;
+            if (listener != null) {
+                listener.onContextReady();
+            }
+        } else {
+            Logger.log("GLContextFactory", "Failed creating OGL version: " + glVersion);
         }
 
         return context;
-    }
-
-    public void setContextReadyListener(GLContextFactoryReadyListener listener) {
-        this.listener = listener;
     }
 
     public boolean isReady() {
         return isReady;
     }
 
-    private void setupRenderer(GL10 gl) {
-        switch ((int)glVersion) {
-            case (int)GLVersion.GL10:
-                if (glVersion == GLVersion.GL10) {
-                    renderer = new GL10Renderer();
-                } else if (glVersion >= GLVersion.GL11) { // works for GL11 and GL14
-                    renderer = new GL11Renderer();
-                }
-                break;
-
-
-            case (int)GLVersion.GL20:
-                renderer = new GL20Renderer();
-                break;
-
-            case (int)GLVersion.GL30:
-                renderer = new GL30Renderer();
-                break;
-        }
-
-        isReady = true;
-
-        if (listener != null) {
-            listener.onContextReady(this);
-
-        }
+    public GLGenericRenderer getRenderer() {
+        return renderer;
     }
 
-    public GLRenderer getRenderer() {
-        return renderer;
+    public void setRenderer(GLGenericRenderer generic) {
+        renderer = generic;
+    }
+
+    public void setContextReadyListener(GLContextReadyListener listener) {
+        this.listener = listener;
     }
 }

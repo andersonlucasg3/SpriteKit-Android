@@ -6,7 +6,8 @@
                  android:icon="@mipmap/ic_launcher">
 
         <activity android:name=".TestAppActivity"
-                android:theme="@style/AppTheme">
+                android:theme="@style/AppTheme"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN" />

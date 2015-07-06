@@ -1,10 +1,9 @@
 package br.com.insanitech.spritekit;
 
-import android.annotation.SuppressLint;
-import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKScene extends SKEffectNode implements OnTouchListener {
 	public enum SKSceneScaleMode {
@@ -12,16 +11,17 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 	}
 
 	private SKSceneScaleMode scaleMode;
-	private int backgroundColor;
-	private PointF anchorPoint;
+	private SKColor backgroundColor;
+	private SKPoint anchorPoint;
 	private SKView view;
+	private SKSize size;
 
-	public static SKScene sceneWithSize(SKSizeF sz) {
-		return new SKScene(sz);
+	public static SKScene sceneWithSize(SKSize size) {
+		return new SKScene(size);
 	}
 
-	public SKScene(SKSizeF sz) {
-		setSize(sz);
+	public SKScene(SKSize size) {
+		this.size = size;
 	}
 
 	public SKSceneScaleMode getScaleMode() {
@@ -32,19 +32,19 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 		scaleMode = mode;
 	}
 
-	public int getBackgroundColor() {
+	public SKColor getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(int color) {
+	public void setBackgroundColor(SKColor color) {
 		backgroundColor = color;
 	}
 
-	public void setAnchorPoint(PointF anchor) {
+	public void setAnchorPoint(SKPoint anchor) {
 		anchorPoint = anchor;
 	}
 
-	public PointF getAnchorPoint() {
+	public SKPoint getAnchorPoint() {
 		return anchorPoint;
 	}
 
@@ -56,16 +56,29 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 		this.view = view;
 	}
 
-	public PointF convertPointFrom(PointF point) {
+	public SKPoint convertGLPointrom(SKPoint point) {
 		return null;
 	}
 
-	public PointF convertPointTo(PointF point) {
+	public SKPoint convertPointTo(SKPoint point) {
 		return null;
 	}
 
 	protected long getCurrentTime() {
 		return view.getCurrentTime();
+	}
+
+	public SKSize getSize() {
+		return size;
+	}
+
+	public void setSize(SKSize size) {
+		this.size = size;
+	}
+
+	@Override
+	public void onDrawFrame(GLRenderer renderer, int width, int height) {
+		drawChildren(renderer, width, height);
 	}
 
 	public void update(long currentTime) {
@@ -88,11 +101,10 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 
 	}
 
-	public void changedSize(SKSizeF oldSize) {
+	void changedSize(SKSize oldSize) {
 
 	}
 
-	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		return false;
