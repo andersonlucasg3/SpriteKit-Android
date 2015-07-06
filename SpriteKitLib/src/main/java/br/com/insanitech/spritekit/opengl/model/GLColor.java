@@ -69,12 +69,17 @@ public class GLColor {
         return a;
     }
 
-    public Buffer getBuffer() {
+    public FloatBuffer getBuffer(float alphaFactor) {
         buffer.put(0, r);
         buffer.put(1, g);
         buffer.put(2, b);
-        buffer.put(3, a);
+        buffer.put(3, a * alphaFactor);
         buffer.position(0);
         return buffer.asReadOnlyBuffer();
+    }
+
+
+    public FloatBuffer getBuffer() {
+        return getBuffer(1.0f);
     }
 }
