@@ -42,21 +42,25 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 
             SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.whiteColor(),
                     new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
+            swordA.setColorBlendFactor(0.5f);
             swordA.setTexture(new SKTexture(new SKRect(0.0f, 1.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setPosition(0, 150);
 
             SKSpriteNode dickA = SKSpriteNode.spriteNode(SKColor.greenColor(),
                     new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
+            dickA.setColorBlendFactor(0.5f);
             dickA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f/14.0f, 1.0f/4.0f), texture));
             dickA.setPosition(0, -150);
 
             SKSpriteNode diamondA = SKSpriteNode.spriteNode(SKColor.blackColor(),
                     new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
+            diamondA.setColorBlendFactor(0.5f);
             diamondA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             diamondA.setPosition(-150, 0);
 
             SKSpriteNode heartsA = SKSpriteNode.spriteNode(SKColor.blueColor(),
                     new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
+            heartsA.setColorBlendFactor(0.05f);
             heartsA.setTexture(new SKTexture(new SKRect(0.0f, 3.0f / 4.0f, 1.0f / 14.0f, 1.0f/4.0f), texture));
             heartsA.setPosition(150, 0);
 
@@ -84,7 +88,7 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
                 SKAction.run(new Runnable() {
                     @Override
                     public void run() {
-                        Logger.log("zRotation", "" + nodeParent.zRotation);
+//                        Logger.log("zRotation", "" + nodeParent.zRotation);
                         rotate(nodeParent);
                     }
                 }))));

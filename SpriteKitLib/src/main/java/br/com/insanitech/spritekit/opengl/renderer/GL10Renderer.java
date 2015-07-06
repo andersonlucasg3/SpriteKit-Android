@@ -11,6 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 /**
  * Created by anderson on 6/28/15.
@@ -132,7 +133,7 @@ class GL10Renderer extends GLRenderer {
 
     @Override
     public void drawRectangle(GLColor color) {
-        GLES10.glColor4f(color.getR(), color.getG(), color.getB(), color.getA());
+        GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.getBuffer(1.0f));
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
@@ -144,9 +145,18 @@ class GL10Renderer extends GLRenderer {
     }
 
     @Override
-    public void drawRectangleTex(GLTexture texture) {
+    public void drawRectangleTex(GLTexture texture, GLColor color, float factor) {
+        // TODO: color blending make it exactely as in iOS
+        GLES10.glEnable(GLES10.GL_BLEND);
+        GLES10.glBlendFunc(GLES10.GL_ONE, GLES10.GL_ONE);
+
+        GLES10.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
         GLES10.glEnable(GLES10.GL_TEXTURE_2D);
         GLES10.glBindTexture(GLES10.GL_TEXTURE_2D, texture.getTexture());
+        // coloring the texture
+        GLES10.glTexEnvf(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_MODE, GLES10.GL_MODULATE);
+        GLES10.glTexEnvfv(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_COLOR, color.getBuffer());
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
         GLES10.glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
@@ -161,6 +171,7 @@ class GL10Renderer extends GLRenderer {
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
         GLES10.glDisable(GLES10.GL_TEXTURE_2D);
+        GLES10.glDisable(GLES10.GL_BLEND);
 
         logGLError();
     }

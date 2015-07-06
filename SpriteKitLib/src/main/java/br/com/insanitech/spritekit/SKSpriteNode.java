@@ -8,7 +8,7 @@ public class SKSpriteNode extends SKNode {
     private SKTexture texture;
     private SKRect centerRect = new SKRect();
     private float colorBlendFactor;
-    private SKColor color = new SKColor(1.0f, 1.0f, 1.0f, 0.0f);
+    private SKColor color = SKColor.whiteColor();
     private SKBlendMode blendMode = SKBlendMode.SKBlendModeAlpha;
 
     private SKPoint anchorPoint = new SKPoint(0.5f, 0.5f);
@@ -68,7 +68,7 @@ public class SKSpriteNode extends SKNode {
             if (texture == null) {
                 renderer.drawRectangle(color);
             } else {
-                renderer.drawRectangleTex(texture.getOpenGLTexture());
+                renderer.drawRectangleTex(texture.getOpenGLTexture(), color, colorBlendFactor);
             }
             renderer.restoreState();
 

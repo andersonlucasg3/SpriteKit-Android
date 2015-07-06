@@ -55,6 +55,6 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer {
     public abstract void scale(float sx, float sy);
     public abstract void drawTriangle(GLColor color);
     public abstract void drawRectangle(GLColor color);
-    public abstract void drawRectangleTex(GLTexture texture);
+    public abstract void drawRectangleTex(GLTexture texture, GLColor color, float factor);
     public abstract void drawCircle(float radius, GLColor color);
 }
