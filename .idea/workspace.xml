@@ -14,16 +14,45 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="{ x" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: br.com.insanitech.testapp" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b03c942-9498-467b-8da5-892894526495" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/.gitignore" afterPath="$PROJECT_DIR$/SpriteKitLib/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestApp/.gitignore" afterPath="$PROJECT_DIR$/TestApp/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TestApp/src/main/res/drawable/card_deck.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLCircle.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLGenericRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLGeometry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLPoint.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRect.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRectangle.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLSize.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLTexture.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKColor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKPhysicsBody.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKPoint.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKReachConstraints.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKRect.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSizeF.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL11Renderer.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL11Renderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL20Renderer.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL20Renderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL30Renderer.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL30Renderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKAction.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKLabelNode.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKLabelNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKNode.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKScene.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKScene.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSize.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSize.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSpriteNode.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSpriteNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKTexture.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKTexture.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java" afterPath="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java" afterPath="$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SpriteKit.iws" />
@@ -58,50 +87,8 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="TestApp" />
+                <option name="myItemId" value="SpriteKit" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="TestApp" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="build" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode$1" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="SpriteKitLib" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
             </PATH>
           </tree_state>
@@ -114,40 +101,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestAppActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestAppActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SKView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.814815">
-              <caret line="55" column="41" selection-start-line="55" selection-start-column="41" selection-end-line="55" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.7289157">
+              <caret line="59" column="83" selection-start-line="59" selection-start-column="83" selection-end-line="59" selection-end-column="83" />
               <folding>
-                <element signature="e#1365#1560#0" expanded="true" />
-                <element signature="e#1559#1560#0" expanded="true" />
-                <element signature="e#1742#2193#0" expanded="true" />
-                <element signature="e#2192#2193#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GLContextFactory.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.0219781">
-              <caret line="95" column="22" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2995#2996#0" expanded="true" />
-                <element signature="e#3026#3027#0" expanded="true" />
+                <element signature="e#3323#3569#0" expanded="true" />
+                <element signature="e#3568#3569#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2167,7 +2128,6 @@
         <option value="$PROJECT_DIR$/TestApp/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GLHelper.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GLES11Renderer.java" />
-        <option value="$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GL10Renderer.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GL11Renderer.java" />
@@ -2175,23 +2135,43 @@
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GL30Renderer.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GLRenderer.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/ContextFactory.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/GLContextFactory.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL10ContextFactory.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL11ContextFactory.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL20ContextFactory.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL30ContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/.gitignore" />
+        <option value="$PROJECT_DIR$/TestApp/.gitignore" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL30Renderer.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL20Renderer.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL11Renderer.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java" />
-        <option value="$PROJECT_DIR$/SpriteKitLib/.gitignore" />
-        <option value="$PROJECT_DIR$/TestApp/.gitignore" />
-        <option value="$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRect.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLSize.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLPoint.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL30ContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL20ContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL11ContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL10ContextFactory.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLGenericRenderer.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKLabelNode.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLCircle.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLUtils.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKRect.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKPoint.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKColor.java" />
+        <option value="$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKScene.java" />
         <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKNode.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSpriteNode.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSize.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRectangle.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLGeometry.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKTexture.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLTexture.java" />
+        <option value="$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKAction.java" />
+        <option value="$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java" />
       </list>
     </option>
   </component>
@@ -2213,6 +2193,31 @@
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="873" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+          <State>
+            <id>Error handlingJava</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -2238,7 +2243,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2323,189 +2328,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spritekit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spritekit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="opengl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="renderer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spritekit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="opengl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpriteKitLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spritekit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="opengl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="context" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.XML" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="jdk.selected.JAVA_MODULE" value="Android 5.1.1 Google APIs" />
@@ -2514,11 +2343,16 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.40229884" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0422295707" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_One_API_22" />
     <property name="FullScreen" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/TestApp/src/main/res/drawable" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.TestApp">
     <configuration default="false" name="SpriteKit:TestApp [assembleDebug]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -2774,6 +2608,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
@@ -2797,7 +2637,7 @@
       <option name="DISABLE_BOOT_ANIMATION" value="false" />
       <option name="NETWORK_SPEED" value="full" />
       <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="CLEAR_LOGCAT" value="true" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
@@ -2844,43 +2684,54 @@
       <workItem from="1435461681926" duration="399000" />
       <workItem from="1435551684211" duration="34000" />
       <workItem from="1435630510627" duration="8839000" />
+      <workItem from="1435727359274" duration="219000" />
+      <workItem from="1435881820888" duration="613000" />
+      <workItem from="1435889730126" duration="10672000" />
+      <workItem from="1435901421635" duration="17962000" />
+      <workItem from="1436018369807" duration="629000" />
+      <workItem from="1436029436258" duration="4215000" />
+      <workItem from="1436043140357" duration="1436000" />
+      <workItem from="1436048571500" duration="16000" />
+      <workItem from="1436062391540" duration="20919000" />
+      <workItem from="1436134452728" duration="185000" />
+      <workItem from="1436137715063" duration="14930000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9272000" />
+    <option name="totallyTimeSpent" value="81068000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39925373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6117497" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32822478" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32822478" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19456366" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24930556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24892704" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32822478" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -2900,49 +2751,22 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java</url>
-          <line>23</line>
+          <url>file://$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java</url>
           <properties />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java</url>
-          <line>28</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL30ContextFactory.java</url>
-          <line>13</line>
-          <properties />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java</url>
-          <line>55</line>
-          <properties />
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java</url>
-          <line>44</line>
-          <properties />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java</url>
-          <line>35</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java</url>
-          <line>51</line>
-          <properties />
-          <option name="timeStamp" value="11" />
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties>
+            <option name="NOTIFY_CAUGHT" value="false" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2951,400 +2775,406 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java">
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/java/nio/FloatBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1076#1077#0" expanded="true" />
-            <element signature="e#1120#1121#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.46153846">
+          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/graphics/RectF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.33186814">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java">
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/java/nio/ByteBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1742#2193#0" expanded="true" />
-            <element signature="e#2192#2193#0" expanded="true" />
-            <element signature="e#2251#2252#0" expanded="true" />
-            <element signature="e#2305#2306#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.44458762">
+          <caret line="39" column="7" selection-start-line="39" selection-start-column="7" selection-end-line="39" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKPhysicsBody.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.020661157">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.09933775">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKReachConstraints.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.09933775">
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestApp/build.gradle">
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/java/lang/Override.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7580645">
-          <caret line="39" column="36" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSpriteNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3326613">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestApp/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09594883">
-          <caret line="3" column="82" selection-start-line="3" selection-start-column="82" selection-end-line="3" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestApp/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/javax/microedition/khronos/opengles/GL11.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17006803">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/javax/microedition/khronos/opengles/GL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13605443">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/opengl/GLES11.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20408164">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09664948">
-          <caret line="5" column="51" selection-start-line="5" selection-start-column="51" selection-end-line="5" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09664948">
-          <caret line="5" column="78" selection-start-line="5" selection-start-column="78" selection-end-line="5" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09664948">
-          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-          <folding>
-            <element signature="e#165#166#0" expanded="true" />
-            <element signature="e#222#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/javax/microedition/khronos/egl/EGL10.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33247423">
-          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL20ContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25128865">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL11ContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25128865">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL10ContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19329897">
-          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30927834">
-          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
-          <folding>
-            <element signature="e#269#270#0" expanded="true" />
-            <element signature="e#315#316#0" expanded="true" />
-            <element signature="e#375#376#0" expanded="true" />
-            <element signature="e#424#425#0" expanded="true" />
-            <element signature="e#601#602#0" expanded="true" />
-            <element signature="e#627#628#0" expanded="true" />
-            <element signature="e#660#661#0" expanded="true" />
-            <element signature="e#686#687#0" expanded="true" />
-            <element signature="e#719#720#0" expanded="true" />
-            <element signature="e#745#746#0" expanded="true" />
-            <element signature="e#778#779#0" expanded="true" />
-            <element signature="e#804#805#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
-            <element signature="e#855#856#0" expanded="true" />
-            <element signature="e#882#883#0" expanded="true" />
-            <element signature="e#906#907#0" expanded="true" />
-            <element signature="e#933#934#0" expanded="true" />
-            <element signature="e#957#958#0" expanded="true" />
-            <element signature="e#984#985#0" expanded="true" />
-            <element signature="e#1008#1009#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL11Renderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.234375">
-          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#319#320#0" expanded="true" />
-            <element signature="e#369#370#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#599#600#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.29801324">
+          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL20Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.234375">
-          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#319#320#0" expanded="true" />
-            <element signature="e#369#370#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#599#600#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL11Renderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL30Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.234375">
-          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#319#320#0" expanded="true" />
-            <element signature="e#369#370#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#599#600#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL10ContextFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8203125">
-          <caret line="28" column="52" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1076#1077#0" expanded="true" />
-            <element signature="e#1120#1121#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestApp/.gitignore">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL11ContextFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.078947365">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/.gitignore">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL20ContextFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.078947365">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL30ContextFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13907285">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.615894">
+          <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLCircle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5714286">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33245033">
+          <caret line="3443" column="22" selection-start-line="3443" selection-start-column="22" selection-end-line="3443" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKRect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3178808">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="25" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3576159">
+          <caret line="18" column="54" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKEffectNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.071428575">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33245033">
+          <caret line="4897" column="16" selection-start-line="4897" selection-start-column="16" selection-end-line="4897" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestApp/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34351146">
+          <caret line="9" column="51" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17857143">
+          <caret line="5" column="78" selection-start-line="5" selection-start-column="78" selection-end-line="5" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKLabelNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33199194">
+          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/opengl/GLSurfaceView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4163569">
+          <caret line="1528" column="52" selection-start-line="1528" selection-start-column="52" selection-end-line="1528" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLSize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48192772">
+          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLGenericRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10009" column="0" selection-start-line="10009" selection-start-column="0" selection-end-line="10009" selection-end-column="0" />
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKColor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLColor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7289157">
+          <caret line="76" column="27" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33271375">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKScene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4618474">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1986755">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <element signature="e#391952#391953#0" expanded="true" />
-            <element signature="e#391989#391990#0" expanded="true" />
-            <element signature="e#392228#392229#0" expanded="true" />
+            <element signature="e#319#320#0" expanded="false" />
+            <element signature="e#343#344#0" expanded="false" />
+            <element signature="e#394#395#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSizeF.java">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRect.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="e#853#854#0" expanded="true" />
+            <element signature="e#889#890#0" expanded="true" />
+            <element signature="e#952#953#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25092936">
+          <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+          <folding>
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#321#322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/logger/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45783132">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/opengl/GLES10.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="111" column="28" selection-start-line="111" selection-start-column="28" selection-end-line="111" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/graphics/Bitmap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1178" column="0" selection-start-line="1178" selection-start-column="0" selection-end-line="1178" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/com/android/internal/policy/impl/PhoneWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2646" column="0" selection-start-line="2646" selection-start-column="0" selection-end-line="2646" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../../../Library/Android/sdk/platforms/android-22/android.jar!/dalvik/system/BaseDexClassLoader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.074074">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/view/LayoutInflater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="625" column="0" selection-start-line="625" selection-start-column="0" selection-end-line="625" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="760" column="0" selection-start-line="760" selection-start-column="0" selection-end-line="760" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLGeometry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25827813">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="e#1030#1031#0" expanded="true" />
+            <element signature="e#1064#1065#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.624498">
+          <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLRectangle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3313253">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKSpriteNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24497992">
+          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKEffectNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKScene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.18473895">
+          <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
           <folding>
-            <element signature="e#653#654#0" expanded="true" />
+            <element signature="e#5591#5592#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/java/lang/Override.java">
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GL10Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4945055">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.5120482">
+          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding>
+            <element signature="e#1591#1592#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKTexture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3935743">
+          <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+          <folding>
+            <element signature="e#1717#1718#0" expanded="true" />
+            <element signature="e#1752#1753#0" expanded="true" />
+            <element signature="e#2892#2893#0" expanded="true" />
+            <element signature="e#2922#2923#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/model/GLTexture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4834437">
+          <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6345382">
+          <caret line="623" column="51" selection-start-line="623" selection-start-column="51" selection-end-line="623" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TestApp/src/main/java/br/com/insanitech/testapp/TestAppActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GL30ContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32967034">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.7289157">
+          <caret line="59" column="83" selection-start-line="59" selection-start-column="83" selection-end-line="59" selection-end-column="83" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../Library/Android/sdk/sources/android-22/android/opengl/GLSurfaceView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33186814">
-          <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/renderer/GLRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5934066">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/SKView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.814815">
-          <caret line="55" column="41" selection-start-line="55" selection-start-column="41" selection-end-line="55" selection-end-column="41" />
-          <folding>
-            <element signature="e#1365#1560#0" expanded="true" />
-            <element signature="e#1559#1560#0" expanded="true" />
-            <element signature="e#1742#2193#0" expanded="true" />
-            <element signature="e#2192#2193#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpriteKitLib/src/main/java/br/com/insanitech/spritekit/opengl/context/GLContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0219781">
-          <caret line="95" column="22" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2995#2996#0" expanded="true" />
-            <element signature="e#3026#3027#0" expanded="true" />
+            <element signature="e#3323#3569#0" expanded="true" />
+            <element signature="e#3568#3569#0" expanded="true" />
           </folding>
         </state>
       </provider>
