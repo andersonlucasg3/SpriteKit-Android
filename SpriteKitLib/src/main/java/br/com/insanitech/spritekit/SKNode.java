@@ -2,32 +2,37 @@ package br.com.insanitech.spritekit;
 
 import java.util.*;
 
-import android.graphics.Canvas;
-import android.graphics.PointF;
-import android.graphics.RectF;
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
-public class SKNode {
+public class SKNode implements GLRenderer.GLDrawer {
 	public interface ChildNodesEnumeration {
 		void nextChildNode(SKNode node, boolean shouldStop);
 	}
 
-	private PointF position = new PointF(0.0f, 0.0f);
-	private SKSizeF size = new SKSizeF(0.0f, 0.0f);
-	private RectF frame = new RectF(0.0f, 0.0f, 0.0f, 0.0f);
-	private PointF scale = new PointF(1.0f, 1.0f);
-	private float rotation = 0.0f;
-	private float speed;
-	private float alpha = 1;
-	private boolean isPaused;
-	private boolean hidden;
-	private boolean userInteractionEnabled = true;
+	private SKRect frame = new SKRect(0.0f, 0.0f, 0.0f, 0.0f);
+	private SKPoint position = new SKPoint(0.0f, 0.0f);
 	private SKNode parent;
 	private List<SKNode> children;
-	private LinkedList<SKAction> actions;
 	private String name = "";
+
+	private SKScene scene;
+
+	private SKPhysicsBody physicsBody;
+	private SKReachConstraints reachConstraints;
+	private List<SKReachConstraints> constraints;
+
+	private LinkedList<SKAction> actions;
 	private Dictionary<?, ?> userData;
 
-	protected SKScene scene;
+	public boolean paused = false;
+	public boolean hidden = false;
+	public float zPosition = 0.0f;
+	public float zRotation = 0.0f;
+	public float xScale = 1.0f;
+	public float yScale = 1.0f;
+	public float speed = 1.0f;
+	public float alpha = 1;
+	public boolean userInteractionEnabled = true;
 
 	public static SKNode node() {
 		return new SKNode();
@@ -38,23 +43,22 @@ public class SKNode {
 		actions = new LinkedList<SKAction>();
 	}
 
-	protected void draw(Canvas canvas) {
-		canvas.save();
+	@Override
+	public void onDrawFrame(GLRenderer renderer, int width, int height) {
+		renderer.translate(position.getX(), position.getY());
 
-		canvas.translate(position.x, position.y);
-		canvas.scale(scale.x, scale.y, getFrame().centerX(),
-			getFrame().centerY());
-		canvas.rotate(rotation, getFrame().centerX(), getFrame().centerY());
+		renderer.rotate(0, 0, zRotation);
+		renderer.scale(xScale, yScale);
 
-		drawChildren(canvas);
-
-		canvas.restore();
+		drawChildren(renderer, width, height);
 	}
 
-	protected void drawChildren(Canvas canvas) {
+	protected void drawChildren(GLRenderer renderer, int width, int height) {
 		try {
 			for (int i = 0; i < children.size(); i++) {
-				children.get(i).draw(canvas);
+				renderer.saveState();
+				children.get(i).onDrawFrame(renderer, width, height);
+				renderer.restoreState();
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -62,7 +66,7 @@ public class SKNode {
 	}
 
 	public void evaluateActions() {
-		if (!isPaused) {
+		if (!paused) {
 			synchronized (actions) {
 				// SKAction[] acts = actions.toArray(new
 				// SKAction[actions.size()]);
@@ -82,12 +86,12 @@ public class SKNode {
 		}
 	}
 
-	public RectF calculateAccumulatedFrame() {
+	public SKRect calculateAccumulatedFrame() {
 		return null;
 	}
 
 	public void setScale(float scale) {
-		this.scale.set(scale, scale);
+		xScale = yScale = scale;
 	}
 
 	private void setSceneRecursive(SKNode current, SKScene scene) {
@@ -211,109 +215,46 @@ public class SKNode {
 		actions.clear();
 	}
 
-	public boolean containsPoint(PointF p) {
-		return getFrame().contains(p.x, p.y);
+	public boolean containsPoint(SKPoint p) {
+		return getFrame().containsPoint(p);
 	}
 
-	public SKNode nodeAt(PointF p) {
+	public SKNode nodeAt(SKPoint p) {
+		// TODO: implement nodeAt
 		return null;
 	}
 
-	public SKNode[] nodesAt(PointF p) {
+	public SKNode[] nodesAt(SKPoint p) {
+		// TODO: implement nodesAt
 		return null;
 	}
 
-	public PointF convertFrom(PointF p, SKNode node) {
+	public SKPoint convertFrom(SKPoint p, SKNode node) {
+		// TODO: implement convertFrom
 		return null;
 	}
 
-	public PointF convertTo(PointF p, SKNode node) {
+	public SKPoint convertTo(SKPoint p, SKNode node) {
+		// TODO: implement convertTo
 		return null;
 	}
 
 	public boolean intersects(SKNode node) {
+		// TODO: implement intersects
 		return false;
 	}
 
-	public PointF getPosition() {
+	public SKPoint getPosition() {
 		return position;
 	}
 
-	public void setPosition(PointF position) {
+	public void setPosition(SKPoint position) {
 		this.position = position;
 	}
 
 	public void setPosition(float x, float y) {
-		position.set(x, y);
-	}
-
-	public SKSizeF getSize() {
-		return size;
-	}
-
-	public void setSize(SKSizeF size) {
-		this.size = size;
-	}
-
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		if (rotation > 360.0f) {
-			rotation = rotation - 360.0f;
-		} else if (rotation < 0.0f) {
-			rotation = 360.0f + rotation;
-		}
-		this.rotation = rotation;
-	}
-
-	public PointF getScale() {
-		return scale;
-	}
-
-	public void setScale(float x, float y) {
-		scale.set(x, y);
-	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	public float getAlpha() {
-		return alpha;
-	}
-
-	public void setAlpha(float alpha) {
-		this.alpha = alpha;
-	}
-
-	public boolean isPaused() {
-		return isPaused;
-	}
-
-	public void setPaused(boolean isPaused) {
-		this.isPaused = isPaused;
-	}
-
-	public boolean isHidden() {
-		return hidden;
-	}
-
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
-	}
-
-	public boolean isUserInteractionEnabled() {
-		return userInteractionEnabled;
-	}
-
-	public void setUserInteractionEnabled(boolean userInteractionEnabled) {
-		this.userInteractionEnabled = userInteractionEnabled;
+		position.setX(x);
+		position.setY(y);
 	}
 
 	public String getName() {
@@ -332,9 +273,8 @@ public class SKNode {
 		this.userData = userData;
 	}
 
-	public RectF getFrame() {
-		frame.set(position.x, position.y, position.x + size.getWidth(),
-			position.y + size.getHeight());
+	public SKRect getFrame() {
+		// TODO: implement frame to contain content bounds
 		return frame;
 	}
 
@@ -348,5 +288,29 @@ public class SKNode {
 
 	public SKScene getScene() {
 		return scene;
+	}
+
+	public SKPhysicsBody getPhysicsBody() {
+		return physicsBody;
+	}
+
+	public void setPhysicsBody(SKPhysicsBody physicsBody) {
+		this.physicsBody = physicsBody;
+	}
+
+	public SKReachConstraints getReachConstraints() {
+		return reachConstraints;
+	}
+
+	public void setReachConstraints(SKReachConstraints reachConstraints) {
+		this.reachConstraints = reachConstraints;
+	}
+
+	public List<SKReachConstraints> getConstraints() {
+		return constraints;
+	}
+
+	public void setConstraints(List<SKReachConstraints> constraints) {
+		this.constraints = constraints;
 	}
 }

@@ -1,24 +1,23 @@
 package br.com.insanitech.spritekit;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.PointF;
 import android.media.Image;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import br.com.insanitech.spritekit.logger.Logger;
-import br.com.insanitech.spritekit.opengl.context.GL30ContextFactory;
+import br.com.insanitech.spritekit.opengl.context.GL10ContextFactory;
 import br.com.insanitech.spritekit.opengl.context.GLContextFactory;
+import br.com.insanitech.spritekit.opengl.renderer.GLGenericRenderer;
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
-public class SKView extends GLSurfaceView {
+public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 	protected static long beginOfTime = 0;
 
+	private GLContextFactory factory;
 	private boolean paused;
 	private SKScene sceneToBePresented;
 	private Thread thread;
-	private GLContextFactory factory;
+	private SKSize viewSize = new SKSize();
 
 	public SKView(Context context) {
 		super(context);
@@ -30,34 +29,23 @@ public class SKView extends GLSurfaceView {
 		initView();
 	}
 
-	@Override
-	protected void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
-
-		if (thread != null) {
-			thread.interrupt();
-			thread = null;
-		}
-	}
-
 	public void initView() {
-//		setWillNotDraw(false);
-//		setWillNotCacheDrawing(true);
-//		if (!isInEditMode()) {
-//			setZOrderOnTop(true);
-//		}
-//		getHolder().setFormat(PixelFormat.TRANSPARENT);
-
 		// initializing OpenGL ES parameters
-		factory = new GL30ContextFactory();
-		factory.setContextReadyListener(new GLContextFactory.GLContextFactoryReadyListener() {
+		final GLGenericRenderer renderer = new GLGenericRenderer();
+		// TODO: testing GL 1.0, change to test other versions
+		factory = new GL10ContextFactory();
+		factory.setRenderer(renderer);
+		factory.setContextReadyListener(new GLContextFactory.GLContextReadyListener() {
 			@Override
-			public void onContextReady(GLContextFactory factory) {
-				setRenderer(factory.getRenderer());
-				requestRender();
+			public void onContextReady() {
+				renderer.setDrawer(SKView.this);
+				if (sceneToBePresented != null) {
+					requestRender();
+				}
 			}
 		});
 		setEGLContextFactory(factory);
+		setRenderer(renderer);
 		// end OpenGL parameters
 
 		beginOfTime = System.currentTimeMillis();
@@ -88,37 +76,53 @@ public class SKView extends GLSurfaceView {
 		return System.currentTimeMillis() - beginOfTime;
 	}
 
-	// unusable on OpenGL implementation
-//	@Override
-//	protected void onDraw(Canvas canvas) {
-//		if (sceneToBePresented != null) {
-//			canvas.save();
-//
-//			canvas.rotate(180, getWidth() / 2, getHeight() / 2);
-//
-//			sceneToBePresented.draw(canvas);
-//
-//			canvas.restore();
-//
-//			invalidate();
-//		}
-//	}
+	@Override
+	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+		super.onLayout(changed, left, top, right, bottom);
+	}
+
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+
+		if (thread != null) {
+			thread.interrupt();
+			thread = null;
+		}
+	}
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+
+
+		viewSize.setWidth(w);
+		viewSize.setHeight(h);
+
+		Logger.log("onSizeChanged: " + viewSize.toString());
+	}
+
+	@Override
+	public void onDrawFrame(GLRenderer renderer, int width, int height) {
+		if (sceneToBePresented != null) {
+			renderer.clear(sceneToBePresented.getBackgroundColor());
+
+			renderer.saveState();
+
+			sceneToBePresented.onDrawFrame(renderer, width, height);
+
+			renderer.restoreState();
+		}
+	}
 
 	public void presentScene(final SKScene scene) {
-//		sceneToBePresented = scene;
-//		setOnTouchListener(scene);
+		sceneToBePresented = scene;
+		setOnTouchListener(scene);
 
 		// needs new implementation of scene presentation
 		if (factory.isReady()) {
 			requestRender();
 		}
-
-		// unused with OpenGL implementation
-//		if (Thread.currentThread().getName().equals("main")) {
-//			invalidate();
-//		} else {
-//			postInvalidate();
-//		}
 	}
 
 	@Override
@@ -145,11 +149,15 @@ public class SKView extends GLSurfaceView {
 		return null;
 	}
 
-	public PointF convertTo(PointF point, SKScene scene) {
+	public SKPoint convertTo(SKPoint point, SKScene scene) {
 		return null;
 	}
 
-	public PointF convertFrom(PointF point, SKScene scene) {
+	public SKPoint convertFrom(SKPoint point, SKScene scene) {
 		return null;
+	}
+
+	public SKSize getSize() {
+		return viewSize;
 	}
 }

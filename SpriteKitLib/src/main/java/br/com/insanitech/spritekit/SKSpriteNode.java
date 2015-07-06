@@ -1,133 +1,136 @@
 package br.com.insanitech.spritekit;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.RectF;
+import android.graphics.*;
+import br.com.insanitech.spritekit.opengl.model.*;
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKSpriteNode extends SKNode {
-	private Bitmap texture;
-	private RectF centerRect = new RectF();
-	private float colorBlendFactor;
-	private int color = Color.TRANSPARENT;
-	private SKBlendMode blendMode = SKBlendMode.SKBlendModeAlpha;
-	private PointF anchorPoint = new PointF(0, 0);
-	private Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+    private SKTexture texture;
+    private SKRect centerRect = new SKRect();
+    private float colorBlendFactor;
+    private SKColor color = new SKColor(1.0f, 1.0f, 1.0f, 0.0f);
+    private SKBlendMode blendMode = SKBlendMode.SKBlendModeAlpha;
 
-	private Rect source = new Rect();
+    private SKPoint anchorPoint = new SKPoint(0.5f, 0.5f);
+    private SKSize size = new SKSize(0, 0);
 
-	public static SKSpriteNode spriteNode(Bitmap texture, SKSizeF size) {
-		SKSpriteNode node = new SKSpriteNode();
-		node.texture = texture;
-		node.setSize(size);
-		return node;
-	}
+    public static SKSpriteNode spriteNode(SKTexture texture, SKSize size) {
+        SKSpriteNode node = new SKSpriteNode();
+        node.texture = texture;
+        node.setSize(size);
+        return node;
+    }
 
-	public static SKSpriteNode spriteNode(Bitmap texture) {
-		SKSpriteNode node = new SKSpriteNode();
-		node.texture = texture;
-		return node;
-	}
+    public static SKSpriteNode spriteNode(SKTexture texture) {
+        SKSpriteNode node = new SKSpriteNode();
+        node.texture = texture;
+        node.setSize(texture.getSize());
+        return node;
+    }
 
-	public static SKSpriteNode spriteNode(int color, SKSizeF size) {
-		SKSpriteNode node = new SKSpriteNode();
-		node.color = color;
-		node.setSize(size);
-		return node;
-	}
+    public static SKSpriteNode spriteNode(SKColor color, SKSize size) {
+        SKSpriteNode node = new SKSpriteNode();
+        node.color = color;
+        node.setSize(size);
+        return node;
+    }
 
-	public static SKSpriteNode spriteNode(Bitmap texture, int color, SKSizeF size) {
-		SKSpriteNode node = new SKSpriteNode();
-		node.texture = texture;
-		node.color = color;
-		node.setSize(size);
-		return node;
-	}
+    public static SKSpriteNode spriteNode(SKTexture texture, SKColor color, SKSize size) {
+        SKSpriteNode node = new SKSpriteNode();
+        node.texture = texture;
+        node.color = color;
+        node.setSize(size);
+        return node;
+    }
 
-	public static SKSpriteNode node() {
-		return new SKSpriteNode();
-	}
+    public static SKSpriteNode node() {
+        return new SKSpriteNode();
+    }
 
-	@Override
-	public void draw(Canvas canvas) {
-		if (getAlpha() > 0.05f && !isHidden()) {
-			canvas.save();
-			canvas.translate(-getFrame().width() * anchorPoint.x,
-				-getFrame().height() * anchorPoint.y);
-			canvas.rotate(getRotation(), getFrame().left + getFrame().width()
-				* anchorPoint.x, getFrame().top + getFrame().height()
-				* anchorPoint.y);
-			canvas.scale(getScale().x, getScale().y, getFrame().left
-				+ getFrame().width() * anchorPoint.x, getFrame().top
-				+ getFrame().height() * anchorPoint.y);
+    @Override
+    public void onDrawFrame(GLRenderer renderer, int width, int height) {
+        if (alpha > 0.05f && !hidden) {
+            // load texture, will load only in the first call
+            if (texture != null) {
+                texture.loadTexture(renderer);
+            }
 
-			paint.setColor(color);
-			paint.setAlpha((int) (255 * getAlpha()));
-			if (texture != null) {
-				source.set(0, 0, texture.getWidth(), texture.getHeight());
-				canvas.drawBitmap(texture, source, getFrame(), paint);
-			} else {
-				canvas.drawRect(getFrame(), paint);
-			}
-			canvas.restore();
+            float x = (getPosition().getX());
+            float y = (getPosition().getY());
+            renderer.translate(x, y);
 
-			canvas.save();
-			canvas.translate(getPosition().x, getPosition().y);
-			canvas.rotate(getRotation());
-			canvas.scale(getScale().x, getScale().y);
-			drawChildren(canvas);
-			canvas.restore();
-		}
-	}
+            renderer.saveState();
+            renderer.rotate(0, 0, zRotation);
+            renderer.translate(size.getWidth() * -anchorPoint.getX(), size.getHeight() * -anchorPoint.getY());
+            renderer.scale(xScale * size.getWidth(), yScale * size.getHeight());
+            // TODO: implement color blend factor
+            // TODO: implement centerRect, that stretches the texture with values: {{0, 0}, {1, 1}}, help: Controls how the texture is stretched to fill the SKSpriteNode. Stretching is performed via a 9-part algorithm where the upper & lower middle parts are scaled horizontally, the left and right middle parts are scaled vertically, the center is scaled in both directions, and the corners are preserved. The centerRect defines the center region in a (0.0 - 1.0) coordinate space. Defaults to {(0,0) (1,1)} (the entire texture is stretched).
+            if (texture == null) {
+                renderer.drawRectangle(color);
+            } else {
+                renderer.drawRectangleTex(texture.getOpenGLTexture());
+            }
+            renderer.restoreState();
 
-	public Bitmap getTexture() {
-		return texture;
-	}
+            drawChildren(renderer, width, height);
 
-	public void setTexture(Bitmap tex) {
-		texture = tex;
-	}
+            renderer.translate(-x, -y);
+        }
+    }
 
-	public RectF getCenterRect() {
-		return centerRect;
-	}
+    public SKTexture getTexture() {
+        return texture;
+    }
 
-	public void setCenterRect(RectF center) {
-		centerRect = center;
-	}
+    public void setTexture(SKTexture tex) {
+        texture = tex;
+    }
 
-	public float getColorBlendFactor() {
-		return colorBlendFactor;
-	}
+    public SKRect getCenterRect() {
+        return centerRect;
+    }
 
-	public void setColorBlendFactor(float colorBlendFactor) {
-		this.colorBlendFactor = colorBlendFactor;
-	}
+    public void setCenterRect(SKRect center) {
+        centerRect = center;
+    }
 
-	public int getColor() {
-		return color;
-	}
+    public float getColorBlendFactor() {
+        return colorBlendFactor;
+    }
 
-	public void setColor(int color) {
-		this.color = color;
-	}
+    public void setColorBlendFactor(float colorBlendFactor) {
+        this.colorBlendFactor = colorBlendFactor;
+    }
 
-	public SKBlendMode getBlendMode() {
-		return blendMode;
-	}
+    public SKColor getColor() {
+        return color;
+    }
 
-	public void setBlendMode(SKBlendMode blendMode) {
-		this.blendMode = blendMode;
-	}
+    public void setColor(SKColor color) {
+        this.color = color;
+    }
 
-	public PointF getAnchorPoint() {
-		return anchorPoint;
-	}
+    public SKBlendMode getBlendMode() {
+        return blendMode;
+    }
 
-	public void setAnchorPoint(PointF anchorPoint) {
-		this.anchorPoint = anchorPoint;
-	}
+    public void setBlendMode(SKBlendMode blendMode) {
+        this.blendMode = blendMode;
+    }
+
+    public SKPoint getAnchorPoint() {
+        return anchorPoint;
+    }
+
+    public void setAnchorPoint(SKPoint anchorPoint) {
+        this.anchorPoint = anchorPoint;
+    }
+
+    public SKSize getSize() {
+        return size;
+    }
+
+    public void setSize(SKSize size) {
+        this.size = size;
+    }
 }
