@@ -21,6 +21,7 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer {
     protected GLDrawer drawer;
     protected GLCircle circle = new GLCircle();
     protected GLRectangle rectangle = new GLRectangle();
+    protected GLColor whiteColor = GLColor.rgb(1, 1, 1, 1);
 
     @Override
     public abstract void onSurfaceCreated(GL10 gl, EGLConfig config);

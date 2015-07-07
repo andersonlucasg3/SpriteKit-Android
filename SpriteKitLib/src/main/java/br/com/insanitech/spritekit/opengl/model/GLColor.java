@@ -28,29 +28,34 @@ public class GLColor {
     }
 
     public GLColor(float r, float g, float b, float a) {
-        ByteBuffer q = ByteBuffer.allocateDirect(4 * 4);
+        ByteBuffer q = ByteBuffer.allocateDirect(16 * 4);
         q.order(ByteOrder.nativeOrder());
         buffer = q.asFloatBuffer();
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        updateBuffer();
     }
 
     public void setR(float r) {
         this.r = r;
+        updateBuffer();
     }
 
     public void setG(float g) {
         this.g = g;
+        updateBuffer();
     }
 
     public void setB(float b) {
         this.b = b;
+        updateBuffer();
     }
 
     public void setA(float a) {
         this.a = a;
+        updateBuffer();
     }
 
     public float getR() {
@@ -69,17 +74,18 @@ public class GLColor {
         return a;
     }
 
-    public FloatBuffer getBuffer(float alphaFactor) {
-        buffer.put(0, r);
-        buffer.put(1, g);
-        buffer.put(2, b);
-        buffer.put(3, a * alphaFactor);
+    private void updateBuffer() {
+        buffer.clear();
+        for (int i = 0; i < 4; i++) {
+            buffer.put(r);
+            buffer.put(g);
+            buffer.put(b);
+            buffer.put(a);
+        }
         buffer.position(0);
-        return buffer.asReadOnlyBuffer();
     }
 
-
     public FloatBuffer getBuffer() {
-        return getBuffer(1.0f);
+        return buffer;
     }
 }

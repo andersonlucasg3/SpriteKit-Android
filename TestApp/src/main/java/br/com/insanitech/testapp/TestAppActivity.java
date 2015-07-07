@@ -36,41 +36,19 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
         if (view == null) {
             view = (SKView) findViewById(R.id.skview);
             SKScene scene = new SKScene(view.getSize());
-            scene.setBackgroundColor(SKColor.redColor());
+            scene.setBackgroundColor(SKColor.darkGrayColor());
 
             texture = new SKTexture(this, R.drawable.card_deck);
 
-            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.whiteColor(),
+            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.redColor(),
                     new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
+            swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setColorBlendFactor(0.5f);
-            swordA.setTexture(new SKTexture(new SKRect(0.0f, 1.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
-            swordA.setPosition(0, 150);
 
-            SKSpriteNode dickA = SKSpriteNode.spriteNode(SKColor.greenColor(),
-                    new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
-            dickA.setColorBlendFactor(0.5f);
-            dickA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f/14.0f, 1.0f/4.0f), texture));
-            dickA.setPosition(0, -150);
-
-            SKSpriteNode diamondA = SKSpriteNode.spriteNode(SKColor.blackColor(),
-                    new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
-            diamondA.setColorBlendFactor(0.5f);
-            diamondA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
-            diamondA.setPosition(-150, 0);
-
-            SKSpriteNode heartsA = SKSpriteNode.spriteNode(SKColor.blueColor(),
-                    new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
-            heartsA.setColorBlendFactor(0.05f);
-            heartsA.setTexture(new SKTexture(new SKRect(0.0f, 3.0f / 4.0f, 1.0f / 14.0f, 1.0f/4.0f), texture));
-            heartsA.setPosition(150, 0);
-
-                    SKNode nodeParent = SKNode.node();
+            SKNode nodeParent = SKNode.node();
             nodeParent.setPosition(scene.getSize().getWidth() / 2.0f, scene.getSize().getHeight() / 2.0f);
 
             nodeParent.addChild(swordA);
-            nodeParent.addChild(dickA);
-            nodeParent.addChild(diamondA);
-            nodeParent.addChild(heartsA);
 
             scene.addChild(nodeParent);
 
@@ -78,7 +56,7 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 
             view.setOnTouchListener(this);
 
-            rotate(nodeParent);
+//            rotate(nodeParent);
         }
     }
 
@@ -88,7 +66,6 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
                 SKAction.run(new Runnable() {
                     @Override
                     public void run() {
-//                        Logger.log("zRotation", "" + nodeParent.zRotation);
                         rotate(nodeParent);
                     }
                 }))));

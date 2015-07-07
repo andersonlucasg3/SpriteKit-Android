@@ -7,6 +7,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by anderson on 6/29/15.
  */
 class GL11Renderer extends GL10Renderer {
+    // TODO: implement GLES 1.1 support
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);

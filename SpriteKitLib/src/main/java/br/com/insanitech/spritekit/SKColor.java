@@ -38,6 +38,18 @@ public class SKColor extends GLColor {
         return rgb(1.0f, 1.0f, 1.0f);
     }
 
+    public static SKColor grayColor() {
+        return rgb(0.5f, 0.5f, 0.5f);
+    }
+
+    public static SKColor lightGrayColor() {
+        return rgb(0.8f, 0.8f, 0.8f);
+    }
+
+    public static SKColor darkGrayColor() {
+        return rgb(0.2f, 0.2f, 0.2f);
+    }
+
     public static SKColor white(float white, float alpha) {
         return rgba(white, white, white, alpha);
     }

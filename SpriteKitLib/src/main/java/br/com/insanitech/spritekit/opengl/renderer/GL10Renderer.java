@@ -133,7 +133,7 @@ class GL10Renderer extends GLRenderer {
 
     @Override
     public void drawRectangle(GLColor color) {
-        GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.getBuffer(1.0f));
+        GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.getBuffer());
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 
@@ -148,18 +148,16 @@ class GL10Renderer extends GLRenderer {
     public void drawRectangleTex(GLTexture texture, GLColor color, float factor) {
         // TODO: color blending make it exactely as in iOS
         GLES10.glEnable(GLES10.GL_BLEND);
-        GLES10.glBlendFunc(GLES10.GL_ONE, GLES10.GL_ONE);
+        GLES10.glBlendFunc(GLES10.GL_SRC_ALPHA, GLES10.GL_ONE_MINUS_SRC_ALPHA);
 
-        GLES10.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.getBuffer());
 
         GLES10.glEnable(GLES10.GL_TEXTURE_2D);
         GLES10.glBindTexture(GLES10.GL_TEXTURE_2D, texture.getTexture());
-        // coloring the texture
-        GLES10.glTexEnvf(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_MODE, GLES10.GL_MODULATE);
-        GLES10.glTexEnvfv(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_COLOR, color.getBuffer());
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
         GLES10.glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
+        GLES10.glEnableClientState(GLES10.GL_COLOR_ARRAY);
 
         GLES10.glFrontFace(GLES10.GL_CCW);
 
@@ -168,6 +166,7 @@ class GL10Renderer extends GLRenderer {
 
         GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.getIndiceCount(), GLES10.GL_UNSIGNED_SHORT, rectangle.getIndices());
 
+        GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
         GLES10.glDisable(GLES10.GL_TEXTURE_2D);

@@ -7,7 +7,7 @@ import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 public class SKSpriteNode extends SKNode {
     private SKTexture texture;
     private SKRect centerRect = new SKRect();
-    private float colorBlendFactor;
+    private float colorBlendFactor = 0.0f;
     private SKColor color = SKColor.whiteColor();
     private SKBlendMode blendMode = SKBlendMode.SKBlendModeAlpha;
 
@@ -94,10 +94,21 @@ public class SKSpriteNode extends SKNode {
         centerRect = center;
     }
 
+
+    /**
+     * Gets color blending factor value [0 - 1].
+     * Not applicable in devices that only support OpenGL ES 1.x.
+     * @return 0-1 value
+     */
     public float getColorBlendFactor() {
         return colorBlendFactor;
     }
 
+    /**
+     * Sets color blending factor value.
+     * Not applicable in devices that only support OpenGL ES 1.x.
+     * @param colorBlendFactor [0 - 1].
+     */
     public void setColorBlendFactor(float colorBlendFactor) {
         this.colorBlendFactor = colorBlendFactor;
     }
