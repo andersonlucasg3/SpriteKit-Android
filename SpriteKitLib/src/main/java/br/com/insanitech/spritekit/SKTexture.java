@@ -38,7 +38,8 @@ public class SKTexture {
     public SKTexture(SKRect rect, SKTexture inTexture) {
         textureRect = rect;
         texture = new GLTexture(inTexture.texture);
-        texture.generateTexCoods(textureRect);
+        SKRect usedTextureRect = new SKRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        texture.generateTexCoords(usedTextureRect);
     }
 
     public SKTexture(float vectorNoiseWithSmoothness, SKSize size) {
@@ -72,7 +73,8 @@ public class SKTexture {
 
     private void setupBitmap(Bitmap bitmap) {
         texture = new GLTexture(bitmap);
-        texture.generateTexCoods(textureRect);
+        SKRect usedTextureRect = new SKRect(textureRect.getX(), textureRect.getY(), textureRect.getWidth(), textureRect.getHeight());
+        texture.generateTexCoords(usedTextureRect);
         size = new SKSize(texture.getSize());
     }
 
@@ -82,6 +84,13 @@ public class SKTexture {
             int filter = filteringMode == SKTextureFilteringMode.Linear ? renderer.getLinearFilterMode() : renderer.getNearestFilterMode();
             texture.loadTexture(renderer, filter);
             loaded = true;
+        }
+    }
+
+    void unloadTexture(GLRenderer renderer) {
+        if (loaded) {
+            texture.unloadTexture(renderer);
+            loaded = false;
         }
     }
 
