@@ -1,11 +1,10 @@
 package br.com.insanitech.spritekit;
 
-import android.graphics.*;
-import br.com.insanitech.spritekit.opengl.model.*;
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKSpriteNode extends SKNode {
     private SKTexture texture;
+    private SKTexture textureToUnload;
     private SKRect centerRect = new SKRect();
     private float colorBlendFactor = 0.0f;
     private SKColor color = SKColor.whiteColor();
@@ -51,6 +50,11 @@ public class SKSpriteNode extends SKNode {
     public void onDrawFrame(GLRenderer renderer, int width, int height) {
         if (alpha > 0.05f && !hidden) {
             // load texture, will load only in the first call
+            if (textureToUnload != null) {
+                textureToUnload.unloadTexture(renderer);
+                textureToUnload = null;
+            }
+
             if (texture != null) {
                 texture.loadTexture(renderer);
             }
@@ -83,6 +87,9 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setTexture(SKTexture tex) {
+        if (texture != null) {
+            textureToUnload = texture;
+        }
         texture = tex;
     }
 
@@ -98,6 +105,7 @@ public class SKSpriteNode extends SKNode {
     /**
      * Gets color blending factor value [0 - 1].
      * Not applicable in devices that only support OpenGL ES 1.x.
+     *
      * @return 0-1 value
      */
     public float getColorBlendFactor() {
@@ -107,6 +115,7 @@ public class SKSpriteNode extends SKNode {
     /**
      * Sets color blending factor value.
      * Not applicable in devices that only support OpenGL ES 1.x.
+     *
      * @param colorBlendFactor [0 - 1].
      */
     public void setColorBlendFactor(float colorBlendFactor) {
