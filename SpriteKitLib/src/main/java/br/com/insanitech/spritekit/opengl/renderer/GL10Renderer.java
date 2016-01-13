@@ -1,17 +1,18 @@
 package br.com.insanitech.spritekit.opengl.renderer;
 
-import android.graphics.Bitmap;
-import android.opengl.*;
-import br.com.insanitech.spritekit.logger.Logger;
-import br.com.insanitech.spritekit.opengl.model.*;
-import br.com.insanitech.spritekit.opengl.model.GLUtils;
+import android.opengl.GLES10;
+import android.opengl.GLU;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+
+import br.com.insanitech.spritekit.logger.Logger;
+import br.com.insanitech.spritekit.opengl.model.GLColor;
+import br.com.insanitech.spritekit.opengl.model.GLTexture;
+import br.com.insanitech.spritekit.opengl.model.GLUtils;
 
 /**
  * Created by anderson on 6/28/15.
@@ -60,7 +61,7 @@ class GL10Renderer extends GLRenderer {
     }
 
     @Override
-    public void generateTexture(ByteBuffer pixelData, int size, int bytesPerRow, int filterMode, int[] textures) {
+    public void loadTexture(ByteBuffer pixelData, int size, int bytesPerRow, int filterMode, int[] textures) {
         if (pixelData.order() != ByteOrder.nativeOrder()) {
             pixelData.flip();
         }
@@ -81,6 +82,11 @@ class GL10Renderer extends GLRenderer {
                 bytesPerRow / 4, size / bytesPerRow, 0, GLES10.GL_RGBA, GLES10.GL_UNSIGNED_BYTE, pixelData);
 
         logGLError();
+    }
+
+    @Override
+    public void unloadTexture(int[] textures) {
+        GLES10.glDeleteTextures(1, textures, 0);
     }
 
     @Override
