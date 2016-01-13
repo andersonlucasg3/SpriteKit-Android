@@ -21,7 +21,7 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer {
     protected GLDrawer drawer;
     protected GLCircle circle = new GLCircle();
     protected GLRectangle rectangle = new GLRectangle();
-    protected GLColor whiteColor = GLColor.rgb(1, 1, 1, 1);
+    protected GLColor whiteColor = GLColor.rgba(1, 1, 1, 1);
 
     @Override
     public abstract void onSurfaceCreated(GL10 gl, EGLConfig config);
@@ -46,7 +46,8 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer {
     public abstract void logGLError();
     public abstract int getLinearFilterMode();
     public abstract int getNearestFilterMode();
-    public abstract void generateTexture(ByteBuffer pixelData, int size, int bytesPerRow, int filterMode, int[] textures);
+    public abstract void loadTexture(ByteBuffer pixelData, int size, int bytesPerRow, int filterMode, int[] textures);
+    public abstract void unloadTexture(int[] textures);
     public abstract void clear(GLColor color);
     public abstract void saveState();
     public abstract void loadIdentity();
