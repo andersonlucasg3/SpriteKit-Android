@@ -27,11 +27,17 @@ public class GLTexture extends GLGeometry {
         size = other.size;
     }
 
+    /**
+     * Creates a OpenGL texture with the bitmap as source.
+     * The bitmap is recycled internally.
+     *
+     * @param bitmap to use as source to the texture
+     */
     public GLTexture(Bitmap bitmap) {
         loadBitmap(bitmap);
         size = new GLSize(bitmap.getWidth(), bitmap.getHeight());
 
-        generateTexCoods(new GLRect(0, 0, 1, 1));
+        generateTexCoords(new GLRect(0, 0, 1, 1));
     }
 
     public GLTexture(ByteBuffer buffer, int bytesPerRow, int size) {
@@ -42,12 +48,12 @@ public class GLTexture extends GLGeometry {
         this.bytesPerRow = bytesPerRow;
         bufferSize = size;
 
-        generateTexCoods(new GLRect(0, 0, 1, 1));
+        generateTexCoords(new GLRect(0, 0, 1, 1));
     }
 
-    public void generateTexCoods(GLRect coords) {
+    public void generateTexCoords(GLRect coords) {
         coords.setY(1.0f - coords.getY());
-        coords.setHeight(coords.getY() - coords.getHeight());
+        coords.setHeight(1.0f - coords.getHeight());
         vertices = new float[] {
                 coords.getX(), coords.getY(),                       //0.0f, 0.0f,
                 coords.getWidth(), coords.getY(),                   //1.0f, 0.0f
@@ -70,10 +76,14 @@ public class GLTexture extends GLGeometry {
     }
 
     public void loadTexture(GLRenderer renderer, int filterMode) {
-        renderer.generateTexture(buffer, bufferSize, bytesPerRow, filterMode, texture);
+        renderer.loadTexture(buffer, bufferSize, bytesPerRow, filterMode, texture);
 
         buffer.clear();
         buffer = null;
+    }
+
+    public void unloadTexture(GLRenderer renderer) {
+        renderer.unloadTexture(texture);
     }
 
     public int getTexture() {
