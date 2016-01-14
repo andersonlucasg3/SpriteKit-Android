@@ -32,6 +32,24 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (view != null) {
+            view.onPause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (view != null) {
+            view.onResume();
+        }
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
@@ -43,14 +61,13 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
     private void initializeScene() {
         if (view == null) {
             view = (SKView) findViewById(R.id.skview);
-            SKScene scene = new SKScene(view.getSize());
+            SKScene scene = new SKScene(new SKSize(320, 480));
             scene.setBackgroundColor(SKColor.darkGrayColor());
 
             texture = new SKTexture(this, R.drawable.card_deck);
 
-            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.whiteColor(),
-                    new SKSize(texture.getSize().getWidth() / 14.0f, texture.getSize().getHeight() / 4.0f));
-            swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
+            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.redColor(), new SKSize(320, 480));
+//            swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setColorBlendFactor(0.5f);
 
             SKNode nodeParent = SKNode.node();
@@ -64,7 +81,7 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 
             view.setOnTouchListener(this);
 
-            animateMovingCards(swordA);
+//            animateMovingCards(swordA);
         }
     }
 
@@ -111,7 +128,7 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
         Log.d("TEX RECT", "textureRect: " + sprite.getTexture().textureRect());
 
         sprite.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000),
-                SKAction.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, spriteCoordX + 1.0f / 14.0f, spriteCoordY + 1.0f / 4.0f), texture)),
+                SKAction.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),
                 SKAction.run(new Runnable() {
                     @Override
                     public void run() {
