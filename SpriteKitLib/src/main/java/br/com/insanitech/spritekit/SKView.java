@@ -95,7 +95,6 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-
 		viewSize.setWidth(w);
 		viewSize.setHeight(h);
 
@@ -108,6 +107,10 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 			renderer.clear(sceneToBePresented.getBackgroundColor());
 
 			renderer.saveState();
+
+			// TODO: this is the scaling of the scene size compared to the view size.
+			// TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
+			renderer.scale(width / sceneToBePresented.getSize().getWidth(), height / sceneToBePresented.getSize().getHeight());
 
 			sceneToBePresented.onDrawFrame(renderer, width, height);
 
