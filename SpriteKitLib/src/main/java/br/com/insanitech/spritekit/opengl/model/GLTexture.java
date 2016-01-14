@@ -52,8 +52,12 @@ public class GLTexture extends GLGeometry {
     }
 
     public void generateTexCoords(GLRect coords) {
+        coords.setWidth(coords.getX() + coords.getWidth());
+        coords.setHeight(coords.getY() + coords.getHeight());
+
         coords.setY(1.0f - coords.getY());
         coords.setHeight(1.0f - coords.getHeight());
+
         vertices = new float[] {
                 coords.getX(), coords.getY(),                       //0.0f, 0.0f,
                 coords.getWidth(), coords.getY(),                   //1.0f, 0.0f
