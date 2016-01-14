@@ -139,20 +139,26 @@ class GL10Renderer extends GLRenderer {
 
     @Override
     public void drawRectangle(GLColor color) {
+        GLES10.glDisable(GLES10.GL_TEXTURE_2D);
+
         GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.getBuffer());
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY);
+        GLES10.glEnableClientState(GLES10.GL_COLOR_ARRAY);
 
-        GLES10.glVertexPointer(2, GLES10.GL_FLOAT, 0, rectangle.getVertexBuffer());
+        GLES10.glVertexPointer(3, GLES10.GL_FLOAT, 0, rectangle.getVertexBuffer());
 
-        GLES10.glDrawArrays(GLES10.GL_TRIANGLE_FAN, 0, rectangle.getVertexCount());
+        GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.getIndiceCount(), GLES10.GL_UNSIGNED_SHORT, rectangle.getIndices());
 
+        GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
+
+        logGLError();
     }
 
     @Override
     public void drawRectangleTex(GLTexture texture, GLColor color, float factor) {
-        // TODO: color blending make it exactely as in iOS
+        // TODO: color blending make it exactly as in iOS
         GLES10.glEnable(GLES10.GL_BLEND);
         GLES10.glBlendFunc(GLES10.GL_SRC_ALPHA, GLES10.GL_ONE_MINUS_SRC_ALPHA);
 
