@@ -78,6 +78,7 @@ public class SKAction {
     private float startX = 0, startY = 0;
     private float deltaX = 0, deltaY = 0;
     private float startAlpha = 0;
+    private float endAlpha = 0;
     private float startAngle = 0; // angle in radians
     private float radians = 0;
     protected String key = "";
@@ -125,7 +126,7 @@ public class SKAction {
         started = true;
     }
 
-    protected void setCompletion(Runnable completion) {
+    void setCompletion(Runnable completion) {
         this.completion = completion;
     }
 
@@ -177,8 +178,10 @@ public class SKAction {
 
         switch (actionType) {
             case ActionTypeFadeAlphaBy:
+                fadeAlphaByImpl(node, elapsed);
                 break;
             case ActionTypeFadeAlphaTo:
+                fadeAlphaToImpl(node, elapsed);
                 break;
             case ActionTypeFadeIn:
                 fadeInImpl(node, elapsed);
@@ -408,6 +411,22 @@ public class SKAction {
         }
     }
 
+    private void fadeAlphaToImpl(SKNode node, long elapsed) {
+        if (!checkCompleted(node, elapsed)) {
+            node.alpha = SKEaseCalculations.linear(elapsed, startAlpha, endAlpha - startAlpha, duration);
+        } else {
+            node.alpha = endAlpha;
+        }
+    }
+
+    private void fadeAlphaByImpl(SKNode node, long elapsed) {
+        if (!checkCompleted(node, elapsed)) {
+            node.alpha = SKEaseCalculations.linear(elapsed, startAlpha, endAlpha, duration);
+        } else {
+            node.alpha = startAlpha + endAlpha;
+        }
+    }
+
     private void scaleByImpl(SKNode node, long elapsed) {
         if (!checkCompleted(node, elapsed)) {
             float newScaleX = node.xScale;
@@ -542,7 +561,7 @@ public class SKAction {
                 copy.group.add(group.get(i).copy());
             }
         }
-        copy.key = new String(key);
+        copy.key = key;
         copy.radians = radians;
         if (sequence != null) {
             copy.sequence = new LinkedList<SKAction>();
@@ -692,6 +711,22 @@ public class SKAction {
     public static SKAction fadeOut(long duration) {
         SKAction action = new SKAction();
         action.actionType = ActionType.ActionTypeFadeOut;
+        action.duration = duration;
+        return action;
+    }
+
+    public static SKAction fadeAlphaTo(float alpha, long duration) {
+        SKAction action = new SKAction();
+        action.actionType = ActionType.ActionTypeFadeAlphaTo;
+        action.endAlpha = alpha;
+        action.duration = duration;
+        return action;
+    }
+
+    public static SKAction fadeAlphaBy(float alpha, long duration) {
+        SKAction action = new SKAction();
+        action.actionType = ActionType.ActionTypeFadeAlphaBy;
+        action.endAlpha = alpha;
         action.duration = duration;
         return action;
     }
