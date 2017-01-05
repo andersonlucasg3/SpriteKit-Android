@@ -34,7 +34,7 @@ class GL10Renderer extends GLRenderer {
         GLES10.glLoadIdentity();
 
         // orthographic camera
-        GLES10.glOrthof(0, width, 0, height, -1, 1);
+        GLES10.glOrthof(0, width, 0, height, -100, 100);
     }
 
     @Override
