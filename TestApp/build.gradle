@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 apply plugin: 'android'
@@ -13,13 +13,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "br.com.insanitech.testapp"
-        minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 15
         versionCode 1
         versionName "1.0"
     }
