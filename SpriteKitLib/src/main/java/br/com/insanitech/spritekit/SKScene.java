@@ -22,6 +22,9 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 
 	public SKScene(SKSize size) {
 		this.size = size;
+		this.scaleMode = SKSceneScaleMode.SKSceneScaleModeAspectFit;
+		this.backgroundColor = SKColor.whiteColor();
+		this.anchorPoint = new SKPoint();
 	}
 
 	public SKSceneScaleMode getScaleMode() {
