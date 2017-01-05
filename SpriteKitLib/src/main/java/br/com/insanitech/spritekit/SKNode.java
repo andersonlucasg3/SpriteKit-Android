@@ -2,6 +2,7 @@ package br.com.insanitech.spritekit;
 
 import java.util.*;
 
+import br.com.insanitech.spritekit.logger.Logger;
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKNode implements GLRenderer.GLDrawer {
@@ -10,9 +11,7 @@ public class SKNode implements GLRenderer.GLDrawer {
 	}
 
 	private SKRect frame = new SKRect(0.0f, 0.0f, 0.0f, 0.0f);
-	private SKPoint position = new SKPoint(0.0f, 0.0f);
 	private SKNode parent;
-	private List<SKNode> children;
 	private String name = "";
 
 	private SKScene scene;
@@ -20,10 +19,12 @@ public class SKNode implements GLRenderer.GLDrawer {
 	private SKPhysicsBody physicsBody;
 	private SKReachConstraints reachConstraints;
 	private List<SKReachConstraints> constraints;
-
-	private LinkedList<SKAction> actions;
 	private Dictionary<?, ?> userData;
 
+	private final List<SKNode> children = new ArrayList<SKNode>();
+	private final LinkedList<SKAction> actions = new LinkedList<SKAction>();
+
+	public SKPoint position = new SKPoint(0.0f, 0.0f);
 	public boolean paused = false;
 	public boolean hidden = false;
 	public float zPosition = 0.0f;
@@ -39,13 +40,12 @@ public class SKNode implements GLRenderer.GLDrawer {
 	}
 
 	public SKNode() {
-		children = new ArrayList<SKNode>();
-		actions = new LinkedList<SKAction>();
+
 	}
 
 	@Override
 	public void onDrawFrame(GLRenderer renderer, int width, int height) {
-		renderer.translate(position.getX(), position.getY());
+		renderer.translate(position.x, position.y, zPosition);
 
 		renderer.rotate(0, 0, zRotation);
 		renderer.scale(xScale, yScale);
@@ -73,8 +73,8 @@ public class SKNode implements GLRenderer.GLDrawer {
 				// for (int i = 0; i < acts.length; i++) {
 				// acts[i].computeAction(this);
 				// }
-				for (int i = 0; i < actions.size(); i++) {
-					actions.get(i).computeAction(this);
+				if (actions.size() > 0) {
+					actions.get(0).computeAction(this);
 				}
 			}
 		}
@@ -114,7 +114,7 @@ public class SKNode implements GLRenderer.GLDrawer {
 	}
 
 	public void removeChildren(List<SKNode> children) {
-		children.removeAll(children);
+		this.children.removeAll(children);
 		SKNode child;
 		for (int i = 0; i < children.size(); i++) {
 			child = children.get(i);
@@ -168,6 +168,7 @@ public class SKNode implements GLRenderer.GLDrawer {
 	}
 
 	protected void actionCompleted(SKAction completed) {
+		Logger.log(getClass().getName(), "actionCompleted: " + completed.key + ", nodeName: " + getName());
 		synchronized (actions) {
 			actions.remove(completed);
 		}
@@ -244,19 +245,6 @@ public class SKNode implements GLRenderer.GLDrawer {
 		return false;
 	}
 
-	public SKPoint getPosition() {
-		return position;
-	}
-
-	public void setPosition(SKPoint position) {
-		this.position = position;
-	}
-
-	public void setPosition(float x, float y) {
-		position.setX(x);
-		position.setY(y);
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -312,5 +300,38 @@ public class SKNode implements GLRenderer.GLDrawer {
 
 	public void setConstraints(List<SKReachConstraints> constraints) {
 		this.constraints = constraints;
+	}
+
+	protected SKNode copy(SKNode input) {
+		input.frame = frame;
+		input.parent = parent;
+		input.name = name;
+
+		input.scene = scene;
+
+		input.physicsBody = physicsBody;
+		input.reachConstraints = reachConstraints;
+		input.constraints = constraints;
+		input.userData = userData;
+
+		input.children.addAll(children);
+		input.actions.addAll(actions);
+
+		input.position = position;
+		input.paused = paused;
+		input.hidden = hidden;
+		input.zPosition = zPosition;
+		input.zRotation = zRotation;
+		input.xScale = xScale;
+		input.yScale = yScale;
+		input.speed = speed;
+		input.alpha = alpha;
+		input.userInteractionEnabled = userInteractionEnabled;
+
+		return input;
+	}
+
+	public Object copy() {
+		return copy(new SKNode());
 	}
 }

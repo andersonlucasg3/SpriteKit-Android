@@ -16,6 +16,6 @@ public class SKPoint extends GLPoint {
 
     @Override
     public String toString() {
-        return "{ x: " + getX() + ", y: " + getY() + " }";
+        return "{ x: " + x + ", y: " + y + " }";
     }
 }

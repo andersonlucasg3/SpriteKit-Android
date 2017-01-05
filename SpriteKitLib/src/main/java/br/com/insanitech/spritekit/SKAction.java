@@ -5,13 +5,12 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-import br.com.insanitech.spritekit.opengl.model.GLUtils;
+import br.com.insanitech.spritekit.logger.Logger;
 
 public class SKAction {
     private enum ActionType {
@@ -30,23 +29,35 @@ public class SKAction {
         }
 
         public void completedAction(SKNode node, SKAction action) {
+            Logger.log(getClass().getName(), "completeAction: " + action.actionType);
+
             if (p.actionType.equals(ActionType.ActionTypeGroup)) {
+                Logger.log(getClass().getName(), "Removing action from group.");
                 p.group.remove(action);
                 if (p.group.size() == 0) {
-                    node.actionCompleted(p);
+                    if (p.handler != null) {
+                        p.handler.completedAction(node, action);
+                    } else {
+                        node.actionCompleted(p);
+                    }
                 }
             } else if (p.actionType.equals(ActionType.ActionTypeSequence)) {
+                Logger.log(getClass().getName(), "Removing action from sequence.");
                 p.sequence.poll();
                 if (p.sequence.size() > 0) {
                     p.sequence.peek().start(node);
                 } else {
-                    node.actionCompleted(p);
+                    if (p.handler != null) {
+                        p.handler.completedAction(node, action);
+                    } else {
+                        node.actionCompleted(p);
+                    }
                 }
             }
         }
     }
 
-    private static SKActionTimingMode defaultTiming = SKActionTimingMode.SKActionTimingLinear;
+    private static SKActionTimingMode defaultTiming = SKActionTimingMode.Linear;
 
     public static void setDefaultTiming(SKActionTimingMode mode) {
         defaultTiming = mode;
@@ -54,11 +65,10 @@ public class SKAction {
 
     private long startedTime = 0;
     private long duration = 1000;
-    private SKActionTimingMode timingMode = defaultTiming;
     private float speed = 0;
     private ActionType actionType = null;
     private Context soundFileContext = null;
-    private int soundFileResid = 0;
+    private int soundFileResId = 0;
     private MediaPlayer soundFile = null;
     private SKTexture texture = null;
     private Queue<SKAction> sequence = null;
@@ -67,7 +77,9 @@ public class SKAction {
     private Runnable completion = null;
     private float startX = 0, startY = 0;
     private float deltaX = 0, deltaY = 0;
-    private float degrees = 0;
+    private float startAlpha = 0;
+    private float startAngle = 0; // angle in radians
+    private float radians = 0;
     protected String key = "";
     private SKSequenceGroup handler = null;
 
@@ -75,20 +87,14 @@ public class SKAction {
 
     private boolean started = false;
 
+    public SKActionTimingMode timingMode = defaultTiming;
+
     public long getDuration() {
         return duration;
     }
 
     public void setDuration(long dur) {
         duration = dur;
-    }
-
-    public SKActionTimingMode getTimingMode() {
-        return timingMode;
-    }
-
-    public void setTimingMode(SKActionTimingMode mode) {
-        timingMode = mode;
     }
 
     public float getSpeed() {
@@ -105,6 +111,7 @@ public class SKAction {
 
     protected void start(SKNode node) {
         startedTime = System.currentTimeMillis();
+        Logger.log(getClass().getName(), "start: " + node.getName() + ", startedTime: " + startedTime);
         if (actionType == ActionType.ActionTypeGroup) {
             for (int i = 0; i < group.size(); i++) {
                 group.get(i).start(node);
@@ -123,22 +130,23 @@ public class SKAction {
     }
 
     private void computeStart(SKNode node) {
+        Logger.log(getClass().getName(), "computeStart: " + node.getName());
         switch (actionType) {
             case ActionTypeFadeIn:
             case ActionTypeFadeOut: {
-                startX = node.alpha;
+                startAlpha = node.alpha;
             }
             break;
             case ActionTypeMoveBy:
             case ActionTypeMoveTo: {
-                startX = node.getPosition().getX();
-                startY = node.getPosition().getY();
+                startX = node.position.x;
+                startY = node.position.y;
             }
             break;
 
             case ActionTypeRotateBy:
             case ActionTypeRotateTo: {
-                startX = node.zRotation;
+                startAngle = node.zRotation;
             }
             break;
 
@@ -151,7 +159,7 @@ public class SKAction {
 
             case ActionTypeFadeAlphaBy:
             case ActionTypeFadeAlphaTo: {
-                startX = node.alpha;
+                startAlpha = node.alpha;
             }
             break;
 
@@ -236,143 +244,134 @@ public class SKAction {
     }
 
     private void rotateByImpl(SKNode node, long elapsed) {
-        switch (timingMode) {
-            case SKActionTimingEaseIn: {
-                float newRot = SKEaseCalculations.easeIn(elapsed, startX, degrees,
-                        duration);
-                node.zRotation = newRot;
-            }
-            break;
+        if (!checkCompleted(node, elapsed)) {
+            switch (timingMode) {
+                case EaseIn: {
+                    node.zRotation = SKEaseCalculations.easeIn(elapsed, startAngle, radians, duration);
+                }
+                break;
 
-            case SKActionTimingEaseOut: {
-                float newRot = SKEaseCalculations.easeOut(elapsed, startX, degrees,
-                        duration);
-                node.zRotation = newRot;
-            }
-            break;
+                case EaseOut: {
+                    node.zRotation = SKEaseCalculations.easeOut(elapsed, startAngle, radians, duration);
+                }
+                break;
 
-            case SKActionTimingEaseInEaseOut: {
-                float newRot = SKEaseCalculations.easeInOut(elapsed, startX, degrees,
-                        duration);
-                node.zRotation = newRot;
-            }
-            break;
+                case EaseInEaseOut: {
+                    node.zRotation = SKEaseCalculations.easeInOut(elapsed, startAngle, radians, duration);
+                }
+                break;
 
-            case SKActionTimingLinear: {
-                float newRot = SKEaseCalculations.linear(elapsed, startX, degrees,
-                        duration);
-                node.zRotation = newRot;
+                case Linear: {
+                    node.zRotation = SKEaseCalculations.linear(elapsed, startAngle, radians, duration);
+                }
+                break;
             }
-            break;
+        } else {
+            node.zRotation = startAngle + radians;
         }
-
-        checkCompleted(node, elapsed);
     }
 
     private void moveByImpl(SKNode node, long elapsed) {
-        switch (timingMode) {
-            case SKActionTimingEaseIn: {
-                float newX = SKEaseCalculations.easeIn(elapsed, startX, deltaX, duration);
-                float newY = SKEaseCalculations.easeIn(elapsed, startY, deltaY, duration);
-                node.setPosition(newX, newY);
+        if (!checkCompleted(node, elapsed)) {
+            switch (timingMode) {
+                case EaseIn: {
+                    float newX = SKEaseCalculations.easeIn(elapsed, startX, deltaX, duration);
+                    float newY = SKEaseCalculations.easeIn(elapsed, startY, deltaY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case EaseInEaseOut: {
+                    float newX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX, duration);
+                    float newY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case EaseOut: {
+                    float newX = SKEaseCalculations.easeOut(elapsed, startX, deltaX, duration);
+                    float newY = SKEaseCalculations.easeOut(elapsed, startY, deltaY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case Linear: {
+                    float newX = SKEaseCalculations.linear(elapsed, startX, deltaX, duration);
+                    float newY = SKEaseCalculations.linear(elapsed, startY, deltaY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
             }
-            break;
-            case SKActionTimingEaseInEaseOut: {
-                float newX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX,
-                        duration);
-                float newY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY,
-                        duration);
-                node.setPosition(newX, newY);
-            }
-            break;
-            case SKActionTimingEaseOut: {
-                float newX = SKEaseCalculations.easeOut(elapsed, startX, deltaX, duration);
-                float newY = SKEaseCalculations.easeOut(elapsed, startY, deltaY, duration);
-                node.setPosition(newX, newY);
-            }
-            break;
-            case SKActionTimingLinear: {
-                float newX = SKEaseCalculations.linear(elapsed, startX, deltaX, duration);
-                float newY = SKEaseCalculations.linear(elapsed, startY, deltaY, duration);
-                node.setPosition(newX, newY);
-            }
-            break;
+        } else {
+            node.position.x = (startX + deltaX);
+            node.position.y = (startY + deltaY);
         }
-
-        checkCompleted(node, elapsed);
     }
 
     private void rotateToImpl(SKNode node, long elapsed) {
-        switch (timingMode) {
-            case SKActionTimingEaseIn: {
-                float newRot = SKEaseCalculations.easeIn(elapsed, startX, degrees - startX, duration);
-                node.zRotation = newRot;
-            }
-            break;
+        if (!checkCompleted(node, elapsed)) {
+            switch (timingMode) {
+                case EaseIn: {
+                    node.zRotation = SKEaseCalculations.easeIn(elapsed, startAngle, radians - startAngle, duration);
+                }
+                break;
 
-            case SKActionTimingEaseOut: {
-                float newRot = SKEaseCalculations.easeIn(elapsed, startX, degrees
-                        - startX, duration);
-                node.zRotation = newRot;
-            }
-            break;
+                case EaseOut: {
+                    node.zRotation = SKEaseCalculations.easeIn(elapsed, startAngle, radians - startAngle, duration);
+                }
+                break;
 
-            case SKActionTimingEaseInEaseOut: {
-                float newRot = SKEaseCalculations.easeIn(elapsed, startX, degrees
-                        - startX, duration);
-                node.zRotation = newRot;
-            }
-            break;
+                case EaseInEaseOut: {
+                    node.zRotation = SKEaseCalculations.easeIn(elapsed, startAngle, radians - startAngle, duration);
+                }
+                break;
 
-            case SKActionTimingLinear: {
-                float newRot = SKEaseCalculations.easeIn(elapsed, startX, degrees
-                        - startX, duration);
-                node.zRotation = newRot;
+                case Linear: {
+                    node.zRotation = SKEaseCalculations.easeIn(elapsed, startAngle, radians - startAngle, duration);
+                }
+                break;
             }
-            break;
+        } else {
+            node.zRotation = radians;
         }
-
-        checkCompleted(node, elapsed);
     }
 
     private void moveToImpl(SKNode node, long elapsed) {
-        switch (timingMode) {
-            case SKActionTimingEaseIn: {
-                float newX = SKEaseCalculations.easeIn(elapsed, startX, deltaX - startX,
-                        duration);
-                float newY = SKEaseCalculations.easeIn(elapsed, startY, deltaY - startY,
-                        duration);
-                node.setPosition(newX, newY);
+        if (!checkCompleted(node, elapsed)) {
+            switch (timingMode) {
+                case EaseIn: {
+                    float newX = SKEaseCalculations.easeIn(elapsed, startX, deltaX - startX, duration);
+                    float newY = SKEaseCalculations.easeIn(elapsed, startY, deltaY - startY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case EaseInEaseOut: {
+                    float newX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX - startX, duration);
+                    float newY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY - startY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case EaseOut: {
+                    float newX = SKEaseCalculations.easeOut(elapsed, startX, deltaX - startX, duration);
+                    float newY = SKEaseCalculations.easeOut(elapsed, startY, deltaY - startY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
+                case Linear: {
+                    float newX = SKEaseCalculations.linear(elapsed, startX, deltaX - startX, duration);
+                    float newY = SKEaseCalculations.linear(elapsed, startY, deltaY - startY, duration);
+                    node.position.x = newX;
+                    node.position.y = newY;
+                }
+                break;
             }
-            break;
-            case SKActionTimingEaseInEaseOut: {
-                float newX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX
-                        - startX, duration);
-                float newY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY
-                        - startY, duration);
-                node.setPosition(newX, newY);
-            }
-            break;
-            case SKActionTimingEaseOut: {
-                float newX = SKEaseCalculations.easeOut(elapsed, startX, deltaX - startX,
-                        duration);
-                float newY = SKEaseCalculations.easeOut(elapsed, startY, deltaY - startY,
-                        duration);
-                node.setPosition(newX, newY);
-            }
-            break;
-            case SKActionTimingLinear: {
-                float newX = SKEaseCalculations.linear(elapsed, startX, deltaX - startX,
-                        duration);
-                float newY = SKEaseCalculations.linear(elapsed, startY, deltaY - startY,
-                        duration);
-                node.setPosition(newX, newY);
-            }
-            break;
-        }
-
-        if (checkCompleted(node, elapsed)) {
-            node.setPosition(deltaX, deltaY);
+        } else {
+            node.position.x = (deltaX);
+            node.position.x = (deltaY);
         }
     }
 
@@ -394,116 +393,99 @@ public class SKAction {
     }
 
     private void fadeInImpl(SKNode node, long elapsed) {
-        float newAlpha = SKEaseCalculations.linear(elapsed, startX, 1.0f - startX,
-                duration);
-        node.alpha = newAlpha;
-
-        if (checkCompleted(node, elapsed)) {
+        if (!checkCompleted(node, elapsed)) {
+            node.alpha = SKEaseCalculations.linear(elapsed, startAlpha, 1.0f - startAlpha, duration);
+        } else {
             node.alpha = 1.0f;
         }
     }
 
     private void fadeOutImpl(SKNode node, long elapsed) {
-        float newAlpha = SKEaseCalculations.linear(elapsed, startX, 0.0f - startX,
-                duration);
-        node.alpha = newAlpha;
-
-        if (checkCompleted(node, elapsed)) {
+        if (!checkCompleted(node, elapsed)) {
+            node.alpha = SKEaseCalculations.linear(elapsed, startAlpha, 0.0f - startAlpha, duration);
+        } else {
             node.alpha = 0.0f;
         }
     }
 
     private void scaleByImpl(SKNode node, long elapsed) {
-        float newScaleX = node.xScale;
-        float newScaleY = node.yScale;
-        switch (timingMode) {
-            case SKActionTimingLinear: {
-                newScaleX = SKEaseCalculations.linear(elapsed, startX, deltaX,
-                        duration);
-                newScaleY = SKEaseCalculations.linear(elapsed, startY, deltaY,
-                        duration);
-            }
-            break;
-
-            case SKActionTimingEaseIn: {
-                newScaleX = SKEaseCalculations.easeIn(elapsed, startX, deltaX,
-                        duration);
-                newScaleY = SKEaseCalculations.easeIn(elapsed, startY, deltaY,
-                        duration);
-            }
-            break;
-
-            case SKActionTimingEaseOut: {
-                newScaleX = SKEaseCalculations.easeOut(elapsed, startX, deltaX,
-                        duration);
-                newScaleY = SKEaseCalculations.easeOut(elapsed, startY, deltaY,
-                        duration);
-            }
-            break;
-
-            case SKActionTimingEaseInEaseOut: {
-                newScaleX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX,
-                        duration);
-                newScaleY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY,
-                        duration);
-            }
-            break;
-
-            default:
+        if (!checkCompleted(node, elapsed)) {
+            float newScaleX = node.xScale;
+            float newScaleY = node.yScale;
+            switch (timingMode) {
+                case Linear: {
+                    newScaleX = SKEaseCalculations.linear(elapsed, startX, deltaX, duration);
+                    newScaleY = SKEaseCalculations.linear(elapsed, startY, deltaY, duration);
+                }
                 break;
+
+                case EaseIn: {
+                    newScaleX = SKEaseCalculations.easeIn(elapsed, startX, deltaX, duration);
+                    newScaleY = SKEaseCalculations.easeIn(elapsed, startY, deltaY, duration);
+                }
+                break;
+
+                case EaseOut: {
+                    newScaleX = SKEaseCalculations.easeOut(elapsed, startX, deltaX, duration);
+                    newScaleY = SKEaseCalculations.easeOut(elapsed, startY, deltaY, duration);
+                }
+                break;
+
+                case EaseInEaseOut: {
+                    newScaleX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX, duration);
+                    newScaleY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY, duration);
+                }
+                break;
+
+                default:
+                    break;
+            }
+
+            node.xScale = newScaleX;
+            node.yScale = newScaleY;
+        } else {
+            node.xScale = startX + deltaX;
+            node.yScale = startY + deltaY;
         }
-
-        node.xScale = newScaleX;
-        node.yScale = newScaleY;
-
-        checkCompleted(node, elapsed);
     }
 
     private void scaleToImpl(SKNode node, long elapsed) {
-        float newScaleX = node.xScale;
-        float newScaleY = node.yScale;
+        if (!checkCompleted(node, elapsed)) {
+            float newScaleX = node.xScale;
+            float newScaleY = node.yScale;
 
-        switch (timingMode) {
-            case SKActionTimingLinear: {
-                newScaleX = SKEaseCalculations.linear(elapsed, startX, deltaX
-                        - startX, duration);
-                newScaleY = SKEaseCalculations.linear(elapsed, startY, deltaY
-                        - startY, duration);
-            }
-            break;
-
-            case SKActionTimingEaseIn: {
-                newScaleX = SKEaseCalculations.easeIn(elapsed, startX, deltaX
-                        - startX, duration);
-                newScaleY = SKEaseCalculations.easeIn(elapsed, startY, deltaY
-                        - startY, duration);
-            }
-            break;
-
-            case SKActionTimingEaseOut: {
-                newScaleX = SKEaseCalculations.easeOut(elapsed, startX, deltaX
-                        - startX, duration);
-                newScaleY = SKEaseCalculations.easeOut(elapsed, startY, deltaY
-                        - startY, duration);
-            }
-            break;
-
-            case SKActionTimingEaseInEaseOut: {
-                newScaleX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX
-                        - startX, duration);
-                newScaleY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY
-                        - startY, duration);
-            }
-            break;
-
-            default:
+            switch (timingMode) {
+                case Linear: {
+                    newScaleX = SKEaseCalculations.linear(elapsed, startX, deltaX - startX, duration);
+                    newScaleY = SKEaseCalculations.linear(elapsed, startY, deltaY - startY, duration);
+                }
                 break;
-        }
 
-        node.xScale = newScaleX;
-        node.yScale = newScaleY;
+                case EaseIn: {
+                    newScaleX = SKEaseCalculations.easeIn(elapsed, startX, deltaX - startX, duration);
+                    newScaleY = SKEaseCalculations.easeIn(elapsed, startY, deltaY - startY, duration);
+                }
+                break;
 
-        if (checkCompleted(node, elapsed)) {
+                case EaseOut: {
+                    newScaleX = SKEaseCalculations.easeOut(elapsed, startX, deltaX - startX, duration);
+                    newScaleY = SKEaseCalculations.easeOut(elapsed, startY, deltaY - startY, duration);
+                }
+                break;
+
+                case EaseInEaseOut: {
+                    newScaleX = SKEaseCalculations.easeInOut(elapsed, startX, deltaX - startX, duration);
+                    newScaleY = SKEaseCalculations.easeInOut(elapsed, startY, deltaY - startY, duration);
+                }
+                break;
+
+                default:
+                    break;
+            }
+
+            node.xScale = newScaleX;
+            node.yScale = newScaleY;
+        } else {
             node.xScale = deltaX;
             node.yScale = deltaY;
         }
@@ -518,7 +500,7 @@ public class SKAction {
             if (!soundFile.isPlaying()) {
                 soundFile.start();
             }
-        } catch (IllegalStateException ex) {
+        } catch (IllegalStateException ignored) {
 
         }
 
@@ -529,16 +511,16 @@ public class SKAction {
 
     private boolean checkCompleted(SKNode node, long elapsed) {
         if (elapsed >= duration) {
+            Logger.log(getClass().getName(), "checkCompleted: " + elapsed);
+
             if (completion != null) {
                 completion.run();
             }
 
             if (handler != null) {
                 handler.completedAction(node, this);
-            } else if (((actionType == ActionType.ActionTypeGroup
-                    && group != null && group.size() == 0) || (actionType == ActionType.ActionTypeSequence
-                    && sequence != null && sequence.size() == 0))
-
+            } else if (((actionType == ActionType.ActionTypeGroup && group != null && group.size() == 0)
+                    || (actionType == ActionType.ActionTypeSequence && sequence != null && sequence.size() == 0))
                     || (actionType != ActionType.ActionTypeGroup && actionType != ActionType.ActionTypeSequence)) {
                 node.actionCompleted(this);
             }
@@ -561,16 +543,16 @@ public class SKAction {
             }
         }
         copy.key = new String(key);
-        copy.degrees = degrees;
+        copy.radians = radians;
         if (sequence != null) {
             copy.sequence = new LinkedList<SKAction>();
-            for (Iterator<SKAction> i = sequence.iterator(); i.hasNext(); ) {
-                copy.sequence.add(i.next().copy());
+            for (SKAction aSequence : sequence) {
+                copy.sequence.add(aSequence.copy());
             }
         }
         if (soundFile != null) {
             copy.soundFile = MediaPlayer.create(soundFileContext,
-                    soundFileResid);
+                    soundFileResId);
             copy.soundFile.setOnCompletionListener(new OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer arg0) {
@@ -582,6 +564,7 @@ public class SKAction {
         copy.startedTime = startedTime;
         copy.startX = startX;
         copy.startY = startY;
+        copy.startAngle = startAngle;
         copy.texture = texture;
         copy.timingMode = timingMode;
         if (handler != null) {
@@ -600,7 +583,7 @@ public class SKAction {
     }
 
     public static SKAction moveTo(SKPoint position, long duration) {
-        return moveTo(position.getX(), position.getY(), duration);
+        return moveTo(position.x, position.y, duration);
     }
 
     public static SKAction moveTo(float toX, float toY, long duration) {
@@ -612,17 +595,17 @@ public class SKAction {
         return action;
     }
 
-    public static SKAction rotateBy(float degrees, long duration) {
+    public static SKAction rotateByAngle(float radians, long duration) {
         SKAction action = new SKAction();
-        action.degrees = GLUtils.degree2Rad(degrees);
+        action.radians = radians;
         action.duration = duration;
         action.actionType = ActionType.ActionTypeRotateBy;
         return action;
     }
 
-    public static SKAction rotateTo(float degrees, long duration) {
+    public static SKAction rotateToAngle(float radians, long duration) {
         SKAction action = new SKAction();
-        action.degrees = GLUtils.degree2Rad(degrees);
+        action.radians = radians;
         action.duration = duration;
         action.actionType = ActionType.ActionTypeRotateTo;
         return action;
@@ -658,7 +641,7 @@ public class SKAction {
             }
         });
         action.soundFileContext = context;
-        action.soundFileResid = resid;
+        action.soundFileResId = resid;
         action.duration = 0;
         return action;
     }

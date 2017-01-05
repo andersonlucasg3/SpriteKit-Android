@@ -3,12 +3,13 @@ package br.com.insanitech.spritekit;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import br.com.insanitech.spritekit.opengl.model.GLTexture;
-import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import br.com.insanitech.spritekit.opengl.model.GLTexture;
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKTexture {
     public enum SKTextureFilteringMode {
@@ -59,8 +60,8 @@ public class SKTexture {
         if (pixelData.order() != ByteOrder.nativeOrder()) {
             pixelData.flip();
         }
-        int bytesPerRow = (int)size.getWidth() * 4;
-        texture = new GLTexture(pixelData, bytesPerRow, bytesPerRow * (int)size.getHeight());
+        int bytesPerRow = (int)size.width * 4;
+        texture = new GLTexture(pixelData, bytesPerRow, bytesPerRow * (int)size.height);
     }
 
     public SKTexture(Buffer pixelData, SKSize size, boolean flipped) {
@@ -107,8 +108,8 @@ public class SKTexture {
     }
 
     public SKSize getSize() {
-        size.setWidth(texture.getSize().getWidth());
-        size.setHeight(texture.getSize().getHeight());
+        size.width = (texture.getSize().width);
+        size.height = (texture.getSize().height);
         return size;
     }
 

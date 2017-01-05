@@ -4,12 +4,11 @@ package br.com.insanitech.spritekit.opengl.model;
  * Created by anderson on 7/3/15.
  */
 public class GLRect {
-    private GLPoint origin;
-    private GLSize size;
+    public GLPoint origin;
+    public GLSize size;
 
     public static GLRect centerRect(GLPoint point, GLSize size) {
-        return new GLRect(point.getX() - size.getWidth() / 2, point.getY() - size.getHeight() / 2,
-                size.getWidth(), size.getHeight());
+        return new GLRect(point.x - size.width / 2, point.y - size.height / 2, size.width, size.height);
     }
 
     public GLRect() {
@@ -26,58 +25,26 @@ public class GLRect {
         this.size = size;
     }
 
-    public GLPoint getOrigin() {
-        return origin;
-    }
-
-    public GLSize getSize() {
-        return size;
-    }
-
     public float getX() {
-        return origin.getX();
+        return origin.x;
     }
 
     public float getY() {
-        return origin.getY();
+        return origin.y;
     }
 
     public float getWidth() {
-        return size.getWidth();
+        return size.width;
     }
 
     public float getHeight() {
-        return size.getHeight();
-    }
-
-    public void setOrigin(GLPoint origin) {
-        this.origin = origin;
-    }
-
-    public void setSize(GLSize size) {
-        this.size = size;
-    }
-
-    public void setX(float x) {
-        origin.setX(x);
-    }
-
-    public void setY(float y) {
-        origin.setY(y);
-    }
-
-    public void setWidth(float width) {
-        size.setWidth(width);
-    }
-
-    public void setHeight(float height) {
-        size.setHeight(height);
+        return size.height;
     }
 
     public boolean containsPoint(GLPoint point) {
-        return point.getX() > origin.getX() &&
-                point.getY() > origin.getY() &&
-                point.getX() < origin.getX() + size.getWidth() &&
-                point.getY() < origin.getY() + size.getHeight();
+        return point.x > origin.x &&
+                point.y > origin.y &&
+                point.x < origin.x + size.width &&
+                point.y < origin.y + size.height;
     }
 }

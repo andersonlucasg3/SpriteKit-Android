@@ -1,11 +1,12 @@
 package br.com.insanitech.spritekit.opengl.model;
 
 import android.graphics.Bitmap;
-import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 /**
  * Created by anderson on 7/3/15.
@@ -52,11 +53,11 @@ public class GLTexture extends GLGeometry {
     }
 
     public void generateTexCoords(GLRect coords) {
-        coords.setWidth(coords.getX() + coords.getWidth());
-        coords.setHeight(coords.getY() + coords.getHeight());
+        coords.size.width = (coords.getX() + coords.getWidth());
+        coords.size.height = (coords.getY() + coords.getHeight());
 
-        coords.setY(1.0f - coords.getY());
-        coords.setHeight(1.0f - coords.getHeight());
+        coords.origin.y = (1.0f - coords.getY());
+        coords.size.height = (1.0f - coords.getHeight());
 
         vertices = new float[] {
                 coords.getX(), coords.getY(),                       //0.0f, 0.0f,
@@ -81,9 +82,6 @@ public class GLTexture extends GLGeometry {
 
     public void loadTexture(GLRenderer renderer, int filterMode) {
         renderer.loadTexture(buffer, bufferSize, bytesPerRow, filterMode, texture);
-
-        buffer.clear();
-        buffer = null;
     }
 
     public void unloadTexture(GLRenderer renderer) {

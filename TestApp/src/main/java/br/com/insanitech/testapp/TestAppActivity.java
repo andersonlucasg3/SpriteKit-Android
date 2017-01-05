@@ -2,7 +2,6 @@ package br.com.insanitech.testapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +16,7 @@ import br.com.insanitech.spritekit.SKSize;
 import br.com.insanitech.spritekit.SKSpriteNode;
 import br.com.insanitech.spritekit.SKTexture;
 import br.com.insanitech.spritekit.SKView;
+import br.com.insanitech.spritekit.logger.Logger;
 
 /**
  * Created by anderson on 24/06/15.
@@ -66,14 +66,22 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 
             texture = new SKTexture(this, R.drawable.card_deck);
 
-            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.redColor(), new SKSize(320, 480));
-//            swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
+            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.whiteColor(), new SKSize(100, 200));
+            swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setColorBlendFactor(0.5f);
 
+//            SKSpriteNode heartA = SKSpriteNode.spriteNode(SKColor.whiteColor(), new SKSize(320, 480));
+//            heartA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
+//            heartA.setColorBlendFactor(0.5f);
+
             SKNode nodeParent = SKNode.node();
-            nodeParent.setPosition(scene.getSize().getWidth() / 2.0f, scene.getSize().getHeight() / 2.0f);
+            nodeParent.position.x = (scene.getSize().width / 2.0f);
+            nodeParent.position.y = (scene.getSize().height / 2.0f);
 
             nodeParent.addChild(swordA);
+//            nodeParent.addChild(heartA);
+
+//            heartA.zPosition = -1;
 
             scene.addChild(nodeParent);
 
@@ -82,12 +90,18 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
             view.setOnTouchListener(this);
 
 //            animateMovingCards(swordA);
+
+            swordA.zRotation = 0;
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle(90, 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle(180, 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle(270, 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle(360, 500))));
         }
     }
 
     private void rotate(final SKNode nodeParent) {
         nodeParent.runAction(SKAction.sequence(Arrays.asList(
-                SKAction.rotateBy(1, 50),
+                SKAction.rotateByAngle(1, 50),
                 SKAction.run(new Runnable() {
                     @Override
                     public void run() {
@@ -125,7 +139,7 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
             spriteCoordY = 0.0f;
         }
 
-        Log.d("TEX RECT", "textureRect: " + sprite.getTexture().textureRect());
+        Logger.log("TEX RECT", "textureRect: " + sprite.getTexture().textureRect());
 
         sprite.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000),
                 SKAction.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),

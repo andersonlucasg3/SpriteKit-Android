@@ -11,8 +11,8 @@ public class SKSize extends GLSize {
     }
 
     SKSize(GLSize other) {
-        setWidth(other.getWidth());
-        setHeight(other.getHeight());
+        width = (other.width);
+        height = (other.height);
     }
 
     public SKSize(float width, float height) {
@@ -21,6 +21,6 @@ public class SKSize extends GLSize {
 
     @Override
     public String toString() {
-        return "{ w: " + getWidth() + ", h: " + getHeight() + " }";
+        return "{ w: " + width + ", h: " + height + " }";
     }
 }

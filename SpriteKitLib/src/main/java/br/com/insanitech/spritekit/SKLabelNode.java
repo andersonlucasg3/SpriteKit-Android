@@ -1,10 +1,8 @@
 package br.com.insanitech.spritekit;
 
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Typeface;
+
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKLabelNode extends SKNode {
@@ -28,10 +26,10 @@ public class SKLabelNode extends SKNode {
         if (alpha > 0.05f && !hidden) {
             renderer.saveState();
 
-            renderer.translate(0, 0);
+            renderer.translate(0, 0, 0);
             renderer.scale(xScale, yScale);
             renderer.rotate(0, 0, zRotation);
-            renderer.translate(getPosition().getX(), getPosition().getY());
+            renderer.translate(position.x, position.y, zPosition);
 
             // TODO: implement text drawing with gl rendereres
 

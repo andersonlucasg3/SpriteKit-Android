@@ -59,14 +59,15 @@ public class SKSpriteNode extends SKNode {
                 texture.loadTexture(renderer);
             }
 
-            float x = (getPosition().getX());
-            float y = (getPosition().getY());
-            renderer.translate(x, y);
+            float x = (position.x);
+            float y = (position.y);
+            float z = zPosition;
+            renderer.translate(x, y, z);
 
             renderer.saveState();
             renderer.rotate(0, 0, zRotation);
-            renderer.translate(size.getWidth() * -anchorPoint.getX(), size.getHeight() * -anchorPoint.getY());
-            renderer.scale(xScale * size.getWidth(), yScale * size.getHeight());
+            renderer.translate(size.width * -anchorPoint.x, size.height * -anchorPoint.y, 0);
+            renderer.scale(xScale * size.width, yScale * size.height);
             // TODO: implement color blend factor
             // TODO: implement centerRect, that stretches the texture with values: {{0, 0}, {1, 1}}, help: Controls how the texture is stretched to fill the SKSpriteNode. Stretching is performed via a 9-part algorithm where the upper & lower middle parts are scaled horizontally, the left and right middle parts are scaled vertically, the center is scaled in both directions, and the corners are preserved. The centerRect defines the center region in a (0.0 - 1.0) coordinate space. Defaults to {(0,0) (1,1)} (the entire texture is stretched).
             if (texture == null) {
@@ -78,7 +79,7 @@ public class SKSpriteNode extends SKNode {
 
             drawChildren(renderer, width, height);
 
-            renderer.translate(-x, -y);
+            renderer.translate(-x, -y, -z);
         }
     }
 
@@ -152,5 +153,21 @@ public class SKSpriteNode extends SKNode {
 
     public void setSize(SKSize size) {
         this.size = size;
+    }
+
+    @Override
+    protected SKNode copy(SKNode input) {
+        SKSpriteNode node = (SKSpriteNode)super.copy(new SKSpriteNode());
+
+        node.texture = texture;
+        node.centerRect = centerRect;
+        node.colorBlendFactor = colorBlendFactor;
+        node.color = color;
+        node.blendMode = blendMode;
+
+        node.anchorPoint = anchorPoint;
+        node.size = size;
+
+        return node;
     }
 }

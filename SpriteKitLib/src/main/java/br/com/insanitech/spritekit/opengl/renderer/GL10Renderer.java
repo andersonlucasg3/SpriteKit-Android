@@ -93,7 +93,10 @@ class GL10Renderer extends GLRenderer {
     public void clear(GLColor color) {
         GLES10.glClearColor(color.getR(), color.getG(), color.getB(), color.getA());
 
-        GLES10.glClear(GLES10.GL_COLOR_BUFFER_BIT);
+        GLES10.glClear(GLES10.GL_COLOR_BUFFER_BIT | GLES10.GL_DEPTH_BUFFER_BIT);
+
+        GLES10.glEnable(GLES10.GL_DEPTH_TEST);
+        GLES10.glDepthFunc(GLES10.GL_LEQUAL);
     }
 
     @Override
@@ -112,10 +115,16 @@ class GL10Renderer extends GLRenderer {
     }
 
     @Override
-    public void translate(float tx, float ty) {
-        GLES10.glTranslatef(tx, ty, 0);
+    public void translate(float tx, float ty, float tz) {
+        GLES10.glTranslatef(tx, ty, tz);
     }
 
+    /**
+     * Rotates the axis by the given values in Radians.
+     * @param rx, rotation in the X axis, value in radians
+     * @param ry, rotation in the Y axis, value in radians
+     * @param rz, rotation in the Z axis, value in radians
+     */
     @Override
     public void rotate(float rx, float ry, float rz) {
         GLES10.glRotatef(GLUtils.rad2Degree(rx), 1, 0, 0);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.Image;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
+
 import br.com.insanitech.spritekit.logger.Logger;
 import br.com.insanitech.spritekit.opengl.context.GL10ContextFactory;
 import br.com.insanitech.spritekit.opengl.context.GLContextFactory;
@@ -64,7 +66,7 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 							}
 						}
 					}
-				} catch (NullPointerException ex) {
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
@@ -95,8 +97,8 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		viewSize.setWidth(w);
-		viewSize.setHeight(h);
+		viewSize.width = (w);
+		viewSize.height = (h);
 
 		Logger.log("onSizeChanged: " + viewSize.toString());
 	}
@@ -110,12 +112,16 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
 
 			// TODO: this is the scaling of the scene size compared to the view size.
 			// TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
-			renderer.scale(width / sceneToBePresented.getSize().getWidth(), height / sceneToBePresented.getSize().getHeight());
+			renderer.scale(width / sceneToBePresented.getSize().width, height / sceneToBePresented.getSize().height);
 
 			sceneToBePresented.onDrawFrame(renderer, width, height);
 
 			renderer.restoreState();
 		}
+	}
+
+	public void removeFromSuperView() {
+		((ViewGroup)getParent()).removeView(this);
 	}
 
 	public void presentScene(final SKScene scene) {
