@@ -48,7 +48,7 @@ public class SKNode implements GLRenderer.GLDrawer {
     }
 
     public void setPosition(SKPoint position) {
-        this.position = new SKPoint(position);
+        this.position.assignByValue(position);
     }
 
     public void setPosition(float x, float y) {
@@ -350,7 +350,7 @@ public class SKNode implements GLRenderer.GLDrawer {
     }
 
     protected SKNode copy(SKNode input) {
-        input.frame = new SKRect(frame);
+        input.frame.assignByValue(frame);
         input.parent = parent;
         input.name = name;
 
@@ -368,7 +368,7 @@ public class SKNode implements GLRenderer.GLDrawer {
             input.actions.addAll(actions);
         }
 
-        input.position = new SKPoint(position);
+        input.position.assignByValue(position);
         input.paused = paused;
         input.hidden = hidden;
         input.zPosition = zPosition;

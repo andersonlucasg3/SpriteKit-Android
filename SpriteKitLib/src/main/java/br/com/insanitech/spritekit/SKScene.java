@@ -10,21 +10,18 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 		SKSceneScaleModeFill, SKSceneScaleModeAspectFill, SKSceneScaleModeAspectFit, SKSceneScaleModeResizeFill
 	}
 
-	private SKSceneScaleMode scaleMode;
-	private SKColor backgroundColor;
-	private SKPoint anchorPoint;
+	private SKSceneScaleMode scaleMode = SKSceneScaleMode.SKSceneScaleModeAspectFit;
+	private SKColor backgroundColor = SKColor.whiteColor();
+	private SKPoint anchorPoint = new SKPoint();
+	private SKSize size = new SKSize();
 	private SKView view;
-	private SKSize size;
 
 	public static SKScene sceneWithSize(SKSize size) {
 		return new SKScene(size);
 	}
 
 	public SKScene(SKSize size) {
-		this.size = size;
-		this.scaleMode = SKSceneScaleMode.SKSceneScaleModeAspectFit;
-		this.backgroundColor = SKColor.whiteColor();
-		this.anchorPoint = new SKPoint();
+		this.size.assignByValue(size);
 	}
 
 	public SKSceneScaleMode getScaleMode() {
@@ -40,11 +37,11 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 	}
 
 	public void setBackgroundColor(SKColor color) {
-		backgroundColor = color;
+		backgroundColor.assignByValue(color);
 	}
 
 	public void setAnchorPoint(SKPoint anchor) {
-		anchorPoint = anchor;
+		anchorPoint.assignByValue(anchor);
 	}
 
 	public SKPoint getAnchorPoint() {
@@ -76,7 +73,7 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 	}
 
 	public void setSize(SKSize size) {
-		this.size = size;
+		this.size.assignByValue(size);
 	}
 
 	@Override

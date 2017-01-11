@@ -5,16 +5,16 @@ package br.com.insanitech.spritekit;
  */
 
 class SKActionMoveBy extends SKAction {
-    private SKPoint startPoint;
-    private SKPoint deltaPoint;
+    private SKPoint startPoint = new SKPoint();
+    private SKPoint deltaPoint = new SKPoint();
 
     public SKActionMoveBy(SKPoint delta) {
-        this.deltaPoint = delta;
+        this.deltaPoint.assignByValue(delta);
     }
 
     @Override
     void computeStart() {
-        startPoint = getParent().getPosition();
+        startPoint.assignByValue(getParent().getPosition());
     }
 
     @Override

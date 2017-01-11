@@ -5,17 +5,17 @@ package br.com.insanitech.spritekit;
  */
 
 class SKActionResizeBy extends SKAction {
-    private SKSize startSize;
-    private SKSize deltaSize;
+    private SKSize startSize = new SKSize();
+    private SKSize deltaSize = new SKSize();
 
     public SKActionResizeBy(SKSize deltaSize) {
-        this.deltaSize = deltaSize;
+        this.deltaSize.assignByValue(deltaSize);
     }
 
     @Override
     void computeStart() {
         if (getParent() instanceof SKSpriteNode) {
-            startSize = ((SKSpriteNode)getParent()).getSize();
+            startSize.assignByValue(((SKSpriteNode)getParent()).getSize());
         }
     }
 
@@ -43,14 +43,14 @@ class SKActionResizeBy extends SKAction {
                     newHeight = SKEaseCalculations.easeInOut(elapsed, startSize.height, deltaSize.height, duration);
                     break;
             }
-            sNode.setSize(new SKSize(newWidth, newHeight));
+            sNode.setSize(newWidth, newHeight);
         }
     }
 
     @Override
     void computeFinish() {
         if (getParent() instanceof SKSpriteNode) {
-            ((SKSpriteNode)getParent()).setSize(new SKSize(startSize.width + deltaSize.width, startSize.height + deltaSize.height));
+            ((SKSpriteNode)getParent()).setSize(startSize.width + deltaSize.width, startSize.height + deltaSize.height);
         }
     }
 

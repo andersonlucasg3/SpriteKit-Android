@@ -37,7 +37,7 @@ public class SKSpriteNode extends SKNode {
     public static SKSpriteNode spriteNode(SKTexture texture, SKColor color, SKSize size) {
         SKSpriteNode node = new SKSpriteNode();
         node.texture = texture;
-        node.color = color;
+        node.setColor(color);
         node.setSize(size);
         return node;
     }
@@ -99,7 +99,7 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setCenterRect(SKRect center) {
-        centerRect = center;
+        centerRect.assignByValue(center);
     }
 
 
@@ -128,7 +128,7 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setColor(SKColor color) {
-        this.color = color;
+        this.color.assignByValue(color);
     }
 
     public SKBlendMode getBlendMode() {
@@ -144,7 +144,7 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setAnchorPoint(SKPoint anchorPoint) {
-        this.anchorPoint = anchorPoint;
+        this.anchorPoint.assignByValue(anchorPoint);
     }
 
     public SKSize getSize() {
@@ -152,7 +152,12 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setSize(SKSize size) {
-        this.size = new SKSize(size);
+        this.size.assignByValue(size);
+    }
+
+    public void setSize(float width, float height) {
+        this.size.width = width;
+        this.size.height = height;
     }
 
     @Override
@@ -160,13 +165,13 @@ public class SKSpriteNode extends SKNode {
         SKSpriteNode node = (SKSpriteNode)super.copy(new SKSpriteNode());
 
         node.texture = texture;
-        node.centerRect = new SKRect(centerRect);
+        node.centerRect.assignByValue(centerRect);
         node.colorBlendFactor = colorBlendFactor;
-        node.color = new SKColor(color);
+        node.color.assignByValue(color);
         node.blendMode = blendMode;
 
-        node.anchorPoint = new SKPoint(anchorPoint);
-        node.size = new SKSize(size);
+        node.anchorPoint.assignByValue(anchorPoint);
+        node.size.assignByValue(size);
 
         return node;
     }
