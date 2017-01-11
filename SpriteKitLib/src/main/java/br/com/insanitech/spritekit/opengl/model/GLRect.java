@@ -1,9 +1,11 @@
 package br.com.insanitech.spritekit.opengl.model;
 
+import br.com.insanitech.spritekit.core.ValueAssign;
+
 /**
  * Created by anderson on 7/3/15.
  */
-public class GLRect {
+public class GLRect implements ValueAssign<GLRect> {
     public GLPoint origin;
     public GLSize size;
 
@@ -46,5 +48,11 @@ public class GLRect {
                 point.y > origin.y &&
                 point.x < origin.x + size.width &&
                 point.y < origin.y + size.height;
+    }
+
+    @Override
+    public void assignByValue(GLRect other) {
+        origin.assignByValue(other.origin);
+        size.assignByValue(other.size);
     }
 }

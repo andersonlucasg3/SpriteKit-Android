@@ -1,14 +1,15 @@
 package br.com.insanitech.spritekit.opengl.model;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import br.com.insanitech.spritekit.core.ValueAssign;
+
 /**
  * Created by anderson on 6/30/15.
  */
-public class GLColor {
+public class GLColor implements ValueAssign<GLColor> {
     private FloatBuffer buffer;
     private float r;
     private float g;
@@ -87,5 +88,14 @@ public class GLColor {
 
     public FloatBuffer getBuffer() {
         return buffer;
+    }
+
+    @Override
+    public void assignByValue(GLColor other) {
+        r = other.r;
+        g = other.g;
+        b = other.b;
+        a = other.a;
+        updateBuffer();
     }
 }
