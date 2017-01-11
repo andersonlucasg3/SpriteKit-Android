@@ -1,6 +1,5 @@
 package br.com.insanitech.spritekit;
 
-import br.com.insanitech.spritekit.opengl.model.GLPoint;
 import br.com.insanitech.spritekit.opengl.model.GLRect;
 
 /**
@@ -14,6 +13,10 @@ public class SKRect extends GLRect {
 
     public SKRect(float x, float y, float width, float height) {
         super(x, y, width, height);
+    }
+
+    public SKRect(SKRect other) {
+        super(other.getX(), other.getY(), other.getWidth(), other.getHeight());
     }
 
     public boolean containsPoint(SKPoint point) {

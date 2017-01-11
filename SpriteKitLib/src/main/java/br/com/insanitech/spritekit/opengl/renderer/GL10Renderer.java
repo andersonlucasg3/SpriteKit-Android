@@ -20,14 +20,13 @@ import br.com.insanitech.spritekit.opengl.model.GLUtils;
 class GL10Renderer extends GLRenderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        Logger.log("GL10Renderer", "onSurfaceCreated: " + getClass().toString());
+
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         super.onSurfaceChanged(gl, width, height);
 
-        Logger.log("GL10Renderer", "onSurfaceChanged: width-" + width + ", height-" + height);
         GLES10.glViewport(0, 0, width, height);
 
         GLES10.glMatrixMode(GLES10.GL_MODELVIEW);

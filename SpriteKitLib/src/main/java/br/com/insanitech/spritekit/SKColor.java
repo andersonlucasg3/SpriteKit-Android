@@ -62,6 +62,10 @@ public class SKColor extends GLColor {
         super(r, g, b, a);
     }
 
+    public SKColor(SKColor other) {
+        super(other.getR(), other.getG(), other.getB(), other.getA());
+    }
+
     public SKColor colorWithAlpha(float alpha) {
         return SKColor.rgba(getR(), getG(), getB(), alpha);
     }

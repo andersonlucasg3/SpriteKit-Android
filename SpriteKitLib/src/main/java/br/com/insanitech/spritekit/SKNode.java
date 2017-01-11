@@ -1,337 +1,388 @@
 package br.com.insanitech.spritekit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
-import br.com.insanitech.spritekit.logger.Logger;
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer;
 
 public class SKNode implements GLRenderer.GLDrawer {
-	public interface ChildNodesEnumeration {
-		void nextChildNode(SKNode node, boolean shouldStop);
-	}
+    public interface ChildNodesEnumeration {
+        void nextChildNode(SKNode node, boolean shouldStop);
+    }
 
-	private SKRect frame = new SKRect(0.0f, 0.0f, 0.0f, 0.0f);
-	private SKNode parent;
-	private String name = "";
+    private SKRect frame = new SKRect(0.0f, 0.0f, 0.0f, 0.0f);
+    private SKNode parent;
+    private String name = "";
 
-	private SKScene scene;
+    private SKScene scene;
 
-	private SKPhysicsBody physicsBody;
-	private SKReachConstraints reachConstraints;
-	private List<SKReachConstraints> constraints;
-	private Dictionary<?, ?> userData;
+    private SKPhysicsBody physicsBody;
+    private SKReachConstraints reachConstraints;
+    private List<SKReachConstraints> constraints;
+    private Dictionary<?, ?> userData;
 
-	private final List<SKNode> children = new ArrayList<SKNode>();
-	private final LinkedList<SKAction> actions = new LinkedList<SKAction>();
+    private final List<SKNode> children = new ArrayList<SKNode>();
+    private final LinkedList<SKAction> actions = new LinkedList<SKAction>();
 
-	public SKPoint position = new SKPoint(0.0f, 0.0f);
-	public boolean paused = false;
-	public boolean hidden = false;
-	public float zPosition = 0.0f;
-	public float zRotation = 0.0f;
-	public float xScale = 1.0f;
-	public float yScale = 1.0f;
-	public float speed = 1.0f;
-	public float alpha = 1;
-	public boolean userInteractionEnabled = true;
+    private SKPoint position = new SKPoint(0.0f, 0.0f);
 
-	public static SKNode node() {
-		return new SKNode();
-	}
+    public boolean paused = false;
+    public boolean hidden = false;
+    public float zPosition = 0.0f;
+    public float zRotation = 0.0f;
+    public float xScale = 1.0f;
+    public float yScale = 1.0f;
+    public float speed = 1.0f;
+    public float alpha = 1;
+    public boolean userInteractionEnabled = true;
 
-	public SKNode() {
+    public static SKNode node() {
+        return new SKNode();
+    }
 
-	}
+    public SKPoint getPosition() {
+        return position;
+    }
 
-	@Override
-	public void onDrawFrame(GLRenderer renderer, int width, int height) {
-		renderer.translate(position.x, position.y, zPosition);
+    public void setPosition(SKPoint position) {
+        this.position = new SKPoint(position);
+    }
 
-		renderer.rotate(0, 0, zRotation);
-		renderer.scale(xScale, yScale);
+    public void setPosition(float x, float y) {
+        position.x = x;
+        position.y = y;
+    }
 
-		drawChildren(renderer, width, height);
-	}
+    @Override
+    public void onDrawFrame(GLRenderer renderer, int width, int height) {
+        renderer.translate(position.x, position.y, zPosition);
 
-	protected void drawChildren(GLRenderer renderer, int width, int height) {
-		try {
-			for (int i = 0; i < children.size(); i++) {
-				renderer.saveState();
-				children.get(i).onDrawFrame(renderer, width, height);
-				renderer.restoreState();
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-	}
+        renderer.rotate(0, 0, zRotation);
+        renderer.scale(xScale, yScale);
 
-	public void evaluateActions() {
-		if (!paused) {
-			synchronized (actions) {
-				// SKAction[] acts = actions.toArray(new
-				// SKAction[actions.size()]);
-				// for (int i = 0; i < acts.length; i++) {
-				// acts[i].computeAction(this);
-				// }
-				if (actions.size() > 0) {
-					actions.get(0).computeAction(this);
-				}
-			}
-		}
+        drawChildren(renderer, width, height);
+    }
 
-		synchronized (children) {
-			for (int i = 0; i < children.size(); i++) {
-				children.get(i).evaluateActions();
-			}
-		}
-	}
+    void drawChildren(GLRenderer renderer, int width, int height) {
+        try {
+            synchronized (children) {
+                List<SKNode> children = new ArrayList<SKNode>(this.children);
+                for (int i = 0; i < children.size(); i++) {
+                    renderer.saveState();
+                    children.get(i).onDrawFrame(renderer, width, height);
+                    renderer.restoreState();
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public SKRect calculateAccumulatedFrame() {
-		return null;
-	}
+    void evaluateActions() {
+        synchronized (actions) {
+            if (!paused) {
+                if (actions.size() > 0) {
+                    SKAction action = actions.get(0);
+                    action.start();
+                    action.computeAction();
+                }
+            }
+        }
 
-	public void setScale(float scale) {
-		xScale = yScale = scale;
-	}
+        synchronized (children) {
+            List<SKNode> children = new ArrayList<SKNode>(this.children);
+            for (int i = 0; i < children.size(); i++) {
+                children.get(i).evaluateActions();
+            }
+        }
+    }
 
-	private void setSceneRecursive(SKNode current, SKScene scene) {
-		for (int i = 0; i < children.size(); i++) {
-			current.setSceneRecursive(children.get(i), scene);
-		}
-		current.scene = scene;
-	}
+    public SKRect calculateAccumulatedFrame() {
+        return null;
+    }
 
-	public void addChild(SKNode node) {
-		children.add(node);
-		node.parent = this;
-		setSceneRecursive(node, scene);
-	}
+    public void setScale(float scale) {
+        xScale = yScale = scale;
+    }
 
-	public void insertChildAt(SKNode node, int index) {
-		children.add(index, node);
-		node.parent = this;
-		setSceneRecursive(node, scene);
-	}
+    private void setSceneRecursive(SKNode current, SKScene scene) {
+        synchronized (children) {
+            for (int i = 0; i < children.size(); i++) {
+                current.setSceneRecursive(children.get(i), scene);
+            }
+        }
+        current.scene = scene;
+    }
 
-	public void removeChildren(List<SKNode> children) {
-		this.children.removeAll(children);
-		SKNode child;
-		for (int i = 0; i < children.size(); i++) {
-			child = children.get(i);
-			child.parent = null;
-			setSceneRecursive(child, null);
-		}
-	}
+    public void addChild(SKNode node) {
+        synchronized (children) {
+            children.add(node);
+            node.parent = this;
+            setSceneRecursive(node, scene);
+        }
+    }
 
-	public void removeAllChildren() {
-		SKNode child;
-		for (int i = 0; i < children.size(); i++) {
-			child = children.get(i);
-			child.parent = null;
-			setSceneRecursive(child, null);
-		}
-		children.clear();
-	}
+    public void insertChildAt(SKNode node, int index) {
+        synchronized (children) {
+            children.add(index, node);
+            node.parent = this;
+            setSceneRecursive(node, scene);
+        }
+    }
 
-	public void removeFromParent() {
-		if (parent != null) {
-			parent.children.remove(this);
-			parent = null;
-			setSceneRecursive(this, null);
-		}
-	}
+    public void removeChildren(List<SKNode> children) {
+        synchronized (this.children) {
+            this.children.removeAll(children);
+            SKNode child;
+            for (int i = 0; i < children.size(); i++) {
+                child = children.get(i);
+                child.parent = null;
+                setSceneRecursive(child, null);
+            }
+        }
+    }
 
-	public SKNode childNode(String name) {
-		SKNode child;
-		for (int i = 0; i < children.size(); i++) {
-			child = children.get(i);
-			if (name.equals(child.name)) {
-				return child;
-			}
-		}
-		return null;
-	}
+    public void removeAllChildren() {
+        synchronized (children) {
+            SKNode child;
+            for (int i = 0; i < children.size(); i++) {
+                child = children.get(i);
+                child.parent = null;
+                setSceneRecursive(child, null);
+            }
+            children.clear();
+        }
+    }
 
-	public void enumerateChildNodes(String name, ChildNodesEnumeration enumeration) throws Exception {
-		throw new Exception("NotImplementedException");
-	}
+    public void removeFromParent() {
+        synchronized (children) {
+            if (parent != null) {
+                parent.children.remove(this);
+                parent = null;
+                setSceneRecursive(this, null);
+            }
+        }
+    }
 
-	public boolean inParentHierarchy(SKNode parent) {
-		SKNode current = this;
-		while (current.parent != null) {
-			current = current.parent;
-			if (current.parent == parent) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public SKNode childNode(String name) {
+        SKNode child;
+        synchronized (children) {
+            for (int i = 0; i < children.size(); i++) {
+                child = children.get(i);
+                if (name.equals(child.name)) {
+                    return child;
+                }
+            }
+        }
+        return null;
+    }
 
-	protected void actionCompleted(SKAction completed) {
-		Logger.log(getClass().getName(), "actionCompleted: " + completed.key + ", nodeName: " + getName());
-		synchronized (actions) {
-			actions.remove(completed);
-		}
-	}
+    public void enumerateChildNodes(String name, ChildNodesEnumeration enumeration) throws Exception {
+        throw new Exception("NotImplementedException");
+    }
 
-	public void runAction(SKAction action) {
-		Random rand = new Random();
-		actions.add(action);
-		action.key = rand.nextInt() + "none" + rand.nextInt();
-		action.start(this);
-	}
+    public boolean inParentHierarchy(SKNode parent) {
+        SKNode current = this;
+        while (current.parent != null) {
+            current = current.parent;
+            if (current.parent == parent) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public void runAction(SKAction action, Runnable completion) {
-		Random rand = new Random();
-		actions.add(action);
-		action.key = rand.nextInt() + "none" + rand.nextInt();
-		action.setCompletion(completion);
-		action.start(this);
-	}
+    void actionCompleted(SKAction completed) {
+        synchronized (actions) {
+            actions.remove(completed);
+        }
+    }
 
-	public void runAction(SKAction action, String key) {
-		actions.add(action);
-		action.key = key;
-		action.start(this);
-	}
+    public void runAction(SKAction action) {
+        synchronized (actions) {
+            action.setParent(this);
+            Random rand = new Random();
+            actions.add(action);
+            action.key = rand.nextInt() + "none" + rand.nextInt();
+        }
+    }
 
-	public boolean hasActions() {
-		return actions.size() > 0;
-	}
+    public void runAction(SKAction action, Runnable completion) {
+        synchronized (actions) {
+            action.setParent(this);
+            Random rand = new Random();
+            actions.add(action);
+            action.key = rand.nextInt() + "none" + rand.nextInt();
+            action.completion = completion;
+        }
+    }
 
-	public SKAction getAction(String key) {
-		for (SKAction action : actions) {
-			if (action.key.equals(key)) {
-				return action;
-			}
-		}
-		return null;
-	}
+    public void runAction(SKAction action, String key) {
+        synchronized (actions) {
+            action.setParent(this);
+            actions.add(action);
+            action.key = key;
+        }
+    }
 
-	public void removeAction(String key) {
-		actions.remove(key);
-	}
+    public boolean hasActions() {
+        synchronized (actions) {
+            return actions.size() > 0;
+        }
+    }
 
-	public void removeAllActions() {
-		actions.clear();
-	}
+    public SKAction getAction(String key) {
+        synchronized (actions) {
+            for (SKAction action : actions) {
+                if (action.key.equals(key)) {
+                    return action;
+                }
+            }
+        }
+        return null;
+    }
 
-	public boolean containsPoint(SKPoint p) {
-		return getFrame().containsPoint(p);
-	}
+    public void removeAction(String key) {
+        synchronized (actions) {
+            for (SKAction action : actions) {
+                if (action.key.equals(key)) {
+                    actions.remove(action);
+                }
+            }
+        }
+    }
 
-	public SKNode nodeAt(SKPoint p) {
-		// TODO: implement nodeAt
-		return null;
-	}
+    public void removeAllActions() {
+        synchronized (actions) {
+            actions.clear();
+        }
+    }
 
-	public SKNode[] nodesAt(SKPoint p) {
-		// TODO: implement nodesAt
-		return null;
-	}
+    public boolean containsPoint(SKPoint p) {
+        return getFrame().containsPoint(p);
+    }
 
-	public SKPoint convertFrom(SKPoint p, SKNode node) {
-		// TODO: implement convertFrom
-		return null;
-	}
+    public SKNode nodeAt(SKPoint p) {
+        // TODO: implement nodeAt
+        return null;
+    }
 
-	public SKPoint convertTo(SKPoint p, SKNode node) {
-		// TODO: implement convertTo
-		return null;
-	}
+    public SKNode[] nodesAt(SKPoint p) {
+        // TODO: implement nodesAt
+        return null;
+    }
 
-	public boolean intersects(SKNode node) {
-		// TODO: implement intersects
-		return false;
-	}
+    public SKPoint convertFrom(SKPoint p, SKNode node) {
+        // TODO: implement convertFrom
+        return null;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public SKPoint convertTo(SKPoint p, SKNode node) {
+        // TODO: implement convertTo
+        return null;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public boolean intersects(SKNode node) {
+        // TODO: implement intersects
+        return false;
+    }
 
-	public Dictionary<?, ?> getUserData() {
-		return userData;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUserData(Dictionary<?, ?> userData) {
-		this.userData = userData;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public SKRect getFrame() {
-		// TODO: implement frame to contain content bounds
-		return frame;
-	}
+    public Dictionary<?, ?> getUserData() {
+        return userData;
+    }
 
-	public SKNode getParent() {
-		return parent;
-	}
+    public void setUserData(Dictionary<?, ?> userData) {
+        this.userData = userData;
+    }
 
-	public List<SKNode> getChildren() {
-		return children;
-	}
+    public SKRect getFrame() {
+        // TODO: implement frame to contain content bounds
+        return frame;
+    }
 
-	public SKScene getScene() {
-		return scene;
-	}
+    public SKNode getParent() {
+        return parent;
+    }
 
-	public SKPhysicsBody getPhysicsBody() {
-		return physicsBody;
-	}
+    public List<SKNode> getChildren() {
+        synchronized (children) {
+            return children;
+        }
+    }
 
-	public void setPhysicsBody(SKPhysicsBody physicsBody) {
-		this.physicsBody = physicsBody;
-	}
+    public SKScene getScene() {
+        return scene;
+    }
 
-	public SKReachConstraints getReachConstraints() {
-		return reachConstraints;
-	}
+    public SKPhysicsBody getPhysicsBody() {
+        return physicsBody;
+    }
 
-	public void setReachConstraints(SKReachConstraints reachConstraints) {
-		this.reachConstraints = reachConstraints;
-	}
+    public void setPhysicsBody(SKPhysicsBody physicsBody) {
+        this.physicsBody = physicsBody;
+    }
 
-	public List<SKReachConstraints> getConstraints() {
-		return constraints;
-	}
+    public SKReachConstraints getReachConstraints() {
+        return reachConstraints;
+    }
 
-	public void setConstraints(List<SKReachConstraints> constraints) {
-		this.constraints = constraints;
-	}
+    public void setReachConstraints(SKReachConstraints reachConstraints) {
+        this.reachConstraints = reachConstraints;
+    }
 
-	protected SKNode copy(SKNode input) {
-		input.frame = frame;
-		input.parent = parent;
-		input.name = name;
+    public List<SKReachConstraints> getConstraints() {
+        return constraints;
+    }
 
-		input.scene = scene;
+    public void setConstraints(List<SKReachConstraints> constraints) {
+        this.constraints = constraints;
+    }
 
-		input.physicsBody = physicsBody;
-		input.reachConstraints = reachConstraints;
-		input.constraints = constraints;
-		input.userData = userData;
+    protected SKNode copy(SKNode input) {
+        input.frame = new SKRect(frame);
+        input.parent = parent;
+        input.name = name;
 
-		input.children.addAll(children);
-		input.actions.addAll(actions);
+        input.scene = scene;
 
-		input.position = position;
-		input.paused = paused;
-		input.hidden = hidden;
-		input.zPosition = zPosition;
-		input.zRotation = zRotation;
-		input.xScale = xScale;
-		input.yScale = yScale;
-		input.speed = speed;
-		input.alpha = alpha;
-		input.userInteractionEnabled = userInteractionEnabled;
+        input.physicsBody = physicsBody;
+        input.reachConstraints = reachConstraints;
+        input.constraints = constraints;
+        input.userData = userData;
 
-		return input;
-	}
+        synchronized (children) {
+            input.children.addAll(children);
+        }
+        synchronized (actions) {
+            input.actions.addAll(actions);
+        }
 
-	public Object copy() {
-		return copy(new SKNode());
-	}
+        input.position = new SKPoint(position);
+        input.paused = paused;
+        input.hidden = hidden;
+        input.zPosition = zPosition;
+        input.zRotation = zRotation;
+        input.xScale = xScale;
+        input.yScale = yScale;
+        input.speed = speed;
+        input.alpha = alpha;
+        input.userInteractionEnabled = userInteractionEnabled;
+
+        return input;
+    }
+
+    public Object copy() {
+        return copy(new SKNode());
+    }
 }

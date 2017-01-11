@@ -84,18 +84,6 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 		drawChildren(renderer, width, height);
 	}
 
-	public void update(long currentTime) {
-
-	}
-
-	public void evaluateActions() {
-		super.evaluateActions();
-
-		for (int i = 0; i < getChildren().size(); i++) {
-			getChildren().get(i).evaluateActions();
-		}
-	}
-
 	public void movedToView(SKView view) {
 
 	}

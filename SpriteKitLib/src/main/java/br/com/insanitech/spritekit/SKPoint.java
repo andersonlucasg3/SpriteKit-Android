@@ -14,6 +14,11 @@ public class SKPoint extends GLPoint {
         super(x, y);
     }
 
+    public SKPoint(SKPoint other) {
+        x = other.x;
+        y = other.y;
+    }
+
     @Override
     public String toString() {
         return "{ x: " + x + ", y: " + y + " }";

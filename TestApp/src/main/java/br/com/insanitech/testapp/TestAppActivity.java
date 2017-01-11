@@ -16,7 +16,6 @@ import br.com.insanitech.spritekit.SKSize;
 import br.com.insanitech.spritekit.SKSpriteNode;
 import br.com.insanitech.spritekit.SKTexture;
 import br.com.insanitech.spritekit.SKView;
-import br.com.insanitech.spritekit.logger.Logger;
 
 /**
  * Created by anderson on 24/06/15.
@@ -92,10 +91,10 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 //            animateMovingCards(swordA);
 
             swordA.zRotation = 0;
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle(90, 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle(180, 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle(270, 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle(360, 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle((float) (Math.PI / 2), 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle((float) Math.PI, 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle((float) (3 * Math.PI / 2), 500))));
+            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle((float) (Math.PI * 2), 500))));
         }
     }
 
@@ -138,8 +137,6 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
             spriteCoordX = 0.0f;
             spriteCoordY = 0.0f;
         }
-
-        Logger.log("TEX RECT", "textureRect: " + sprite.getTexture().textureRect());
 
         sprite.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000),
                 SKAction.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),

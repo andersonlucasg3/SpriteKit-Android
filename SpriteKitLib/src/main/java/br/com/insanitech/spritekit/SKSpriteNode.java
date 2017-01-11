@@ -59,8 +59,8 @@ public class SKSpriteNode extends SKNode {
                 texture.loadTexture(renderer);
             }
 
-            float x = (position.x);
-            float y = (position.y);
+            float x = getPosition().x;
+            float y = getPosition().y;
             float z = zPosition;
             renderer.translate(x, y, z);
 
@@ -152,7 +152,7 @@ public class SKSpriteNode extends SKNode {
     }
 
     public void setSize(SKSize size) {
-        this.size = size;
+        this.size = new SKSize(size);
     }
 
     @Override
@@ -160,13 +160,13 @@ public class SKSpriteNode extends SKNode {
         SKSpriteNode node = (SKSpriteNode)super.copy(new SKSpriteNode());
 
         node.texture = texture;
-        node.centerRect = centerRect;
+        node.centerRect = new SKRect(centerRect);
         node.colorBlendFactor = colorBlendFactor;
-        node.color = color;
+        node.color = new SKColor(color);
         node.blendMode = blendMode;
 
-        node.anchorPoint = anchorPoint;
-        node.size = size;
+        node.anchorPoint = new SKPoint(anchorPoint);
+        node.size = new SKSize(size);
 
         return node;
     }

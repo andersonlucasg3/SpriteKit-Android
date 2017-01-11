@@ -35,8 +35,8 @@ public class GLTexture extends GLGeometry {
      * @param bitmap to use as source to the texture
      */
     public GLTexture(Bitmap bitmap) {
-        loadBitmap(bitmap);
         size = new GLSize(bitmap.getWidth(), bitmap.getHeight());
+        loadBitmap(bitmap);
 
         generateTexCoords(new GLRect(0, 0, 1, 1));
     }

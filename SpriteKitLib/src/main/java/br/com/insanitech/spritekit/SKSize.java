@@ -10,13 +10,13 @@ public class SKSize extends GLSize {
         super();
     }
 
+    public SKSize(float width, float height) {
+        super(width, height);
+    }
+
     SKSize(GLSize other) {
         width = (other.width);
         height = (other.height);
-    }
-
-    public SKSize(float width, float height) {
-        super(width, height);
     }
 
     @Override

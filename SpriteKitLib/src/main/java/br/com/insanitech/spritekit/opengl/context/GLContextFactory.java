@@ -1,12 +1,14 @@
 package br.com.insanitech.spritekit.opengl.context;
 
-import android.opengl.GLES10;
 import android.opengl.GLSurfaceView;
-import br.com.insanitech.spritekit.logger.Logger;
-import br.com.insanitech.spritekit.opengl.renderer.*;
 
-import javax.microedition.khronos.egl.*;
-import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLContext;
+import javax.microedition.khronos.egl.EGLDisplay;
+
+import br.com.insanitech.spritekit.logger.Logger;
+import br.com.insanitech.spritekit.opengl.renderer.GLGenericRenderer;
 
 /**
  * Created by anderson on 6/29/15.
@@ -39,18 +41,15 @@ public abstract class GLContextFactory implements GLSurfaceView.EGLContextFactor
 
     @Override
     public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
-        Logger.log("GLContextFactory", "Destroying gles context version: " + glVersion + ", error: " + GLES10.glGetError());
         isReady = false;
     }
 
     protected EGLContext createGLContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
-        Logger.log("GLContextFactory", "Creating gles context version: " + glVersion);
 
         int[] attr_list = { EGL_CONTEXT_CLIENT_VERSION, (int)glVersion, EGL10.EGL_NONE };
         context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attr_list);
 
         if (context != null) {
-            Logger.log("GLContextFactory", "Successfully created OGL version: " + glVersion);
             renderer.setGLVersion(glVersion);
             isReady = true;
             if (listener != null) {

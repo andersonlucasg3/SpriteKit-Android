@@ -29,7 +29,7 @@ public class SKLabelNode extends SKNode {
             renderer.translate(0, 0, 0);
             renderer.scale(xScale, yScale);
             renderer.rotate(0, 0, zRotation);
-            renderer.translate(position.x, position.y, zPosition);
+            renderer.translate(getPosition().x, getPosition().y, zPosition);
 
             // TODO: implement text drawing with gl rendereres
 
