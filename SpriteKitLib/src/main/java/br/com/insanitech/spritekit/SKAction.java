@@ -58,7 +58,9 @@ public abstract class SKAction implements Cloneable {
 
     void computeAction() {
         long elapsed = System.currentTimeMillis() - startedTime;
-        computeAction(elapsed);
+        if (parent != null && parent.get() != null) {
+            computeAction(elapsed);
+        }
         checkCompleted(elapsed);
     }
 
@@ -70,8 +72,8 @@ public abstract class SKAction implements Cloneable {
 
     boolean checkCompleted(long elapsed) {
         if (!willHandleFinish() && elapsed > duration) {
-            computeFinish();
             if (parent != null) {
+                computeFinish();
                 parent.get().actionCompleted(this);
             }
             dispatchCompletion();

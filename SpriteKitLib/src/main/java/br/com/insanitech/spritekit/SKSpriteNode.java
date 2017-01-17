@@ -48,58 +48,68 @@ public class SKSpriteNode extends SKNode {
 
     @Override
     public void onDrawFrame(GLRenderer renderer, int width, int height) {
-        if (alpha > 0.05f && !hidden) {
-            // load texture, will load only in the first call
-            if (textureToUnload != null) {
-                textureToUnload.unloadTexture(renderer);
-                textureToUnload = null;
+        synchronized (this) {
+            if (alpha > 0.05f && !hidden) {
+                // load texture, will load only in the first call
+                if (textureToUnload != null) {
+                    textureToUnload.unloadTexture(renderer);
+                    textureToUnload = null;
+                }
+
+                if (texture != null) {
+                    texture.loadTexture(renderer);
+                }
+
+                float x = getPosition().x;
+                float y = getPosition().y;
+                float z = zPosition;
+                renderer.translate(x, y, z);
+
+                renderer.saveState();
+                renderer.rotate(0, 0, zRotation);
+                renderer.translate(size.width * -anchorPoint.x, size.height * -anchorPoint.y, 0);
+                renderer.scale(xScale * size.width, yScale * size.height);
+                // TODO: implement color blend factor
+                // TODO: implement centerRect, that stretches the texture with values: {{0, 0}, {1, 1}}, help: Controls how the texture is stretched to fill the SKSpriteNode. Stretching is performed via a 9-part algorithm where the upper & lower middle parts are scaled horizontally, the left and right middle parts are scaled vertically, the center is scaled in both directions, and the corners are preserved. The centerRect defines the center region in a (0.0 - 1.0) coordinate space. Defaults to {(0,0) (1,1)} (the entire texture is stretched).
+                if (texture == null) {
+                    renderer.drawRectangle(color);
+                } else {
+                    renderer.drawRectangleTex(texture.getOpenGLTexture(), color, colorBlendFactor);
+                }
+                renderer.restoreState();
+
+                drawChildren(renderer, width, height);
+
+                renderer.translate(-x, -y, -z);
             }
-
-            if (texture != null) {
-                texture.loadTexture(renderer);
-            }
-
-            float x = getPosition().x;
-            float y = getPosition().y;
-            float z = zPosition;
-            renderer.translate(x, y, z);
-
-            renderer.saveState();
-            renderer.rotate(0, 0, zRotation);
-            renderer.translate(size.width * -anchorPoint.x, size.height * -anchorPoint.y, 0);
-            renderer.scale(xScale * size.width, yScale * size.height);
-            // TODO: implement color blend factor
-            // TODO: implement centerRect, that stretches the texture with values: {{0, 0}, {1, 1}}, help: Controls how the texture is stretched to fill the SKSpriteNode. Stretching is performed via a 9-part algorithm where the upper & lower middle parts are scaled horizontally, the left and right middle parts are scaled vertically, the center is scaled in both directions, and the corners are preserved. The centerRect defines the center region in a (0.0 - 1.0) coordinate space. Defaults to {(0,0) (1,1)} (the entire texture is stretched).
-            if (texture == null) {
-                renderer.drawRectangle(color);
-            } else {
-                renderer.drawRectangleTex(texture.getOpenGLTexture(), color, colorBlendFactor);
-            }
-            renderer.restoreState();
-
-            drawChildren(renderer, width, height);
-
-            renderer.translate(-x, -y, -z);
         }
     }
 
     public SKTexture getTexture() {
-        return texture;
+        synchronized (this) {
+            return texture;
+        }
     }
 
     public void setTexture(SKTexture tex) {
-        if (texture != null) {
-            textureToUnload = texture;
+        synchronized (this) {
+            if (texture != null) {
+                textureToUnload = texture;
+            }
+            texture = tex;
         }
-        texture = tex;
     }
 
     public SKRect getCenterRect() {
-        return centerRect;
+        synchronized (this) {
+            return centerRect;
+        }
     }
 
     public void setCenterRect(SKRect center) {
-        centerRect.assignByValue(center);
+        synchronized (this) {
+            centerRect.assignByValue(center);
+        }
     }
 
 
@@ -110,7 +120,9 @@ public class SKSpriteNode extends SKNode {
      * @return 0-1 value
      */
     public float getColorBlendFactor() {
-        return colorBlendFactor;
+        synchronized (this) {
+            return colorBlendFactor;
+        }
     }
 
     /**
@@ -120,49 +132,69 @@ public class SKSpriteNode extends SKNode {
      * @param colorBlendFactor [0 - 1].
      */
     public void setColorBlendFactor(float colorBlendFactor) {
-        this.colorBlendFactor = colorBlendFactor;
+        synchronized (this) {
+            this.colorBlendFactor = colorBlendFactor;
+        }
     }
 
     public SKColor getColor() {
-        return color;
+        synchronized (this) {
+            return color;
+        }
     }
 
     public void setColor(SKColor color) {
-        this.color.assignByValue(color);
+        synchronized (this) {
+            this.color.assignByValue(color);
+        }
     }
 
     public SKBlendMode getBlendMode() {
-        return blendMode;
+        synchronized (this) {
+            return blendMode;
+        }
     }
 
     public void setBlendMode(SKBlendMode blendMode) {
-        this.blendMode = blendMode;
+        synchronized (this) {
+            this.blendMode = blendMode;
+        }
     }
 
     public SKPoint getAnchorPoint() {
-        return anchorPoint;
+        synchronized (this) {
+            return anchorPoint;
+        }
     }
 
     public void setAnchorPoint(SKPoint anchorPoint) {
-        this.anchorPoint.assignByValue(anchorPoint);
+        synchronized (this) {
+            this.anchorPoint.assignByValue(anchorPoint);
+        }
     }
 
     public SKSize getSize() {
-        return size;
+        synchronized (this) {
+            return size;
+        }
     }
 
     public void setSize(SKSize size) {
-        this.size.assignByValue(size);
+        synchronized (this) {
+            this.size.assignByValue(size);
+        }
     }
 
     public void setSize(float width, float height) {
-        this.size.width = width;
-        this.size.height = height;
+        synchronized (this) {
+            this.size.width = width;
+            this.size.height = height;
+        }
     }
 
     @Override
     protected SKNode copy(SKNode input) {
-        SKSpriteNode node = (SKSpriteNode)super.copy(new SKSpriteNode());
+        SKSpriteNode node = (SKSpriteNode) super.copy(new SKSpriteNode());
 
         node.texture = texture;
         node.centerRect.assignByValue(centerRect);

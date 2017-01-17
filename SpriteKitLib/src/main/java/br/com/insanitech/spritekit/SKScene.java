@@ -25,76 +25,112 @@ public class SKScene extends SKEffectNode implements OnTouchListener {
 	}
 
 	public SKSceneScaleMode getScaleMode() {
-		return scaleMode;
+		synchronized (this) {
+			return scaleMode;
+		}
 	}
 
 	public void setScaleMode(SKSceneScaleMode mode) {
-		scaleMode = mode;
+		synchronized (this) {
+			scaleMode = mode;
+		}
 	}
 
 	public SKColor getBackgroundColor() {
-		return backgroundColor;
+		synchronized (this) {
+			return backgroundColor;
+		}
 	}
 
 	public void setBackgroundColor(SKColor color) {
-		backgroundColor.assignByValue(color);
+		synchronized (this) {
+			backgroundColor.assignByValue(color);
+		}
 	}
 
 	public void setAnchorPoint(SKPoint anchor) {
-		anchorPoint.assignByValue(anchor);
+		synchronized (this) {
+			anchorPoint.assignByValue(anchor);
+		}
 	}
 
 	public SKPoint getAnchorPoint() {
-		return anchorPoint;
+		synchronized (this) {
+			return anchorPoint;
+		}
 	}
 
 	public SKView getView() {
-		return view;
+		synchronized (this) {
+			return view;
+		}
 	}
 
 	protected void setView(SKView view) {
-		this.view = view;
+		synchronized (this) {
+			this.view = view;
+		}
 	}
 
 	public SKPoint convertGLPointrom(SKPoint point) {
-		return null;
+		synchronized (this) {
+			return null;
+		}
 	}
 
 	public SKPoint convertPointTo(SKPoint point) {
-		return null;
+		synchronized (this) {
+			return null;
+		}
 	}
 
 	protected long getCurrentTime() {
-		return view.getCurrentTime();
+		synchronized (this) {
+			return view.getCurrentTime();
+		}
 	}
 
 	public SKSize getSize() {
-		return size;
+		synchronized (this) {
+			return size;
+		}
 	}
 
 	public void setSize(SKSize size) {
-		this.size.assignByValue(size);
+		synchronized (this) {
+			this.size.assignByValue(size);
+		}
 	}
 
 	@Override
 	public void onDrawFrame(GLRenderer renderer, int width, int height) {
-		drawChildren(renderer, width, height);
+		synchronized (this) {
+			drawChildren(renderer, width, height);
+		}
 	}
 
 	public void movedToView(SKView view) {
+		synchronized (this) {
 
+		}
 	}
 
 	public void movedFromView(SKView view) {
+		synchronized (this) {
 
+		}
 	}
 
 	void changedSize(SKSize oldSize) {
+		synchronized (this) {
 
+		}
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		return false;
+		synchronized (this) {
+			return false;
+		}
 	}
 }

@@ -21,24 +21,6 @@ public class SKLabelNode extends SKNode {
         return new SKLabelNode(fontName, style);
     }
 
-    @Override
-    public void onDrawFrame(GLRenderer renderer, int width, int height) {
-        if (alpha > 0.05f && !hidden) {
-            renderer.saveState();
-
-            renderer.translate(0, 0, 0);
-            renderer.scale(xScale, yScale);
-            renderer.rotate(0, 0, zRotation);
-            renderer.translate(getPosition().x, getPosition().y, zPosition);
-
-            // TODO: implement text drawing with gl rendereres
-
-            drawChildren(renderer, width, height);
-
-            renderer.restoreState();
-        }
-    }
-
     public SKLabelNode(String fontName, int style) {
         typeFace = Typeface.create(fontName, style);
         fontColor = Color.WHITE;
@@ -46,55 +28,101 @@ public class SKLabelNode extends SKNode {
         text = "";
     }
 
+    @Override
+    public void onDrawFrame(GLRenderer renderer, int width, int height) {
+        synchronized (this) {
+            if (alpha > 0.05f && !hidden) {
+                renderer.saveState();
+
+                renderer.translate(0, 0, 0);
+                renderer.scale(xScale, yScale);
+                renderer.rotate(0, 0, zRotation);
+                renderer.translate(getPosition().x, getPosition().y, zPosition);
+
+                // TODO: implement text drawing with gl rendereres
+
+                drawChildren(renderer, width, height);
+
+                renderer.restoreState();
+            }
+        }
+    }
+
     public SKLabelVerticalAlignmentMode getVerticalAlignmentMode() {
-        return verticalAlignmentMode;
+        synchronized (this) {
+            return verticalAlignmentMode;
+        }
     }
 
     public void setVerticalAlignmentMode(SKLabelVerticalAlignmentMode vertical) {
-        verticalAlignmentMode = vertical;
+        synchronized (this) {
+            verticalAlignmentMode = vertical;
+        }
     }
 
     public SKLabelHorizontalAlignmentMode getHorizontalAlignmentMode() {
-        return horizontalAlignmentMode;
+        synchronized (this) {
+            return horizontalAlignmentMode;
+        }
     }
 
     public void setHorizontalAlignmentMode(SKLabelHorizontalAlignmentMode horizontal) {
-        horizontalAlignmentMode = horizontal;
+        synchronized (this) {
+            horizontalAlignmentMode = horizontal;
+        }
     }
 
     public String getText() {
-        return text;
+        synchronized (this) {
+            return text;
+        }
     }
 
     public void setText(String text) {
-        this.text = text;
+        synchronized (this) {
+            this.text = text;
+        }
     }
 
     public float getFontSize() {
-        return fontSize;
+        synchronized (this) {
+            return fontSize;
+        }
     }
 
     public void setFontSize(float size) {
-        fontSize = size;
+        synchronized (this) {
+            fontSize = size;
+        }
     }
 
     public void setFontColor(int color) {
-        fontColor = color;
+        synchronized (this) {
+            fontColor = color;
+        }
     }
 
     public SKBlendMode getBlendMode() {
-        return blendMode;
+        synchronized (this) {
+            return blendMode;
+        }
     }
 
     public void setBlendMode(SKBlendMode mode) {
-        blendMode = mode;
+        synchronized (this) {
+            blendMode = mode;
+        }
     }
 
     protected int getFontColor() {
-        return fontColor;
+        synchronized (this) {
+            return fontColor;
+        }
     }
 
     protected Typeface getTypeFace() {
-        return typeFace;
+        synchronized (this) {
+            return typeFace;
+        }
     }
 }

@@ -117,7 +117,9 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
     }
 
     public void removeFromSuperView() {
-        ((ViewGroup) getParent()).removeView(this);
+        synchronized (this) {
+            ((ViewGroup) getParent()).removeView(this);
+        }
     }
 
     public void presentScene(final SKScene scene) {
@@ -138,33 +140,47 @@ public class SKView extends GLSurfaceView implements GLRenderer.GLDrawer {
     }
 
     public boolean getPaused() {
-        return paused;
+        synchronized (this) {
+            return paused;
+        }
     }
 
     public void setPaused(boolean p) {
-        paused = p;
-        if (!p) {
-            presentScene(sceneToBePresented);
+        synchronized (this) {
+            paused = p;
+            if (!p) {
+                presentScene(sceneToBePresented);
+            }
         }
     }
 
     public SKScene getScene() {
-        return sceneToBePresented;
+        synchronized (this) {
+            return sceneToBePresented;
+        }
     }
 
     public Image getTexture(SKNode node) {
-        return null;
+        synchronized (this) {
+            return null;
+        }
     }
 
     public SKPoint convertTo(SKPoint point, SKScene scene) {
-        return null;
+        synchronized (this) {
+            return null;
+        }
     }
 
     public SKPoint convertFrom(SKPoint point, SKScene scene) {
-        return null;
+        synchronized (this) {
+            return null;
+        }
     }
 
     public SKSize getSize() {
-        return viewSize;
+        synchronized (this) {
+            return viewSize;
+        }
     }
 }
