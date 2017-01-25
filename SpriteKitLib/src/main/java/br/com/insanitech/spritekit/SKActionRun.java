@@ -18,14 +18,14 @@ class SKActionRun extends SKAction {
 
     @Override
     void computeAction(long elapsed) {
-        if (runnable != null) {
-            runnable.run();
-        }
+
     }
 
     @Override
     void computeFinish() {
-
+        if (runnable != null) {
+            runnable.run();
+        }
     }
 
     @Override
