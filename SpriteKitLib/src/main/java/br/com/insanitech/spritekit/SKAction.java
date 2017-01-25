@@ -71,7 +71,7 @@ public abstract class SKAction implements Cloneable {
     abstract boolean willHandleFinish();
 
     boolean checkCompleted(long elapsed) {
-        if (!willHandleFinish() && elapsed > duration) {
+        if (!willHandleFinish() && elapsed >= duration) {
             if (parent != null) {
                 computeFinish();
                 parent.get().actionCompleted(this);
