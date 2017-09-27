@@ -61,11 +61,11 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
         if (view == null) {
             view = (SKView) findViewById(R.id.skview);
             SKScene scene = new SKScene(new SKSize(320, 480));
-            scene.setBackgroundColor(SKColor.darkGrayColor());
+            scene.setBackgroundColor(SKColor.Companion.darkGrayColor());
 
             texture = new SKTexture(this, R.drawable.card_deck);
 
-            SKSpriteNode swordA = SKSpriteNode.spriteNode(SKColor.whiteColor(), new SKSize(100, 200));
+            SKSpriteNode swordA = SKSpriteNode.Companion.spriteNode(SKColor.Companion.whiteColor(), new SKSize(100, 200));
             swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setColorBlendFactor(0.5f);
 
@@ -73,9 +73,9 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 //            heartA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
 //            heartA.setColorBlendFactor(0.5f);
 
-            SKNode nodeParent = SKNode.node();
-            nodeParent.position.x = (scene.getSize().width / 2.0f);
-            nodeParent.position.y = (scene.getSize().height / 2.0f);
+            SKNode nodeParent = SKNode.Companion.node();
+            nodeParent.getPosition().setX((scene.getSize().getWidth() / 2.0f));
+            nodeParent.getPosition().setY((scene.getSize().getHeight() / 2.0f));
 
             nodeParent.addChild(swordA);
 //            nodeParent.addChild(heartA);
@@ -90,18 +90,18 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 
 //            animateMovingCards(swordA);
 
-            swordA.zRotation = 0;
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle((float) (Math.PI / 2), 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle((float) Math.PI, 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle((float) (3 * Math.PI / 2), 500))));
-            swordA.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle((float) (Math.PI * 2), 500))));
+            swordA.setZRotation(0);
+            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000), SKAction.Companion.rotateToAngle((float) (Math.PI / 2), 500))));
+            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(2000), SKAction.Companion.rotateToAngle((float) Math.PI, 500))));
+            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(3000), SKAction.Companion.rotateToAngle((float) (3 * Math.PI / 2), 500))));
+            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(4000), SKAction.Companion.rotateToAngle((float) (Math.PI * 2), 500))));
         }
     }
 
     private void rotate(final SKNode nodeParent) {
-        nodeParent.runAction(SKAction.sequence(Arrays.asList(
-                SKAction.rotateByAngle(1, 50),
-                SKAction.run(new Runnable() {
+        nodeParent.runAction(SKAction.Companion.sequence(Arrays.asList(
+                SKAction.Companion.rotateByAngle(1, 50),
+                SKAction.Companion.run(new Runnable() {
                     @Override
                     public void run() {
                         rotate(nodeParent);
@@ -138,9 +138,9 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
             spriteCoordY = 0.0f;
         }
 
-        sprite.runAction(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000),
-                SKAction.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),
-                SKAction.run(new Runnable() {
+        sprite.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000),
+                SKAction.Companion.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),
+                SKAction.Companion.run(new Runnable() {
                     @Override
                     public void run() {
                         animateMovingCards(sprite);
