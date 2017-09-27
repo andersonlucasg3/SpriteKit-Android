@@ -19,10 +19,10 @@ class SKSpriteNode : SKNode() {
         }
 
     var anchorPoint = SKPoint(0.5f, 0.5f)
-        private set(value) { this.anchorPoint.assignByValue(value) }
+        set(value) { this.anchorPoint.assignByValue(value) }
 
     var size = SKSize(0f, 0f)
-        private set(value) { this.size.assignByValue(value) }
+        set(value) { this.size.assignByValue(value) }
 
     override fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int) {
         synchronized(this) {
