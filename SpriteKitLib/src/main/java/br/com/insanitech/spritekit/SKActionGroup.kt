@@ -21,7 +21,7 @@ internal class SKActionGroup : SKAction {
         for (i in group!!.indices) {
             val action = group!![i]
             action.parent = parent
-            action.completion = Runnable { completedAction(action) }
+            action.completion = { completedAction(action) }
             action.start()
         }
     }

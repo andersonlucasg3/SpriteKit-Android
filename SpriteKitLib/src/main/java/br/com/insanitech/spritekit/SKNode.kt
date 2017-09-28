@@ -25,34 +25,24 @@ open class SKNode : GLRenderer.GLDrawer {
     private val actions = LinkedList<SKAction>()
 
     var position = SKPoint(0.0f, 0.0f)
-        get set
 
     var alpha: Float = 1f
-        get set
 
     var speed = 1.0f
-        get set
 
     var zPosition = 0.0f
-        get set
 
     var zRotation = 0.0f
-        get set
 
     var xScale = 1.0f
-        get set
 
     var yScale = 1.0f
-        get set
 
     var isPaused: Boolean = false
-        get set
 
     var isHidden: Boolean = false
-        get set
 
     var isUserInteractionEnabled: Boolean = true
-        get set
 
     fun setPosition(x: Float, y: Float) {
         synchronized(this) {
@@ -224,7 +214,7 @@ open class SKNode : GLRenderer.GLDrawer {
         }
     }
 
-    fun runAction(action: SKAction, completion: Runnable) {
+    fun runAction(action: SKAction, completion: SKBlock) {
         synchronized(this) {
             action.parent = this
             val rand = Random()
@@ -251,11 +241,7 @@ open class SKNode : GLRenderer.GLDrawer {
     fun getAction(key: String): SKAction? {
         synchronized(this) {
             val actions = ArrayList(this.actions)
-            for (action in actions) {
-                if (action.key == key) {
-                    return action
-                }
-            }
+            actions.filter { it.key == key }.forEach { return it }
         }
         return null
     }
@@ -263,11 +249,9 @@ open class SKNode : GLRenderer.GLDrawer {
     fun removeAction(key: String) {
         synchronized(this.actions) {
             val actions = ArrayList(this.actions)
-            for (action in actions) {
-                if (action.key == key) {
-                    synchronized(this.actions) {
-                        this.actions.remove(action)
-                    }
+            actions.filter { it.key == key }.forEach {
+                synchronized(this.actions) {
+                    this.actions.remove(it)
                 }
             }
         }

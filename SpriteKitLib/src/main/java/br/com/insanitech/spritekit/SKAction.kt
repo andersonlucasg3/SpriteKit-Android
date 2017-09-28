@@ -15,7 +15,7 @@ abstract class SKAction : Cloneable {
     private var parentWeak: WeakReference<SKNode>? = null
 
     internal var key = ""
-    internal var completion: Runnable? = null
+    internal var completion: SKBlock? = null
     internal var started = false
     internal var startedTime: Long = 0
 
@@ -72,7 +72,7 @@ abstract class SKAction : Cloneable {
 
     internal fun dispatchCompletion() {
         if (completion != null) {
-            completion?.run()
+            completion?.invoke()
         }
     }
 
@@ -228,7 +228,7 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun run(completion: Runnable): SKAction {
+        fun run(completion: SKBlock): SKAction {
             val action = SKActionRun(completion)
             action.duration = 0
             return action

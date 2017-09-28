@@ -113,7 +113,7 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
         }
     }
 
-    fun presentScene(scene: SKScene?) {
+    public fun presentScene(scene: SKScene?) {
         synchronized(this) {
             sceneToBePresented = scene
             setOnTouchListener(scene)

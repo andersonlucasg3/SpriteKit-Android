@@ -18,7 +18,7 @@ internal class SKActionSequence : SKAction {
 
     private fun setupNextAction() {
         sequence!!.peek().parent = parent
-        sequence!!.peek().completion = Runnable { completedAction() }
+        sequence!!.peek().completion = { completedAction() }
         sequence!!.peek().start()
     }
 

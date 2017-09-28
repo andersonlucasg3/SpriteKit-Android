@@ -3,8 +3,7 @@ package br.com.insanitech.spritekit
 /**
  * Created by anderson on 06/01/17.
  */
-
-internal class SKActionRun(private val runnable: Runnable?) : SKAction() {
+internal class SKActionRun(private val runnable: SKBlock?) : SKAction() {
 
     internal override fun computeStart() {
 
@@ -15,10 +14,8 @@ internal class SKActionRun(private val runnable: Runnable?) : SKAction() {
     }
 
     internal override fun computeFinish() {
-        runnable?.run()
+        runnable?.invoke()
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
+    internal override fun willHandleFinish(): Boolean = false
 }
