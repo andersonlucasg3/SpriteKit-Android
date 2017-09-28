@@ -8,12 +8,12 @@ internal class SKActionScaleTo(private val deltaX: Float, private val deltaY: Fl
     private var startX: Float = 0.toFloat()
     private var startY: Float = 0.toFloat()
 
-    internal override fun computeStart() {
+    override fun computeStart() {
         startX = parent?.xScale ?: 0.0f
         startY = parent?.yScale ?: 0.0f
     }
 
-    internal override fun computeAction(elapsed: Long) {
+    override fun computeAction(elapsed: Long) {
         var newScaleX = parent?.xScale ?: 0.0f
         var newScaleY = parent?.yScale ?: 0.0f
 
@@ -37,21 +37,16 @@ internal class SKActionScaleTo(private val deltaX: Float, private val deltaY: Fl
                 newScaleX = SKEaseCalculations.easeInOut(elapsed.toFloat(), startX, deltaX - startX, duration.toFloat())
                 newScaleY = SKEaseCalculations.easeInOut(elapsed.toFloat(), startY, deltaY - startY, duration.toFloat())
             }
-
-            else -> {
-            }
         }
 
         parent?.xScale = newScaleX
         parent?.yScale = newScaleY
     }
 
-    internal override fun computeFinish() {
+    override fun computeFinish() {
         parent?.xScale = deltaX
         parent?.yScale = deltaY
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
+    override fun willHandleFinish(): Boolean = false
 }
