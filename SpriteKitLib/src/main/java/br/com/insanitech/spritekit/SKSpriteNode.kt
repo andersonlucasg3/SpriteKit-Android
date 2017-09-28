@@ -44,8 +44,8 @@ class SKSpriteNode : SKNode() {
 
                 renderer.saveState()
                 renderer.rotate(0f, 0f, zRotation)
-                renderer.translate(size.width * -anchorPoint.x, size.height * -anchorPoint.y, 0f)
                 renderer.scale(xScale * size.width, yScale * size.height)
+                renderer.translate(-anchorPoint.x, -anchorPoint.y, 0f)
                 // TODO: implement color blend factor
                 // TODO: implement centerRect, that stretches the texture with values: {{0, 0}, {1, 1}}, help: Controls how the texture is stretched to fill the SKSpriteNode. Stretching is performed via a 9-part algorithm where the upper & lower middle parts are scaled horizontally, the left and right middle parts are scaled vertically, the center is scaled in both directions, and the corners are preserved. The centerRect defines the center region in a (0.0 - 1.0) coordinate space. Defaults to {(0,0) (1,1)} (the entire texture is stretched).
                 if (texture == null) {
@@ -53,9 +53,9 @@ class SKSpriteNode : SKNode() {
                 } else {
                     renderer.drawRectangleTex(texture!!.openGLTexture!!, color, colorBlendFactor)
                 }
-                renderer.restoreState()
 
                 drawChildren(renderer, width, height)
+                renderer.restoreState()
 
                 renderer.translate(-x, -y, -z)
             }
