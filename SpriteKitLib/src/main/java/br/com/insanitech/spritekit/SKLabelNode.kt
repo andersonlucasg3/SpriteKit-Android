@@ -25,7 +25,6 @@ class SKLabelNode(fontName: String, style: Int) : SKNode() {
     }
 
     override fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int) {
-        synchronized(this) {
             if (alpha > 0.05f && !isHidden) {
                 renderer.saveState()
 
@@ -39,90 +38,62 @@ class SKLabelNode(fontName: String, style: Int) : SKNode() {
                 drawChildren(renderer, width, height)
 
                 renderer.restoreState()
-            }
         }
     }
 
     fun getVerticalAlignmentMode(): SKLabelVerticalAlignmentMode? {
-        synchronized(this) {
             return verticalAlignmentMode
-        }
     }
 
     fun setVerticalAlignmentMode(vertical: SKLabelVerticalAlignmentMode) {
-        synchronized(this) {
             verticalAlignmentMode = vertical
-        }
     }
 
     fun getHorizontalAlignmentMode(): SKLabelHorizontalAlignmentMode? {
-        synchronized(this) {
             return horizontalAlignmentMode
-        }
     }
 
     fun setHorizontalAlignmentMode(horizontal: SKLabelHorizontalAlignmentMode) {
-        synchronized(this) {
             horizontalAlignmentMode = horizontal
-        }
     }
 
     fun getText(): String? {
-        synchronized(this) {
             return text
-        }
     }
 
     fun setText(text: String) {
-        synchronized(this) {
             this.text = text
-        }
     }
 
     fun getFontSize(): Float {
-        synchronized(this) {
             return fontSize
-        }
     }
 
     fun setFontSize(size: Float) {
-        synchronized(this) {
             fontSize = size
-        }
     }
 
     fun setFontColor(color: Int) {
-        synchronized(this) {
             fontColor = color
-        }
     }
 
     fun getBlendMode(): SKBlendMode? {
-        synchronized(this) {
             return blendMode
-        }
     }
 
     fun setBlendMode(mode: SKBlendMode) {
-        synchronized(this) {
             blendMode = mode
-        }
     }
 
     protected fun getFontColor(): Int {
-        synchronized(this) {
             return fontColor
-        }
     }
 
     protected fun getTypeFace(): Typeface {
-        synchronized(this) {
             return typeFace
-        }
     }
 
     companion object {
-
         fun labelNode(fontName: String, style: Int): SKLabelNode {
             return SKLabelNode(fontName, style)
         }
