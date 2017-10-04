@@ -17,7 +17,7 @@ import br.com.insanitech.spritekit.opengl.model.GLUtils
 /**
  * Created by anderson on 6/28/15.
  */
-internal open class GL10Renderer : GLRenderer() {
+internal open class GL10Renderer(drawer: GLDrawer) : GLRenderer(drawer) {
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
 
     }
@@ -32,10 +32,6 @@ internal open class GL10Renderer : GLRenderer() {
 
         // orthographic camera
         GLES10.glOrthof(0f, width.toFloat(), 0f, height.toFloat(), -100f, 100f)
-    }
-
-    override fun onDrawFrame(gl: GL10) {
-        super.onDrawFrame(gl)
     }
 
     override fun logGLError() {
@@ -137,7 +133,7 @@ internal open class GL10Renderer : GLRenderer() {
 
         GLES10.glVertexPointer(3, GLES10.GL_FLOAT, 0, rectangle.vertexBuffer)
 
-        GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.indiceCount, GLES10.GL_UNSIGNED_SHORT, rectangle.indicesBuff)
+        GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.indicesCount, GLES10.GL_UNSIGNED_SHORT, rectangle.indicesBuff)
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY)
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY)
@@ -153,7 +149,7 @@ internal open class GL10Renderer : GLRenderer() {
         GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, color.buffer)
 
         GLES10.glEnable(GLES10.GL_TEXTURE_2D)
-        GLES10.glBindTexture(GLES10.GL_TEXTURE_2D, texture.getTexture())
+        GLES10.glBindTexture(GLES10.GL_TEXTURE_2D, texture.glTexture)
 
         GLES10.glEnableClientState(GLES10.GL_VERTEX_ARRAY)
         GLES10.glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY)
@@ -164,7 +160,7 @@ internal open class GL10Renderer : GLRenderer() {
         GLES10.glTexCoordPointer(2, GLES10.GL_FLOAT, 0, texture.texVertexBuffer)
         GLES10.glVertexPointer(3, GLES10.GL_FLOAT, 0, rectangle.vertexBuffer)
 
-        GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.indiceCount, GLES10.GL_UNSIGNED_SHORT, rectangle.indicesBuff)
+        GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.indicesCount, GLES10.GL_UNSIGNED_SHORT, rectangle.indicesBuff)
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY)
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY)

@@ -9,12 +9,14 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 import br.com.insanitech.spritekit.logger.Logger
 import br.com.insanitech.spritekit.opengl.renderer.GLGenericRenderer
+import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
 /**
  * Created by anderson on 6/29/15.
  */
 internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
     private var context: EGLContext? = null
+    private var drawer: GLRenderer.GLDrawer
 
     protected var glVersion: Float = 0f
 
@@ -23,6 +25,10 @@ internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
 
     var isReady: Boolean = false
         private set
+
+    constructor(drawer: GLRenderer.GLDrawer) {
+        this.drawer = drawer
+    }
 
     override fun createContext(egl: EGL10, display: EGLDisplay, eglConfig: EGLConfig): EGLContext? =
             this.createGLContext(egl, display, eglConfig)
@@ -36,7 +42,7 @@ internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
         this.context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attrList)
 
         if (this.context != null) {
-            this.renderer.setGLVersion(this.glVersion)
+            this.renderer.setGLVersion(this.glVersion, this.drawer)
             this.isReady = true
             this.listener.onContextReady()
         } else {

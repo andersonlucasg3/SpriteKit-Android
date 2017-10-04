@@ -15,17 +15,18 @@ import br.com.insanitech.spritekit.opengl.model.GLTexture
 /**
  * Created by anderson on 6/29/15.
  */
-abstract class GLRenderer : GLSurfaceView.Renderer {
-    interface GLDrawer {
-        fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int)
-    }
+internal abstract class GLRenderer : GLSurfaceView.Renderer {
+    private var drawer: GLDrawer
 
     protected var width: Int = 0
     protected var height: Int = 0
     protected var circle = GLCircle()
     protected var rectangle = GLRectangle()
     protected var whiteColor = GLColor.rgba(1f, 1f, 1f, 1f)
-    internal var drawer: GLDrawer? = null
+
+    constructor(drawer: GLDrawer) {
+        this.drawer = drawer
+    }
 
     abstract override fun onSurfaceCreated(gl: GL10, config: EGLConfig)
 
@@ -35,9 +36,7 @@ abstract class GLRenderer : GLSurfaceView.Renderer {
     }
 
     override fun onDrawFrame(gl: GL10) {
-        if (drawer != null) {
-            drawer!!.onDrawFrame(this, width, height)
-        }
+        this.drawer.drawFrame(this, width, height)
     }
 
     abstract fun logGLError()
@@ -71,4 +70,8 @@ abstract class GLRenderer : GLSurfaceView.Renderer {
     abstract fun drawRectangleTex(texture: GLTexture, color: GLColor, factor: Float)
 
     abstract fun drawCircle(radius: Float, color: GLColor)
+
+    interface GLDrawer {
+        fun drawFrame(renderer: GLRenderer, width: Int, height: Int)
+    }
 }
