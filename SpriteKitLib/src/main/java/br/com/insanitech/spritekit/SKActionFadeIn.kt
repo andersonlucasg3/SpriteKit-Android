@@ -23,8 +23,4 @@ internal class SKActionFadeIn : SKAction() {
     internal override fun computeFinish() {
         parent?.alpha = 1.0f
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

@@ -48,8 +48,4 @@ internal class SKActionMoveTo(delta: SKPoint) : SKAction() {
     internal override fun computeFinish() {
         parent?.setPosition(deltaPoint.x, deltaPoint.y)
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

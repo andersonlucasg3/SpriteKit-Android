@@ -27,13 +27,13 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
         initView()
     }
 
-    fun initView() {
+    private fun initView() {
         // initializing OpenGL ES parameters
         val renderer = GLGenericRenderer()
         // TODO: testing GL 1.0, change to test other versions
         factory = GL10ContextFactory()
         factory!!.renderer = renderer
-        factory!!.setContextReadyListener(object: GLContextFactory.GLContextReadyListener {
+        factory!!.setContextReadyListener(object : GLContextFactory.GLContextReadyListener {
             override fun onContextReady() {
                 renderer.setDrawer(this@SKView)
                 if (sceneToBePresented != null) {
@@ -47,20 +47,17 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
 
         beginOfTime = System.currentTimeMillis()
 
-        thread = Thread(object : Runnable {
-            override fun run() {
-                try {
-                    while (thread != null && !thread!!.isInterrupted) {
+        thread = Thread(Runnable {
+            try {
+                while (thread != null && !thread!!.isInterrupted) {
+                    if (sceneToBePresented != null && factory!!.isReady && !paused) {
                         synchronized(this) {
-                            if (sceneToBePresented != null && factory!!.isReady && !paused) {
-                                sceneToBePresented!!.evaluateActions()
-                            }
+                            sceneToBePresented!!.evaluateActions()
                         }
                     }
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
                 }
-
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
         })
         thread!!.start()
@@ -68,10 +65,6 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
 
     val currentTime: Long
         get() = System.currentTimeMillis() - beginOfTime
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-    }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
@@ -108,71 +101,41 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
     }
 
     fun removeFromSuperView() {
-        synchronized(this) {
-            (parent as ViewGroup).removeView(this)
-        }
+        (parent as ViewGroup).removeView(this)
     }
 
     public fun presentScene(scene: SKScene?) {
-        synchronized(this) {
-            sceneToBePresented = scene
-            setOnTouchListener(scene)
+        sceneToBePresented = scene
+        setOnTouchListener(scene)
 
-            // needs new implementation of scene presentation
-            if (factory!!.isReady) {
-                requestRender()
-            }
+        // needs new implementation of scene presentation
+        if (factory!!.isReady) {
+            requestRender()
         }
     }
 
-    override fun performClick(): Boolean {
-        return super.performClick()
-    }
-
-    fun getPaused(): Boolean {
-        synchronized(this) {
-            return paused
-        }
-    }
+    fun getPaused(): Boolean = paused
 
     fun setPaused(p: Boolean) {
-        synchronized(this) {
-            paused = p
-            if (!p) {
-                presentScene(sceneToBePresented)
-            }
+        paused = p
+        if (!p) {
+            presentScene(sceneToBePresented)
         }
     }
 
     val scene: SKScene?
-        get() = synchronized(this) {
-            return sceneToBePresented
-        }
+        get() = sceneToBePresented
 
-    fun getTexture(node: SKNode): Image? {
-        synchronized(this) {
-            return null
-        }
-    }
+    fun getTexture(node: SKNode): Image? = null
 
-    fun convertTo(point: SKPoint, scene: SKScene): SKPoint? {
-        synchronized(this) {
-            return null
-        }
-    }
+    fun convertTo(point: SKPoint, scene: SKScene): SKPoint? = null
 
-    fun convertFrom(point: SKPoint, scene: SKScene): SKPoint? {
-        synchronized(this) {
-            return null
-        }
-    }
+    fun convertFrom(point: SKPoint, scene: SKScene): SKPoint? = null
 
     val size: SKSize
-        get() = synchronized(this) {
-            return viewSize
-        }
+        get() = viewSize
 
     companion object {
-        protected var beginOfTime: Long = 0
+        private var beginOfTime: Long = 0
     }
 }

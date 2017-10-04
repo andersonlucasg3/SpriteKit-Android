@@ -11,42 +11,34 @@ internal class SKActionGroup : SKAction {
 
     constructor(group: MutableList<SKAction>) {
         this.group = group
+        this.duration = Long.MAX_VALUE
     }
 
-    constructor(other: SKActionGroup) {
-        group = other.group
-    }
+    constructor(other: SKActionGroup) : this(other.group ?: ArrayList<SKAction>())
 
     internal override fun computeStart() {
-        for (i in group!!.indices) {
+        for (i in this.group!!.indices) {
             val action = group!![i]
             action.parent = parent
-            action.completion = { completedAction(action) }
-            action.start()
+            action.completion = {
+                completedAction(action)
+            }
         }
     }
 
     internal override fun computeAction(elapsed: Long) {
-        val group = ArrayList(this.group!!)
-        for (i in group.indices) {
-            val action = group[i]
-            action.computeAction()
-        }
+        this.group?.forEach { it.computeAction() }
     }
 
     internal override fun computeFinish() {
 
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return true
-    }
-
     private fun completedAction(action: SKAction) {
-        group!!.remove(action)
-        if (group!!.size == 0) {
-            parent?.actionCompleted(this)
-            dispatchCompletion()
+        this.group?.remove(action)
+        if (this.group?.size == 0) {
+            this.removeFromParent()
+            this.dispatchCompletion()
         }
     }
 }

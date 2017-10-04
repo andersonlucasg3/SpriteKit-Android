@@ -23,8 +23,4 @@ internal class SKActionFadeAlphaTo(private val endAlpha: Float) : SKAction() {
     internal override fun computeFinish() {
         parent?.alpha = endAlpha
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

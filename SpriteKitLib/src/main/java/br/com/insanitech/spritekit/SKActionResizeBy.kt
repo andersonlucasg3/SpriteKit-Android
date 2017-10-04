@@ -50,8 +50,4 @@ internal class SKActionResizeBy(deltaSize: SKSize) : SKAction() {
             (parent as SKSpriteNode).setSize(startSize.width + deltaSize.width, startSize.height + deltaSize.height)
         }
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

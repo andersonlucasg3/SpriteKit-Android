@@ -1,25 +1,27 @@
 package br.com.insanitech.spritekit
 
-import java.util.Queue
+import java.util.*
 
 /**
  * Created by anderson on 05/01/17.
  */
 internal class SKActionSequence : SKAction {
     private var sequence: Queue<SKAction>? = null
+    private var computingAction: SKAction? = null
 
     constructor(sequence: Queue<SKAction>) {
         this.sequence = sequence
+        this.duration = Long.MAX_VALUE
     }
 
-    constructor(other: SKActionSequence) {
-        sequence = other.sequence
-    }
+    constructor(other: SKActionSequence): this(other.sequence ?: LinkedList<SKAction>())
 
     private fun setupNextAction() {
-        sequence!!.peek().parent = parent
-        sequence!!.peek().completion = { completedAction() }
-        sequence!!.peek().start()
+        this.computingAction = this.sequence?.peek()
+        this.computingAction?.parent = parent
+        this.computingAction?.completion = {
+            this.completedAction()
+        }
     }
 
     internal override fun computeStart() {
@@ -27,27 +29,24 @@ internal class SKActionSequence : SKAction {
     }
 
     internal override fun computeAction(elapsed: Long) {
-        if (sequence!!.size > 0) {
-            val action = sequence!!.peek()
-            action.computeAction()
-        }
+        this.computingAction?.computeAction()
     }
 
     internal override fun computeFinish() {
 
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return true
-    }
-
     private fun completedAction() {
-        sequence!!.poll()
-        if (sequence!!.size > 0) {
-            setupNextAction()
-        } else {
-            parent?.actionCompleted(this)
-            dispatchCompletion()
+        val sequence = this.sequence
+        val action = this.computingAction
+        if (sequence != null && action != null) {
+            sequence.remove(action)
+            if (sequence.size > 0) {
+                setupNextAction()
+            } else {
+                this.removeFromParent()
+                this.dispatchCompletion()
+            }
         }
     }
 }

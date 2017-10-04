@@ -15,7 +15,5 @@ class SKPoint : GLPoint {
         y = other.y
     }
 
-    override fun toString(): String {
-        return "{ x: $x, y: $y }"
-    }
+    override fun toString(): String = "{ x: $x, y: $y }"
 }
