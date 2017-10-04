@@ -34,8 +34,4 @@ internal class SKActionRotateBy(private val radians: Float) : SKAction() {
     internal override fun computeFinish() {
         parent?.zRotation = startRadians + radians
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

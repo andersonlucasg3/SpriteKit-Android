@@ -46,7 +46,5 @@ internal class SKActionMoveBy(delta: SKPoint) : SKAction() {
         parent?.setPosition(startPoint.x + deltaPoint.x, startPoint.y + deltaPoint.y)
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
+
 }

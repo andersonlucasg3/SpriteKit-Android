@@ -47,6 +47,4 @@ internal class SKActionScaleTo(private val deltaX: Float, private val deltaY: Fl
         parent?.xScale = deltaX
         parent?.yScale = deltaY
     }
-
-    override fun willHandleFinish(): Boolean = false
 }

@@ -16,6 +16,4 @@ internal class SKActionRun(private val runnable: SKBlock?) : SKAction() {
     internal override fun computeFinish() {
         runnable?.invoke()
     }
-
-    internal override fun willHandleFinish(): Boolean = false
 }

@@ -24,7 +24,5 @@ internal class SKActionFadeOut : SKAction() {
         parent?.alpha = 0.0f
     }
 
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
+
 }

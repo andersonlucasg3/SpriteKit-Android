@@ -12,68 +12,52 @@ import java.util.Random
 import br.com.insanitech.spritekit.logger.Logger
 
 abstract class SKAction : Cloneable {
-    private var parentWeak: WeakReference<SKNode>? = null
+    private var started = false
+    private var startedTime: Long = 0
 
     internal var key = ""
+    internal var parent: SKNode? = null
     internal var completion: SKBlock? = null
-    internal var started = false
-    internal var startedTime: Long = 0
 
-    var speed = 0f
+    var speed = 1f
     var duration: Long = 1000
     var timingMode = defaultTiming
 
-    var parent: SKNode?
-        get() = parentWeak?.get()
-        set(value) {
-            parentWeak = if (value != null) WeakReference(value) else null
-        }
+    fun reverseAction(): SKAction? = null
 
-    fun reverseAction(): SKAction? {
-        return null
-    }
+    internal abstract fun computeStart()
 
-    internal fun start() {
+    internal fun computeAction() {
         if (!started) {
             started = true
             startedTime = System.currentTimeMillis()
             computeStart()
         }
-    }
 
-    internal abstract fun computeStart()
-
-    internal fun computeAction() {
         val elapsed = System.currentTimeMillis() - startedTime
-        if (parent != null) {
-            computeAction(elapsed)
-        }
-        checkCompleted(elapsed)
+        computeAction(elapsed)
+        checkAndCompleteIfFinished(elapsed)
     }
 
     internal abstract fun computeAction(elapsed: Long)
 
     internal abstract fun computeFinish()
 
-    internal abstract fun willHandleFinish(): Boolean
-
-    internal fun checkCompleted(elapsed: Long): Boolean {
-        if (!willHandleFinish() && elapsed >= duration) {
-            if (parent != null) {
-                computeFinish()
-                parent?.actionCompleted(this)
-            }
-            dispatchCompletion()
-            parent = null
-            return true
+    internal fun checkAndCompleteIfFinished(elapsed: Long) {
+        if (elapsed >= this.duration) {
+            this.computeFinish()
+            this.removeFromParent()
+            this.dispatchCompletion()
         }
-        return false
+    }
+
+    internal fun removeFromParent() {
+        this.parent?.actions?.remove(this)
+        this.parent = null
     }
 
     internal fun dispatchCompletion() {
-        if (completion != null) {
-            completion?.invoke()
-        }
+        this.completion?.invoke()
     }
 
     @Throws(CloneNotSupportedException::class)
@@ -89,18 +73,11 @@ abstract class SKAction : Cloneable {
         return copy
     }
 
-    internal fun log(content: String, vararg args: Any) {
-        Logger.log(javaClass.simpleName, String.format(Locale.getDefault(), content, *args))
-    }
-
     companion object {
         private var defaultTiming = SKActionTimingMode.Linear
-            get
-            set
 
-        fun moveBy(deltaPosition: SKPoint, duration: Long): SKAction {
-            return moveBy(deltaPosition.x, deltaPosition.y, duration)
-        }
+        fun moveBy(deltaPosition: SKPoint, duration: Long): SKAction =
+                moveBy(deltaPosition.x, deltaPosition.y, duration)
 
         fun moveBy(deltaX: Float, deltaY: Float, duration: Long): SKAction {
             val action = SKActionMoveBy(SKPoint(deltaX, deltaY))
@@ -108,9 +85,8 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun moveTo(toX: Float, toY: Float, duration: Long): SKAction {
-            return moveTo(SKPoint(toX, toY), duration)
-        }
+        fun moveTo(toX: Float, toY: Float, duration: Long): SKAction =
+                moveTo(SKPoint(toX, toY), duration)
 
         fun moveTo(position: SKPoint, duration: Long): SKAction {
             val action = SKActionMoveTo(position)
@@ -130,9 +106,8 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun resizeBy(width: Float, height: Float, duration: Long): SKAction {
-            return resizeBy(SKSize(width, height), duration)
-        }
+        fun resizeBy(width: Float, height: Float, duration: Long): SKAction =
+                resizeBy(SKSize(width, height), duration)
 
         fun resizeBy(size: SKSize, duration: Long): SKAction {
             val action = SKActionResizeBy(size)
@@ -140,9 +115,8 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun resizeTo(width: Float, height: Float, duration: Long): SKAction {
-            return resizeTo(SKSize(width, height), duration)
-        }
+        fun resizeTo(width: Float, height: Float, duration: Long): SKAction =
+                resizeTo(SKSize(width, height), duration)
 
         fun resizeTo(size: SKSize, duration: Long): SKAction {
             val action = SKActionResizeTo(size)
@@ -156,13 +130,9 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun sequence(sequence: List<SKAction>): SKAction {
-            return SKActionSequence(LinkedList(sequence))
-        }
+        fun sequence(sequence: List<SKAction>): SKAction = SKActionSequence(LinkedList(sequence))
 
-        fun group(group: List<SKAction>): SKAction {
-            return SKActionGroup(ArrayList(group))
-        }
+        fun group(group: List<SKAction>): SKAction = SKActionGroup(ArrayList(group))
 
         fun waitFor(duration: Long): SKAction {
             val action = SKActionWaitFor()
@@ -202,9 +172,7 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun scaleTo(scale: Float, duration: Long): SKAction {
-            return scaleTo(scale, scale, duration)
-        }
+        fun scaleTo(scale: Float, duration: Long): SKAction = scaleTo(scale, scale, duration)
 
         fun scaleTo(x: Float, y: Float, duration: Long): SKAction {
             val action = SKActionScaleTo(x, y)
@@ -212,9 +180,7 @@ abstract class SKAction : Cloneable {
             return action
         }
 
-        fun scaleBy(scale: Float, duration: Long): SKAction {
-            return scaleBy(scale, scale, duration)
-        }
+        fun scaleBy(scale: Float, duration: Long): SKAction = scaleBy(scale, scale, duration)
 
         fun scaleBy(x: Float, y: Float, duration: Long): SKAction {
             val action = SKActionScaleBy(x, y)

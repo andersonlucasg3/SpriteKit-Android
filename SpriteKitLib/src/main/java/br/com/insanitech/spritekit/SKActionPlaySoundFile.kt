@@ -38,8 +38,4 @@ internal class SKActionPlaySoundFile(context: Context, @IdRes soundFileResId: In
     internal override fun computeFinish() {
         soundFile!!.release()
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

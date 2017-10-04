@@ -51,7 +51,9 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
             try {
                 while (thread != null && !thread!!.isInterrupted) {
                     if (sceneToBePresented != null && factory!!.isReady && !paused) {
-                        sceneToBePresented!!.evaluateActions()
+                        synchronized(this) {
+                            sceneToBePresented!!.evaluateActions()
+                        }
                     }
                 }
             } catch (ex: Exception) {
@@ -81,18 +83,20 @@ class SKView : GLSurfaceView, GLRenderer.GLDrawer {
     }
 
     override fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int) {
-        if (sceneToBePresented != null) {
-            renderer.clear(sceneToBePresented!!.backgroundColor)
+        synchronized(this) {
+            if (sceneToBePresented != null) {
+                renderer.clear(sceneToBePresented!!.backgroundColor)
 
-            renderer.saveState()
+                renderer.saveState()
 
-            // TODO: this is the scaling of the scene size compared to the view size.
-            // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
-            renderer.scale(width / sceneToBePresented!!.size.width, height / sceneToBePresented!!.size.height)
+                // TODO: this is the scaling of the scene size compared to the view size.
+                // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
+                renderer.scale(width / sceneToBePresented!!.size.width, height / sceneToBePresented!!.size.height)
 
-            sceneToBePresented!!.onDrawFrame(renderer, width, height)
+                sceneToBePresented!!.onDrawFrame(renderer, width, height)
 
-            renderer.restoreState()
+                renderer.restoreState()
+            }
         }
     }
 

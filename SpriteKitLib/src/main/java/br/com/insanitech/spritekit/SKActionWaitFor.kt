@@ -16,8 +16,4 @@ internal class SKActionWaitFor : SKAction() {
     internal override fun computeFinish() {
 
     }
-
-    internal override fun willHandleFinish(): Boolean {
-        return false
-    }
 }

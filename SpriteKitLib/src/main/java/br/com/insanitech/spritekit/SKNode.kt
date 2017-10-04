@@ -86,7 +86,6 @@ open class SKNode : GLRenderer.GLDrawer {
         if (!isPaused) {
             val actions = ArrayList(this.actions)
             for (action in actions) {
-                action.start()
                 action.computeAction()
             }
         }
@@ -178,10 +177,6 @@ open class SKNode : GLRenderer.GLDrawer {
         return false
     }
 
-    internal fun actionCompleted(completed: SKAction) {
-        actions.remove(completed)
-    }
-
     fun runAction(action: SKAction) {
         action.parent = this
         val rand = Random()
@@ -203,9 +198,7 @@ open class SKNode : GLRenderer.GLDrawer {
         actions.add(action)
     }
 
-    fun hasActions(): Boolean {
-        return actions.size > 0
-    }
+    fun hasActions(): Boolean = actions.size > 0
 
     fun getAction(key: String): SKAction? {
         val actions = ArrayList(this.actions)
