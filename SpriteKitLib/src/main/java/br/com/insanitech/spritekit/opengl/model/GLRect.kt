@@ -6,8 +6,10 @@ import br.com.insanitech.spritekit.core.ValueAssign
  * Created by anderson on 7/3/15.
  */
 internal class GLRect() : ValueAssign<GLRect> {
-    val origin: GLPoint = GLPoint()
-    val size: GLSize = GLSize()
+    var origin: GLPoint = GLPoint()
+        set(value) { this.origin.assignByValue(value) }
+    var size: GLSize = GLSize()
+        set(value) { this.size.assignByValue(value) }
 
     constructor(x: Float, y: Float, width: Float, height: Float) : this() {
         this.origin.x = x
@@ -17,8 +19,8 @@ internal class GLRect() : ValueAssign<GLRect> {
     }
 
     constructor(point: GLPoint, size: GLSize) : this() {
-        this.origin.assignByValue(point)
-        this.size.assignByValue(size)
+        this.origin = point
+        this.size = size
     }
 
     val x: Float
