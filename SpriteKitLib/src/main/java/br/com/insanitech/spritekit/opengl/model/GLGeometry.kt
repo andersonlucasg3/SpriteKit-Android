@@ -1,40 +1,48 @@
 package br.com.insanitech.spritekit.opengl.model
 
+import br.com.insanitech.spritekit.core.ValueAssign
 import java.nio.*
 
 /**
- * Created by anderson on 7/3/15.
- */
-abstract class GLGeometry {
-    protected abstract var vertices: FloatArray
-    protected lateinit var indices: ShortArray
-    protected var componentsPerVertice: Int = 0
+* Created by anderson on 7/3/15.
+*/
+internal abstract class GLGeometry : ValueAssign<GLGeometry> {
+    private lateinit var indices: ShortArray
+    protected lateinit var vertices: FloatArray
 
-    var verticesBuff: FloatBuffer? = null
+    protected var componentsPerVertices: Int = 0
+
+    lateinit var verticesBuff: FloatBuffer
         private set
-    var indicesBuff: ShortBuffer? = null
+    lateinit var indicesBuff: ShortBuffer
         private set
 
     protected fun generateVertex() {
-        indices = shortArrayOf(0, 1, 2, 1, 3, 2)
-        indicesBuff = ShortBuffer.allocate(indices.size)
-        indicesBuff!!.put(indices)
-        indicesBuff!!.flip()
-        indicesBuff!!.position(0)
+        this.indices = shortArrayOf(0, 1, 2, 1, 3, 2)
+        this.indicesBuff = ShortBuffer.allocate(this.indices.size)
+        this.indicesBuff.put(this.indices)
+        this.indicesBuff.flip()
+        this.indicesBuff.position(0)
 
-        val bBuff = ByteBuffer.allocateDirect(vertices.size * 4)
+        val bBuff = ByteBuffer.allocateDirect(this.vertices.size * 4)
         bBuff.order(ByteOrder.nativeOrder())
-        verticesBuff = bBuff.asFloatBuffer()
-        verticesBuff!!.put(vertices)
-        verticesBuff!!.position(0)
+        this.verticesBuff = bBuff.asFloatBuffer()
+        this.verticesBuff.put(this.vertices)
+        this.verticesBuff.position(0)
     }
 
     val vertexBuffer: Buffer
-        get() = verticesBuff!!.asReadOnlyBuffer()
+        get() = this.verticesBuff.asReadOnlyBuffer()
 
     val vertexCount: Int
-        get() = vertices.size / componentsPerVertice
+        get() = this.vertices.size / this.componentsPerVertices
 
-    val indiceCount: Int
-        get() = indices.size
+    val indicesCount: Int
+        get() = this.indices.size
+
+    override fun assignByValue(other: GLGeometry) {
+        this.indices = other.indices.copyOf()
+        this.vertices = other.vertices.copyOf()
+        this.componentsPerVertices = other.componentsPerVertices
+    }
 }
