@@ -1,280 +1,156 @@
 package br.com.insanitech.spritekit
 
-import java.util.ArrayList
-import java.util.Dictionary
-import java.util.LinkedList
-import java.util.Random
+import br.com.insanitech.spritekit.actions.SKAction
+import br.com.insanitech.spritekit.graphics.SKPoint
 
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
-open class SKNode : GLRenderer.GLDrawer {
-    interface ChildNodesEnumeration {
-        fun nextChildNode(node: SKNode, shouldStop: Boolean)
-    }
+class SKNode {
+    internal val actions = ArrayList<SKAction>()
+        get() = synchronized(this) { field }
 
-    // TODO: implement frame to contain content bounds
-    var parent: SKNode? = null
-        private set
+    private var childrenNodes: ArrayList<SKNode> = ArrayList()
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    var name: String = ""
+    var position: SKPoint = SKPoint()
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field.point.assignByValue(value.point) }
 
-    val frame = SKRect(0.0f, 0.0f, 0.0f, 0.0f)
+    var zPosition: Float = 0.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    var scene: SKScene? = null
-        private set
+    var xScale: Float = 1.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    var userData: Dictionary<*, *>? = null
+    var yScale: Float = 1.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    val children = ArrayList<SKNode>()
+    var zRotation: Float = 0.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    val actions = LinkedList<SKAction>()
-
-    var position = SKPoint(0.0f, 0.0f)
-
-    var alpha: Float = 1f
-
-    var speed = 1.0f
-
-    var zPosition = 0.0f
-
-    var zRotation = 0.0f
-
-    var xScale = 1.0f
-
-    var yScale = 1.0f
-
-    var isPaused: Boolean = false
+    var alpha: Float = 1.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
     var isHidden: Boolean = false
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    var isUserInteractionEnabled: Boolean = true
+    var isUserInteractionEnabled: Boolean = false
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
-    fun setPosition(x: Float, y: Float) {
-        position.x = x
-        position.y = y
-    }
+    val children: List<SKNode>
+        get() = this.childrenNodes
+
+    var parent: SKNode? = null
+        get() = synchronized(this) { field }
+        private set(value) = synchronized(this) { field = value }
+
+    var scene: SKScene? = null
+        get() = synchronized(this) { field }
+        internal set(value) = synchronized(this) { field = value }
+
+    var name: String? = null
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
+
+    var speed: Float = 1.0f
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
+
+    var isPaused: Boolean = false
+        get() = synchronized(this) { field }
+        set(value) = synchronized(this) { field = value }
 
     fun setScale(scale: Float) {
-        yScale = scale
-        xScale = yScale
+        this.xScale = scale
+        this.yScale = scale
     }
 
-    override fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int) {
-        renderer.translate(position.x, position.y, zPosition)
-
-        renderer.rotate(0f, 0f, zRotation)
-        renderer.scale(xScale, yScale)
-
-        drawChildren(renderer, width, height)
-    }
-
-    internal fun drawChildren(renderer: GLRenderer, width: Int, height: Int) {
-        try {
-            val children = ArrayList(this.children)
-            for (i in children.indices) {
-                renderer.saveState()
-                children[i].onDrawFrame(renderer, width, height)
-                renderer.restoreState()
-            }
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    internal fun evaluateActions() {
-        if (!isPaused) {
-            val actions = ArrayList(this.actions)
-            for (action in actions) {
-                action.computeAction()
-            }
-        }
-
-        val children = ArrayList(this.children)
-        for (i in children.indices) {
-            children[i].evaluateActions()
-        }
-    }
-
-    fun calculateAccumulatedFrame(): SKRect? {
-        return null
-    }
-
-    private fun setSceneRecursive(current: SKNode, scene: SKScene?) {
-        val children = ArrayList(this.children)
-        for (i in children.indices) {
-            current.setSceneRecursive(children[i], scene)
-        }
-        current.scene = scene
-    }
-
-    fun addChild(node: SKNode) {
-        children.add(node)
+    @Synchronized fun addChild(node: SKNode) {
+        this.childrenNodes.add(node)
         node.parent = this
-        setSceneRecursive(node, scene)
     }
 
-    fun insertChildAt(node: SKNode, index: Int) {
-        children.add(index, node)
+    @Synchronized fun insertChild(node: SKNode, index: Int) {
+        this.childrenNodes.add(index, node)
         node.parent = this
-        setSceneRecursive(node, scene)
     }
 
-    fun removeChildren(children: List<SKNode>) {
-        this.children.removeAll(children)
-        var child: SKNode
-        for (i in children.indices) {
-            child = children[i]
-            child.parent = null
-            setSceneRecursive(child, null)
-        }
+    @Synchronized fun removeFromParent() {
+        this.parent?.childrenNodes?.remove(this)
+        this.parent = null
     }
 
-    fun removeAllChildren() {
-        val children = ArrayList(this.children)
-        var child: SKNode
-        for (i in children.indices) {
-            child = children[i]
-            child.parent = null
-            setSceneRecursive(child, null)
-        }
-        this.children.clear()
+    @Synchronized fun removeAllChildren() {
+        val children = ArrayList<SKNode>(this.childrenNodes)
+        children.forEach(SKNode::removeFromParent)
     }
 
-    fun removeFromParent() {
-        if (parent != null) {
-            parent!!.removeChildren(listOf(this))
-            parent = null
-            setSceneRecursive(this, null)
-        }
+    @Synchronized fun removeChildren(nodes: List<SKNode>) {
+        val list = ArrayList<SKNode>(nodes)
+        list.forEach { if (it.parent == this) it.removeFromParent() }
     }
 
-    fun childNode(name: String): SKNode? {
-        val children = ArrayList(this.children)
-        var child: SKNode
-        for (i in children.indices) {
-            child = children[i]
-            if (name == child.name) {
-                return child
-            }
-        }
-        return null
-    }
-
-    @Throws(Exception::class)
-    fun enumerateChildNodes(name: String, enumeration: ChildNodesEnumeration) {
-        throw Exception("NotImplementedException")
-    }
-
-    fun inParentHierarchy(parent: SKNode): Boolean {
-        var current: SKNode? = this
-        while (current!!.parent != null) {
-            current = current.parent
-            if (current!!.parent === parent) {
+    @Synchronized fun inParentHierarchy(parent: SKNode) : Boolean {
+        var myParent = this.parent
+        while (myParent != null) {
+            if (myParent == parent) {
                 return true
             }
+            myParent = myParent.parent
         }
         return false
     }
 
-    fun runAction(action: SKAction) {
-        action.parent = this
-        val rand = Random()
-        action.key = rand.nextInt().toString() + "none" + rand.nextInt()
-        actions.add(action)
+    @Synchronized internal fun movedToScene(scene: SKScene?) {
+        this.scene = scene
+        this.childrenNodes.forEach {
+            it.movedToScene(scene)
+        }
     }
 
-    fun runAction(action: SKAction, completion: SKBlock) {
-        action.parent = this
-        val rand = Random()
-        action.key = rand.nextInt().toString() + "none" + rand.nextInt()
+    @Synchronized fun run(action: SKAction) {
+        this.actions.add(action)
+    }
+
+    @Synchronized fun run(action: SKAction, completion: SKBlock) {
         action.completion = completion
-        actions.add(action)
+        this.actions.add(action)
     }
 
-    fun runAction(action: SKAction, key: String) {
-        action.parent = this
+    @Synchronized fun run(action: SKAction, key: String) {
+        this.removeAction(key)
         action.key = key
-        actions.add(action)
+        this.actions.add(action)
     }
 
-    fun hasActions(): Boolean = actions.size > 0
+    @Synchronized fun action(key: String) : SKAction? = this.actions.firstOrNull { it.key == key }
 
-    fun getAction(key: String): SKAction? {
-        val actions = ArrayList(this.actions)
-        actions.filter { it.key == key }.forEach { return it }
-        return null
+    @Synchronized fun hasActions() = this.actions.size > 0
+
+    @Synchronized fun removeAllActions() {
+        this.actions.clear()
     }
 
-    fun removeAction(key: String) {
-        val actions = ArrayList(this.actions)
-        actions.filter { it.key == key }.forEach {
-            this.actions.remove(it)
-        }
+    @Synchronized fun removeAction(key: String) {
+        val action = this.action(key)
+        when { action != null -> this.actions.remove(action) }
     }
-
-    fun removeAllActions() {
-        actions.clear()
-    }
-
-    fun containsPoint(p: SKPoint): Boolean {
-        return frame.containsPoint(p)
-    }
-
-    fun nodeAt(p: SKPoint): SKNode? {
-        // TODO: implement nodeAt
-        return null
-    }
-
-    fun nodesAt(p: SKPoint): Array<SKNode>? {
-        // TODO: implement nodesAt
-        return null
-    }
-
-    fun convertFrom(p: SKPoint, node: SKNode): SKPoint? {
-        // TODO: implement convertFrom
-        return null
-    }
-
-    fun convertTo(p: SKPoint, node: SKNode): SKPoint? {
-        // TODO: implement convertTo
-        return null
-    }
-
-    fun intersects(node: SKNode): Boolean {
-        // TODO: implement intersects
-        return false
-    }
-
-    protected open fun copy(input: SKNode): SKNode {
-        input.frame.assignByValue(frame)
-        input.parent = parent
-        input.name = name
-
-        input.scene = scene
-
-        input.userData = userData
-
-        input.children.addAll(children)
-        input.actions.addAll(actions)
-
-        input.position.assignByValue(position)
-        input.isPaused = isPaused
-        input.isHidden = isHidden
-        input.zPosition = zPosition
-        input.zRotation = zRotation
-        input.xScale = xScale
-        input.yScale = yScale
-        input.speed = speed
-        input.alpha = alpha
-        input.isUserInteractionEnabled = isUserInteractionEnabled
-
-        return input
-    }
-
-    fun copy(): Any = copy(SKNode())
 
     companion object {
         fun node(): SKNode = SKNode()
+    }
+
+    internal object Drawer : GLRenderer.GLDrawer {
+        override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
+
+        }
     }
 }
