@@ -7,14 +7,22 @@ import br.com.insanitech.spritekit.opengl.model.GLRect
  */
 class SKRect {
     internal val rect: GLRect
+    internal val orig: SKPoint
+    internal val sz: SKSize
 
     var origin: SKPoint
-        get() = SKPoint(this.rect.origin)
-        set(value) { this.rect.origin = value.point }
+        get() = this.orig
+        set(value) {
+            this.rect.origin.assignByValue(value.point)
+            this.orig.point.assignByValue(value.point)
+        }
 
     var size: SKSize
-        get() = SKSize(this.rect.size)
-        set(value) { this.rect.size = value.size }
+        get() = this.sz
+        set(value) {
+            this.rect.size.assignByValue(value.size)
+            this.sz.size.assignByValue(value.size)
+        }
 
     val x: Float
         get() = this.rect.x
@@ -30,15 +38,19 @@ class SKRect {
 
     constructor() {
         this.rect = GLRect()
+        this.orig = SKPoint()
+        this.sz = SKSize()
     }
 
     constructor(x: Float, y: Float, width: Float, height: Float) {
         this.rect = GLRect(x, y, width, height)
+        this.orig = SKPoint(x, y)
+        this.sz = SKSize(width, height)
     }
 
-    constructor(other: SKRect) : this(other.rect)
-
     internal constructor(other: GLRect) : this(other.x, other.y, other.width, other.height)
+
+    constructor(other: SKRect) : this(other.rect)
 
     fun containsPoint(point: SKPoint): Boolean = this.rect.containsPoint(point.point)
 
