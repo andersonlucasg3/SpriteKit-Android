@@ -1,16 +1,16 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 /**
  * Created by anderson on 06/01/17.
  */
 
-internal class SKActionSetTexture(private val texture: SKTexture) : SKAction() {
+internal class SKActionRemoveFromParent : SKAction() {
     internal override fun computeStart() {
 
     }
 
     internal override fun computeAction(elapsed: Long) {
-        (this.parent as? SKSpriteNode)?.texture = texture
+        parent?.removeFromParent()
     }
 
     internal override fun computeFinish() {

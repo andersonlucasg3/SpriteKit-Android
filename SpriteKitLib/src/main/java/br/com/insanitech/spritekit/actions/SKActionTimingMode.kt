@@ -1,4 +1,4 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 /**
  * Created by anderson on 06/01/17.

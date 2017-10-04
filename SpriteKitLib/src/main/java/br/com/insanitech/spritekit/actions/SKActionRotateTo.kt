@@ -1,4 +1,6 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
+
+import br.com.insanitech.spritekit.SKEaseCalculations
 
 /**
  * Created by anderson on 06/01/17.

@@ -1,15 +1,12 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 import android.content.Context
 import android.support.annotation.IdRes
+import br.com.insanitech.spritekit.*
 
-import java.lang.ref.WeakReference
 import java.util.ArrayList
 import java.util.LinkedList
-import java.util.Locale
 import java.util.Random
-
-import br.com.insanitech.spritekit.logger.Logger
 
 abstract class SKAction : Cloneable {
     private var started = false

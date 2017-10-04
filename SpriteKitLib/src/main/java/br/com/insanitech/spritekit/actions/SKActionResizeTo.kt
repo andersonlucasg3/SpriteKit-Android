@@ -1,4 +1,8 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
+
+import br.com.insanitech.spritekit.SKEaseCalculations
+import br.com.insanitech.spritekit.SKSize
+import br.com.insanitech.spritekit.SKSpriteNode
 
 /**
  * Created by anderson on 06/01/17.

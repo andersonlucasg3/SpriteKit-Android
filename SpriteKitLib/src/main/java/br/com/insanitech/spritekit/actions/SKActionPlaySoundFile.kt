@@ -1,4 +1,4 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 import android.content.Context
 import android.media.MediaPlayer

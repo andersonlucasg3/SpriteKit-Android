@@ -1,10 +1,12 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
+
+import br.com.insanitech.spritekit.SKBlock
 
 /**
  * Created by anderson on 06/01/17.
  */
+internal class SKActionRun(private val runnable: SKBlock?) : SKAction() {
 
-internal class SKActionWaitFor : SKAction() {
     internal override fun computeStart() {
 
     }
@@ -14,6 +16,6 @@ internal class SKActionWaitFor : SKAction() {
     }
 
     internal override fun computeFinish() {
-
+        runnable?.invoke()
     }
 }

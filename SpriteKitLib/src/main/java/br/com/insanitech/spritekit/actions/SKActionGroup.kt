@@ -1,4 +1,4 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 import java.util.ArrayList
 
