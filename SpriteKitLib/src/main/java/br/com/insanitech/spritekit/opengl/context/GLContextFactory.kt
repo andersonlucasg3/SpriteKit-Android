@@ -1,6 +1,7 @@
 package br.com.insanitech.spritekit.opengl.context
 
 import android.opengl.GLSurfaceView
+import br.com.insanitech.spritekit.SKBlock
 
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
@@ -9,26 +10,20 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 import br.com.insanitech.spritekit.logger.Logger
 import br.com.insanitech.spritekit.opengl.renderer.GLGenericRenderer
-import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
 /**
  * Created by anderson on 6/29/15.
  */
 internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
     private var context: EGLContext? = null
-    private var drawer: GLRenderer.GLDrawer
 
     protected var glVersion: Float = 0f
 
     lateinit var renderer: GLGenericRenderer
-    lateinit var listener: GLContextReadyListener
+    lateinit var onContextReady: SKBlock
 
     var isReady: Boolean = false
         private set
-
-    constructor(drawer: GLRenderer.GLDrawer) {
-        this.drawer = drawer
-    }
 
     override fun createContext(egl: EGL10, display: EGLDisplay, eglConfig: EGLConfig): EGLContext? =
             this.createGLContext(egl, display, eglConfig)
@@ -42,9 +37,9 @@ internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
         this.context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attrList)
 
         if (this.context != null) {
-            this.renderer.setGLVersion(this.glVersion, this.drawer)
+            this.renderer.setGLVersion(this.glVersion)
             this.isReady = true
-            this.listener.onContextReady()
+            this.onContextReady.invoke()
         } else {
             Logger.log("GLContextFactory", "Failed creating OGL version: " + glVersion)
         }
@@ -61,9 +56,5 @@ internal abstract class GLContextFactory : GLSurfaceView.EGLContextFactory {
         val GL14 = 1.4f
         val GL20 = 2.0f
         val GL30 = 3.0f
-    }
-
-    interface GLContextReadyListener {
-        fun onContextReady()
     }
 }

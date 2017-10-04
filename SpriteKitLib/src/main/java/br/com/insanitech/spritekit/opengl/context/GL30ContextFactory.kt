@@ -9,7 +9,7 @@ import javax.microedition.khronos.egl.EGLDisplay
 /**
  * Created by anderson on 6/30/15.
  */
-internal class GL30ContextFactory(drawer: GLRenderer.GLDrawer) : GL20ContextFactory(drawer) {
+internal class GL30ContextFactory : GL20ContextFactory() {
     override fun createContext(egl: EGL10, display: EGLDisplay, eglConfig: EGLConfig): EGLContext? {
         this.glVersion = GLVersion.GL30
         val context = createGLContext(egl, display, eglConfig)
