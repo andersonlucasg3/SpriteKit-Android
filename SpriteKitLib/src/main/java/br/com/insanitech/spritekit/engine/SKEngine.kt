@@ -37,7 +37,7 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
             while (!thread.isInterrupted) {
                 val sceneToBePresented = this.sceneToBePresented ?: continue
                 if (factory.isReady && !this.isPaused) {
-                    synchronized(this) { sceneToBePresented.evaluateActions() }
+                    this.evaluateSceneActions(sceneToBePresented)
                 }
             }
         })
@@ -63,6 +63,10 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
         view.setEGLContextFactory(factory)
         view.setRenderer(factory.renderer)
         return factory
+    }
+
+    @Synchronized private fun evaluateSceneActions(scene: SKScene) {
+        scene.evaluateActions()
     }
 
     @Synchronized override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
