@@ -5,48 +5,48 @@ import br.com.insanitech.spritekit.core.ValueAssign
 /**
  * Created by anderson on 7/3/15.
  */
-open class GLRect : ValueAssign<GLRect> {
-    var origin: GLPoint
-    var size: GLSize
+internal class GLRect() : ValueAssign<GLRect> {
+    val origin: GLPoint = GLPoint()
+    val size: GLSize = GLSize()
 
-    @JvmOverloads constructor(x: Float = 0f, y: Float = 0f, width: Float = 0f, height: Float = 0f) {
-        origin = GLPoint(x, y)
-        size = GLSize(width, height)
+    constructor(x: Float, y: Float, width: Float, height: Float) : this() {
+        this.origin.x = x
+        this.origin.y = y
+        this.size.width = width
+        this.size.height = height
     }
 
-    constructor(point: GLPoint, size: GLSize) {
-        this.origin = point
-        this.size = size
+    constructor(point: GLPoint, size: GLSize) : this() {
+        this.origin.assignByValue(point)
+        this.size.assignByValue(size)
     }
 
     val x: Float
-        get() = origin.x
+        get() = this.origin.x
 
     val y: Float
-        get() = origin.y
+        get() = this.origin.y
 
     val width: Float
-        get() = size.width
+        get() = this.size.width
 
     val height: Float
-        get() = size.height
+        get() = this.size.height
 
     fun containsPoint(point: GLPoint): Boolean {
-        return point.x > origin.x &&
-                point.y > origin.y &&
-                point.x < origin.x + size.width &&
-                point.y < origin.y + size.height
+        return point.x > this.origin.x &&
+                point.y > this.origin.y &&
+                point.x < this.origin.x + this.size.width &&
+                point.y < this.origin.y + this.size.height
     }
 
     override fun assignByValue(other: GLRect) {
-        origin.assignByValue(other.origin)
-        size.assignByValue(other.size)
+        this.origin.assignByValue(other.origin)
+        this.size.assignByValue(other.size)
     }
 
     companion object {
-
-        fun centerRect(point: GLPoint, size: GLSize): GLRect {
-            return GLRect(point.x - size.width / 2, point.y - size.height / 2, size.width, size.height)
-        }
+        fun centerRect(point: GLPoint, size: GLSize): GLRect =
+                GLRect(point.x - size.width / 2, point.y - size.height / 2, size.width, size.height)
     }
 }
