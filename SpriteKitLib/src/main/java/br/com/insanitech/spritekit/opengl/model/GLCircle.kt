@@ -3,23 +3,32 @@ package br.com.insanitech.spritekit.opengl.model
 /**
  * Created by anderson on 7/3/15.
  */
-class GLCircle : GLGeometry() {
-    val pointsCount = 10
-    override lateinit var vertices: FloatArray
-        get set
-
+internal class GLCircle : GLGeometry() {
+    var pointsCount = 10
 
     init {
-        vertices = FloatArray((pointsCount + 1) * 3)
+        this.generateCircleVertices()
+        this.generateVertex()
+    }
+
+    private fun generateCircleVertices() {
+        this.vertices = FloatArray((this.pointsCount + 1) * 3)
         var i = 3
-        while (i < (pointsCount + 1) * 3) {
-            val rad = i * 360 / pointsCount * 3 * (3.14 / 180)
-            vertices[i] = Math.cos(rad).toFloat()
-            vertices[i + 1] = Math.sin(rad).toFloat()
-            vertices[i + 2] = 0f
+        while (i < (this.pointsCount + 1) * 3) {
+            val rad = i * 360 / this.pointsCount * 3 * (3.14 / 180)
+            this.vertices[i] = Math.cos(rad).toFloat()
+            this.vertices[i + 1] = Math.sin(rad).toFloat()
+            this.vertices[i + 2] = 0f
             i += 3
         }
-        componentsPerVertice = 3
-        generateVertex()
+        this.componentsPerVertices = 3
+    }
+
+    override fun assignByValue(other: GLGeometry) {
+        super.assignByValue(other)
+        val otherCircle = other as GLCircle
+        this.pointsCount = otherCircle.pointsCount
+        this.generateCircleVertices()
+        this.generateVertex()
     }
 }
