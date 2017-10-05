@@ -46,7 +46,7 @@ class SKView : GLSurfaceView {
     }
 
     fun removeFromSuperView() {
-        (parent as ViewGroup).removeView(this)
+        (this.parent as ViewGroup).removeView(this)
     }
 
     fun presentScene(scene: SKScene?) {

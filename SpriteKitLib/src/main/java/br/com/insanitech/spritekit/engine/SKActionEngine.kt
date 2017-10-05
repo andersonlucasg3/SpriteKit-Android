@@ -22,7 +22,7 @@ internal object SKActionEngine {
 
     private fun updateChildrenActions(node: SKNode) {
         node.children.forEach {
-            this.evaluateActions(node)
+            this.evaluateActions(it)
         }
     }
 
