@@ -10,7 +10,8 @@ internal abstract class GLGeometry : ValueAssign<GLGeometry> {
     private lateinit var indices: ShortArray
     protected lateinit var vertices: FloatArray
 
-    protected var componentsPerVertices: Int = 0
+    var componentsPerVertices: Int = 0
+        protected set
 
     lateinit var verticesBuff: FloatBuffer
         private set

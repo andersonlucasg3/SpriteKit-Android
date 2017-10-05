@@ -7,6 +7,6 @@ internal class GLRectangle : GLGeometry() {
     init {
         this.vertices = floatArrayOf(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f)
         this.componentsPerVertices = 2
-        generateVertex()
+        this.generateVertex()
     }
 }
