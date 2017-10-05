@@ -35,6 +35,18 @@ class SKSpriteNode : SKNode() {
         this.size.height = height
     }
 
+    override fun copy(): SKSpriteNode {
+        val node = super.copy(SKSpriteNode())
+        node.blendMode = this.blendMode
+        node.colorBlendFactor = this.colorBlendFactor
+        node.color = this.color
+        node.centerRect = this.centerRect
+        node.texture = this.texture
+        node.anchorPoint = this.anchorPoint
+        node.size = this.size
+        return node
+    }
+
     override val drawer: SKNodeDrawer by lazy {
         object: SKNodeDrawer(this) {
             override val node: SKSpriteNode = super.node as SKSpriteNode
@@ -65,7 +77,7 @@ class SKSpriteNode : SKNode() {
                     if (this.node.texture == null) {
                         renderer.drawRectangle(this.node.color.color)
                     } else {
-                        renderer.drawRectangleTex(this.node.texture!!.openGLTexture!!, this.node.color.color, this.node.colorBlendFactor)
+                        renderer.drawRectangleTex(this.node.texture!!.openGLTexture, this.node.color.color, this.node.colorBlendFactor)
                     }
 
                     this.drawChildren(renderer, width, height)

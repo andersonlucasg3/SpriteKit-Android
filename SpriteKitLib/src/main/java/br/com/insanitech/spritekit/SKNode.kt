@@ -35,6 +35,11 @@ open class SKNode {
         this.yScale = scale
     }
 
+    fun setPosition(x: Float, y: Float) {
+        this.position.x = x
+        this.position.y = y
+    }
+
     fun addChild(node: SKNode) {
         this.childrenNodes.add(node)
         node.parent = this
@@ -106,8 +111,22 @@ open class SKNode {
         when { action != null -> this.actions.remove(action) }
     }
 
-    companion object {
-        fun node(): SKNode = SKNode()
+    open fun copy() : SKNode = this.copy(SKNode())
+
+    protected fun <T : SKNode> copy(into: T) : T {
+        val newNode = into
+        newNode.position = this.position
+        newNode.alpha = this.alpha
+        newNode.isHidden = this.isHidden
+        newNode.isPaused = this.isPaused
+        newNode.isUserInteractionEnabled = this.isUserInteractionEnabled
+        newNode.name = this.name
+        newNode.speed = this.speed
+        newNode.xScale = this.xScale
+        newNode.yScale = this.yScale
+        newNode.zPosition = this.zPosition
+        newNode.zRotation = this.zRotation
+        return newNode
     }
 
     // MARK: Drawer implementations
@@ -115,17 +134,22 @@ open class SKNode {
     internal open val drawer: SKNodeDrawer by lazy { SKNodeDrawer(this) }
 
     internal open class SKNodeDrawer(protected open val node: SKNode) : GLRenderer.GLDrawer {
+
         override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
             renderer.translate(this.node.position.x, this.node.position.y, this.node.zPosition)
             renderer.rotate(0f, 0f, this.node.zRotation)
             renderer.scale(this.node.xScale, this.node.yScale)
             this.drawChildren(renderer, width, height)
         }
-
         internal fun drawChildren(renderer: GLRenderer, width: Int, height: Int) {
             this.node.children.forEach {
                 it.drawer.drawFrame(renderer, width, height)
             }
         }
+
+    }
+
+    companion object {
+        fun node(): SKNode = SKNode()
     }
 }
