@@ -11,7 +11,9 @@ open class SKNode {
     private var childrenNodes: ArrayList<SKNode> = ArrayList()
 
     var position: SKPoint = SKPoint()
-        set(value) { field.point.assignByValue(value.point) }
+        set(value) {
+            field.point.assignByValue(value.point)
+        }
 
     var zPosition: Float = 0.0f
     var xScale: Float = 1.0f
@@ -65,7 +67,7 @@ open class SKNode {
         list.forEach { if (it.parent == this) it.removeFromParent() }
     }
 
-    fun inParentHierarchy(parent: SKNode) : Boolean {
+    fun inParentHierarchy(parent: SKNode): Boolean {
         var myParent = this.parent
         while (myParent != null) {
             if (myParent == parent) {
@@ -98,7 +100,7 @@ open class SKNode {
         this.actions.add(action)
     }
 
-    fun action(key: String) : SKAction? = this.actions.firstOrNull { it.key == key }
+    fun action(key: String): SKAction? = this.actions.firstOrNull { it.key == key }
 
     fun hasActions() = this.actions.size > 0
 
@@ -108,12 +110,13 @@ open class SKNode {
 
     fun removeAction(key: String) {
         val action = this.action(key)
-        when { action != null -> this.actions.remove(action) }
+        when { action != null -> this.actions.remove(action)
+        }
     }
 
-    open fun copy() : SKNode = this.copy(SKNode())
+    open fun copy(): SKNode = this.copy(SKNode())
 
-    protected fun <T : SKNode> copy(into: T) : T {
+    protected fun <T : SKNode> copy(into: T): T {
         val newNode = into
         newNode.position = this.position
         newNode.alpha = this.alpha
@@ -141,6 +144,7 @@ open class SKNode {
             renderer.scale(this.node.xScale, this.node.yScale)
             this.drawChildren(renderer, width, height)
         }
+
         internal fun drawChildren(renderer: GLRenderer, width: Int, height: Int) {
             this.node.children.forEach {
                 it.drawer.drawFrame(renderer, width, height)
