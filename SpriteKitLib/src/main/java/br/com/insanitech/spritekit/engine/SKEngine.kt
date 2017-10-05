@@ -48,9 +48,7 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
 
     private fun doUpdateFlow(sceneToBePresented: SKScene) {
         sceneToBePresented.update(this.currentTime)
-        synchronized(this) {
-            SKActionEngine.evaluateActions(sceneToBePresented)
-        }
+        SKActionEngine.evaluateActions(sceneToBePresented)
         sceneToBePresented.didEvaluateActions()
         sceneToBePresented.didFinishUpdate()
     }
