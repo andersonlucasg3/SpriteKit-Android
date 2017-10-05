@@ -9,9 +9,9 @@ import java.nio.ByteOrder
  */
 internal class GLColor() : ValueAssign<GLColor> {
     internal val buffer by lazy {
-        val bb = ByteBuffer.allocateDirect(16 * 4)
+        val bb = ByteBuffer.allocateDirect(4 * 4)
         bb.order(ByteOrder.nativeOrder())
-        return@lazy bb.asFloatBuffer()
+        bb.asFloatBuffer()
     }
 
     var r: Float
