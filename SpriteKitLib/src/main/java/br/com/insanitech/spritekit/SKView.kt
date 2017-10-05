@@ -1,141 +1,66 @@
 package br.com.insanitech.spritekit
 
 import android.content.Context
-import android.media.Image
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.ViewGroup
+import br.com.insanitech.spritekit.engine.SKEngine
+import br.com.insanitech.spritekit.graphics.SKSize
 
-import br.com.insanitech.spritekit.opengl.context.GL10ContextFactory
-import br.com.insanitech.spritekit.opengl.context.GLContextFactory
-import br.com.insanitech.spritekit.opengl.renderer.GLGenericRenderer
-import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
+class SKView : GLSurfaceView {
+    private val engine = SKEngine.instance
 
-class SKView : GLSurfaceView, GLRenderer.GLDrawer {
+    val size: SKSize = SKSize()
 
-    private var factory: GLContextFactory? = null
-    private var paused: Boolean = false
-    private var sceneToBePresented: SKScene? = null
-    private var thread: Thread? = null
-    private val viewSize = SKSize()
+    val scene: SKScene?
+        get() = this.engine.sceneToBePresented
+
+    var isPaused: Boolean
+        get() = this.engine.isPaused
+        set(value) {
+            this.engine.isPaused = value
+            if (!value) {
+                this.presentScene()
+            }
+        }
 
     constructor(context: Context) : super(context) {
-        initView()
+        this.engine.start(this)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        initView()
+        this.engine.start(this)
     }
-
-    private fun initView() {
-        // initializing OpenGL ES parameters
-        val renderer = GLGenericRenderer()
-        // TODO: testing GL 1.0, change to test other versions
-        factory = GL10ContextFactory()
-        factory!!.renderer = renderer
-        factory!!.setContextReadyListener(object : GLContextFactory.GLContextReadyListener {
-            override fun onContextReady() {
-                renderer.setDrawer(this@SKView)
-                if (sceneToBePresented != null) {
-                    requestRender()
-                }
-            }
-        })
-        setEGLContextFactory(factory)
-        setRenderer(renderer)
-        // end OpenGL parameters
-
-        beginOfTime = System.currentTimeMillis()
-
-        thread = Thread(Runnable {
-            try {
-                while (thread != null && !thread!!.isInterrupted) {
-                    if (sceneToBePresented != null && factory!!.isReady && !paused) {
-                        synchronized(this) {
-                            sceneToBePresented!!.evaluateActions()
-                        }
-                    }
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        })
-        thread!!.start()
-    }
-
-    val currentTime: Long
-        get() = System.currentTimeMillis() - beginOfTime
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
 
-        if (thread != null) {
-            thread!!.interrupt()
-            thread = null
-        }
+        this.engine.stop()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        viewSize.width = w.toFloat()
-        viewSize.height = h.toFloat()
-    }
-
-    override fun onDrawFrame(renderer: GLRenderer, width: Int, height: Int) {
-        synchronized(this) {
-            if (sceneToBePresented != null) {
-                renderer.clear(sceneToBePresented!!.backgroundColor)
-
-                renderer.saveState()
-
-                // TODO: this is the scaling of the scene size compared to the view size.
-                // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
-                renderer.scale(width / sceneToBePresented!!.size.width, height / sceneToBePresented!!.size.height)
-
-                sceneToBePresented!!.onDrawFrame(renderer, width, height)
-
-                renderer.restoreState()
-            }
-        }
+        this.size.width = w.toFloat()
+        this.size.height = h.toFloat()
     }
 
     fun removeFromSuperView() {
-        (parent as ViewGroup).removeView(this)
+        (this.parent as ViewGroup).removeView(this)
     }
 
-    public fun presentScene(scene: SKScene?) {
-        sceneToBePresented = scene
+    fun presentScene(scene: SKScene?) {
+        if (this.engine.sceneToBePresented != scene) {
+            this.engine.sceneToBePresented?.willMove(this)
+        }
+        this.engine.sceneToBePresented = scene
+        this.engine.sceneToBePresented?.didMove(this)
+
         setOnTouchListener(scene)
-
-        // needs new implementation of scene presentation
-        if (factory!!.isReady) {
-            requestRender()
-        }
+        this.presentScene()
     }
 
-    fun getPaused(): Boolean = paused
-
-    fun setPaused(p: Boolean) {
-        paused = p
-        if (!p) {
-            presentScene(sceneToBePresented)
-        }
-    }
-
-    val scene: SKScene?
-        get() = sceneToBePresented
-
-    fun getTexture(node: SKNode): Image? = null
-
-    fun convertTo(point: SKPoint, scene: SKScene): SKPoint? = null
-
-    fun convertFrom(point: SKPoint, scene: SKScene): SKPoint? = null
-
-    val size: SKSize
-        get() = viewSize
-
-    companion object {
-        private var beginOfTime: Long = 0
+    private fun presentScene() {
+        this.engine.tryRender(this)
     }
 }

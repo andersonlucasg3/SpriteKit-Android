@@ -5,10 +5,17 @@ import br.com.insanitech.spritekit.core.ValueAssign
 /**
  * Created by anderson on 7/3/15.
  */
-open class GLSize @JvmOverloads constructor(var width: Float = 0f, var height: Float = 0f) : ValueAssign<GLSize> {
+internal class GLSize() : ValueAssign<GLSize> {
+    var width: Float = 0.0f
+    var height: Float = 0.0f
+
+    constructor(width: Float, height: Float) : this() {
+        this.width = width
+        this.height = height
+    }
 
     override fun assignByValue(other: GLSize) {
-        width = other.width
-        height = other.height
+        this.width = other.width
+        this.height = other.height
     }
 }

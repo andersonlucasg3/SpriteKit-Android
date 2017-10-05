@@ -1,76 +1,49 @@
-package br.com.insanitech.spritekit
+package br.com.insanitech.spritekit.actions
 
 import android.content.Context
 import android.support.annotation.IdRes
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.SKTexture
+import br.com.insanitech.spritekit.core.SKBlock
+import br.com.insanitech.spritekit.graphics.SKPoint
+import br.com.insanitech.spritekit.graphics.SKSize
+import java.util.*
 
-import java.lang.ref.WeakReference
-import java.util.ArrayList
-import java.util.LinkedList
-import java.util.Locale
-import java.util.Random
-
-import br.com.insanitech.spritekit.logger.Logger
-
-abstract class SKAction : Cloneable {
+abstract class SKAction {
     private var started = false
-    private var startedTime: Long = 0
 
     internal var key = ""
-    internal var parent: SKNode? = null
     internal var completion: SKBlock? = null
+
+    internal var startedTime: Long = 0
+        private set
 
     var speed = 1f
     var duration: Long = 1000
     var timingMode = defaultTiming
 
-    fun reverseAction(): SKAction? = null
-
-    internal abstract fun computeStart()
-
-    internal fun computeAction() {
-        if (!started) {
-            started = true
-            startedTime = System.currentTimeMillis()
-            computeStart()
-        }
-
-        val elapsed = System.currentTimeMillis() - startedTime
-        computeAction(elapsed)
-        checkAndCompleteIfFinished(elapsed)
-    }
-
-    internal abstract fun computeAction(elapsed: Long)
-
-    internal abstract fun computeFinish()
-
-    internal fun checkAndCompleteIfFinished(elapsed: Long) {
-        if (elapsed >= this.duration) {
-            this.computeFinish()
-            this.removeFromParent()
-            this.dispatchCompletion()
+    internal fun start(node: SKNode) {
+        if (!this.started) {
+            this.started = true
+            this.startedTime = System.currentTimeMillis()
+            this.computeStart(node)
         }
     }
 
-    internal fun removeFromParent() {
-        this.parent?.actions?.remove(this)
-        this.parent = null
+    protected fun restart() {
+        this.started = false
     }
+
+    internal abstract fun computeStart(node: SKNode)
+
+    internal abstract fun computeAction(node: SKNode, elapsed: Long)
+
+    internal abstract fun computeFinish(node: SKNode)
+
+    internal open fun hasCompleted(elapsed: Long) : Boolean = elapsed >= this.duration
 
     internal fun dispatchCompletion() {
         this.completion?.invoke()
-    }
-
-    @Throws(CloneNotSupportedException::class)
-    fun copy(): SKAction {
-        val copy = clone() as SKAction
-        copy.duration = duration
-        copy.key = key
-        copy.speed = speed
-        copy.started = started
-        copy.startedTime = startedTime
-        copy.timingMode = timingMode
-        copy.completion = completion
-        return copy
     }
 
     companion object {

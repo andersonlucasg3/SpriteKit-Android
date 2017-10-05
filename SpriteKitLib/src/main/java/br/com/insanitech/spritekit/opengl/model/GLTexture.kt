@@ -11,23 +11,27 @@ import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 /**
  * Created by anderson on 7/3/15.
  */
-class GLTexture : GLGeometry {
-    override lateinit var vertices: FloatArray
-        get set
-    private var buffer: ByteBuffer? = null
+internal class GLTexture : GLGeometry {
+    private lateinit var buffer: ByteBuffer
     private var bytesPerRow: Int = 0
     private var bufferSize: Int = 0
 
     private var texture = IntArray(1)
-    var size: GLSize? = null
-        private set
+
+    val size = GLSize()
+
+    val texVertexBuffer: Buffer
+        get() = this.vertexBuffer
+
+    val glTexture: Int
+        get() = this.texture[0]
 
     constructor(other: GLTexture) : super() {
-        buffer = other.buffer
-        bytesPerRow = other.bytesPerRow
-        bufferSize = other.bufferSize
-        texture = other.texture
-        size = other.size
+        this.buffer = other.buffer
+        this.bytesPerRow = other.bytesPerRow
+        this.bufferSize = other.bufferSize
+        this.texture = other.texture
+        this.size.assignByValue(other.size)
     }
 
     /**
@@ -37,10 +41,11 @@ class GLTexture : GLGeometry {
      * @param bitmap to use as source to the texture
      */
     constructor(bitmap: Bitmap) {
-        size = GLSize(bitmap.width.toFloat(), bitmap.height.toFloat())
-        loadBitmap(bitmap)
+        this.size.width = bitmap.width.toFloat()
+        this.size.height = bitmap.height.toFloat()
+        this.loadBitmap(bitmap)
 
-        generateTexCoords(GLRect(0f, 0f, 1f, 1f))
+        this.generateTexCoords(GLRect(0f, 0f, 1f, 1f))
     }
 
     constructor(buffer: ByteBuffer, bytesPerRow: Int, size: Int) {
@@ -49,9 +54,9 @@ class GLTexture : GLGeometry {
         }
         this.buffer = buffer
         this.bytesPerRow = bytesPerRow
-        bufferSize = size
+        this.bufferSize = size
 
-        generateTexCoords(GLRect(0f, 0f, 1f, 1f))
+        this.generateTexCoords(GLRect(0f, 0f, 1f, 1f))
     }
 
     fun generateTexCoords(coords: GLRect) {
@@ -61,38 +66,32 @@ class GLTexture : GLGeometry {
         coords.origin.y = 1.0f - coords.y
         coords.size.height = 1.0f - coords.height
 
-        vertices = floatArrayOf(coords.x, coords.y, //0.0f, 0.0f,
-                coords.width, coords.y, //1.0f, 0.0f
-                coords.x, coords.height, //0.0f, 1.0f,
-                coords.width, coords.height               //1.0f, 1.0f,
+        this.vertices = floatArrayOf(
+                coords.x, coords.y,                 //0.0f, 0.0f,
+                coords.width, coords.y,             //1.0f, 0.0f
+                coords.x, coords.height,            //0.0f, 1.0f,
+                coords.width, coords.height         //1.0f, 1.0f,
         )
-        componentsPerVertice = 2
-        generateVertex()
+        this.componentsPerVertices = 2
+        this.generateVertex()
     }
 
     private fun loadBitmap(bitmap: Bitmap) {
-        bytesPerRow = bitmap.rowBytes
-        bufferSize = bytesPerRow * bitmap.height
-        buffer = ByteBuffer.allocate(bufferSize)
-        buffer!!.order(ByteOrder.nativeOrder())
-        bitmap.copyPixelsToBuffer(buffer)
-        buffer!!.position(0)
+        this.bytesPerRow = bitmap.rowBytes
+        this.bufferSize = this.bytesPerRow * bitmap.height
+        this.buffer = ByteBuffer.allocate(this.bufferSize)
+        this.buffer.order(ByteOrder.nativeOrder())
+        bitmap.copyPixelsToBuffer(this.buffer)
+        this.buffer.position(0)
 
         bitmap.recycle()
     }
 
     fun loadTexture(renderer: GLRenderer, filterMode: Int) {
-        renderer.loadTexture(buffer!!, bufferSize, bytesPerRow, filterMode, texture)
+        renderer.loadTexture(this.buffer, this.bufferSize, this.bytesPerRow, filterMode, this.texture)
     }
 
     fun unloadTexture(renderer: GLRenderer) {
-        renderer.unloadTexture(texture)
+        renderer.unloadTexture(this.texture)
     }
-
-    fun getTexture(): Int {
-        return texture[0]
-    }
-
-    val texVertexBuffer: Buffer
-        get() = vertexBuffer
 }
