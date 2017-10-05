@@ -23,7 +23,7 @@ internal class SKActionGroup : SKAction {
     }
 
     override fun computeAction(node: SKNode, elapsed: Long) {
-        this.group.forEach { SKActionEngine.computeAction(it, node) }
+        ArrayList(this.group).forEach { SKActionEngine.computeAction(it, node) }
     }
 
     override fun computeFinish(node: SKNode) {
