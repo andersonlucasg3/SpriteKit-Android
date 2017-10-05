@@ -16,15 +16,10 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
     private var factory: GLContextFactory? = null
 
     val currentTime: Long
-        get() = synchronized(this) { System.currentTimeMillis() - this.beginOfTime }
+        get() = System.currentTimeMillis() - this.beginOfTime
 
     var isPaused: Boolean = false
-        get() = synchronized(this) { field }
-        set(value) = synchronized(this) { field = value }
-
     var sceneToBePresented: SKScene? = null
-        get() = synchronized(this) { field }
-        set(value) = synchronized(this) { field = value }
 
     fun start(view: SKView) {
         this.factory = this.setupFactoryAndRenderer(view)
@@ -35,9 +30,11 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
             val thread = this.thread ?: return@Thread
             val factory = this.factory ?: return@Thread
             while (!thread.isInterrupted) {
-                val sceneToBePresented = this.sceneToBePresented ?: continue
-                if (factory.isReady && !this.isPaused) {
-                    this.evaluateSceneActions(sceneToBePresented)
+                synchronized(this) {
+                    val sceneToBePresented = this.sceneToBePresented ?: return@synchronized
+                    if (factory.isReady && !this.isPaused) {
+                        SKActionEngine.evaluateActions(sceneToBePresented)
+                    }
                 }
             }
         })
@@ -65,20 +62,18 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
         return factory
     }
 
-    @Synchronized private fun evaluateSceneActions(scene: SKScene) {
-        scene.evaluateActions()
-    }
+    override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
+        synchronized(this) {
+            val sceneToBePresented = this.sceneToBePresented ?: return
 
-    @Synchronized override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
-        val sceneToBePresented = this.sceneToBePresented ?: return
-
-        renderer.clear(sceneToBePresented.backgroundColor)
-        renderer.saveState()
-        // TODO: this is the scaling of the scene size compared to the view size.
-        // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
-        renderer.scale(width / sceneToBePresented.size.width, height / sceneToBePresented.size.height)
-        sceneToBePresented.onDrawFrame(renderer, width, height)
-        renderer.restoreState()
+            renderer.clear(sceneToBePresented.backgroundColor.color)
+            renderer.saveState()
+            // TODO: this is the scaling of the scene size compared to the view size.
+            // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
+            renderer.scale(width / sceneToBePresented.size.width, height / sceneToBePresented.size.height)
+            sceneToBePresented.drawer.drawFrame(renderer, width, height)
+            renderer.restoreState()
+        }
     }
 
     companion object {

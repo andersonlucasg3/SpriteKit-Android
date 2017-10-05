@@ -55,4 +55,8 @@ class SKRect {
     fun containsPoint(point: SKPoint): Boolean = this.rect.containsPoint(point.point)
 
     override fun toString(): String = "{ origin: ${this.origin}, size: ${this.size} }"
+
+    internal fun assignByValue(rect: SKRect) {
+        this.rect.assignByValue(rect.rect)
+    }
 }

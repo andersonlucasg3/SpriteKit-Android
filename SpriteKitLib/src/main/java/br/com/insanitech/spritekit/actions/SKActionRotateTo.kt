@@ -1,6 +1,7 @@
 package br.com.insanitech.spritekit.actions
 
 import br.com.insanitech.spritekit.SKEaseCalculations
+import br.com.insanitech.spritekit.SKNode
 
 /**
  * Created by anderson on 06/01/17.
@@ -8,31 +9,31 @@ import br.com.insanitech.spritekit.SKEaseCalculations
 internal class SKActionRotateTo(private val radians: Float) : SKAction() {
     private var startRadians: Float = 0.toFloat()
 
-    internal override fun computeStart() {
-        startRadians = parent?.zRotation ?: 0.0f
+    override fun computeStart(node: SKNode) {
+        this.startRadians = node.zRotation
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        when (timingMode) {
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        when (this.timingMode) {
             SKActionTimingMode.EaseIn -> {
-                parent?.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), startRadians, radians - startRadians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startRadians, this.radians - this.startRadians, this.duration.toFloat())
             }
 
             SKActionTimingMode.EaseOut -> {
-                parent?.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), startRadians, radians - startRadians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startRadians, this.radians - this.startRadians, this.duration.toFloat())
             }
 
             SKActionTimingMode.EaseInEaseOut -> {
-                parent?.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), startRadians, radians - startRadians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startRadians, this.radians - this.startRadians, this.duration.toFloat())
             }
 
             SKActionTimingMode.Linear -> {
-                parent?.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), startRadians, radians - startRadians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startRadians, this.radians - this.startRadians, this.duration.toFloat())
             }
         }
     }
 
-    internal override fun computeFinish() {
-        parent?.zRotation = radians
+    override fun computeFinish(node: SKNode) {
+        node.zRotation = this.radians
     }
 }

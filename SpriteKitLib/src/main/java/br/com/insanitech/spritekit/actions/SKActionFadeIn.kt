@@ -1,6 +1,7 @@
 package br.com.insanitech.spritekit.actions
 
 import br.com.insanitech.spritekit.SKEaseCalculations
+import br.com.insanitech.spritekit.SKNode
 
 /**
  * Created by anderson on 06/01/17.
@@ -9,20 +10,20 @@ import br.com.insanitech.spritekit.SKEaseCalculations
 internal class SKActionFadeIn : SKAction() {
     private var startAlpha: Float = 0.toFloat()
 
-    internal override fun computeStart() {
-        startAlpha = parent?.alpha ?: 0.0f
+    override fun computeStart(node: SKNode) {
+        this.startAlpha = node.alpha
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        when (timingMode) {
-            SKActionTimingMode.Linear -> parent?.alpha = SKEaseCalculations.linear(elapsed.toFloat(), startAlpha, 1.0f - startAlpha, duration.toFloat())
-            SKActionTimingMode.EaseIn -> parent?.alpha = SKEaseCalculations.easeIn(elapsed.toFloat(), startAlpha, 1.0f - startAlpha, duration.toFloat())
-            SKActionTimingMode.EaseOut -> parent?.alpha = SKEaseCalculations.easeOut(elapsed.toFloat(), startAlpha, 1.0f - startAlpha, duration.toFloat())
-            SKActionTimingMode.EaseInEaseOut -> parent?.alpha = SKEaseCalculations.easeInOut(elapsed.toFloat(), startAlpha, 1.0f - startAlpha, duration.toFloat())
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        when (this.timingMode) {
+            SKActionTimingMode.Linear -> node.alpha = SKEaseCalculations.linear(elapsed.toFloat(), this.startAlpha, 1.0f - this.startAlpha, this.duration.toFloat())
+            SKActionTimingMode.EaseIn -> node.alpha = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startAlpha, 1.0f - this.startAlpha, this.duration.toFloat())
+            SKActionTimingMode.EaseOut -> node.alpha = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startAlpha, 1.0f - this.startAlpha, this.duration.toFloat())
+            SKActionTimingMode.EaseInEaseOut -> node.alpha = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startAlpha, 1.0f - this.startAlpha, this.duration.toFloat())
         }
     }
 
-    internal override fun computeFinish() {
-        parent?.alpha = 1.0f
+    override fun computeFinish(node: SKNode) {
+        node.alpha = 1.0f
     }
 }

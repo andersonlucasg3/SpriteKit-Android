@@ -1,5 +1,6 @@
 package br.com.insanitech.spritekit.actions
 
+import br.com.insanitech.spritekit.SKNode
 import br.com.insanitech.spritekit.SKSpriteNode
 import br.com.insanitech.spritekit.SKTexture
 
@@ -8,15 +9,17 @@ import br.com.insanitech.spritekit.SKTexture
  */
 
 internal class SKActionSetTexture(private val texture: SKTexture) : SKAction() {
-    internal override fun computeStart() {
+    override fun computeStart(node: SKNode) {
 
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        (this.parent as? SKSpriteNode)?.texture = texture
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        if (node is SKSpriteNode) {
+            node.texture = this.texture
+        }
     }
 
-    internal override fun computeFinish() {
+    override fun computeFinish(node: SKNode) {
 
     }
 }

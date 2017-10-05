@@ -1,7 +1,8 @@
 package br.com.insanitech.spritekit.actions
 
 import br.com.insanitech.spritekit.SKEaseCalculations
-import br.com.insanitech.spritekit.SKPoint
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.graphics.SKPoint
 
 /**
  * Created by anderson on 06/01/17.
@@ -15,39 +16,37 @@ internal class SKActionMoveBy(delta: SKPoint) : SKAction() {
         this.deltaPoint.assignByValue(delta)
     }
 
-    internal override fun computeStart() {
-        (parent ?: return).let { parent ->
-            startPoint.assignByValue(parent.position)
-        }
+    override fun computeStart(node: SKNode) {
+        this.startPoint.assignByValue(node.position)
     }
 
-    internal override fun computeAction(elapsed: Long) {
+    override fun computeAction(node: SKNode, elapsed: Long) {
         var newX = 0.0f
         var newY = 0.0f
-        when (timingMode) {
+        when (this.timingMode) {
             SKActionTimingMode.EaseIn -> {
-                newX = SKEaseCalculations.easeIn(elapsed.toFloat(), startPoint.x, deltaPoint.x, duration.toFloat())
-                newY = SKEaseCalculations.easeIn(elapsed.toFloat(), startPoint.y, deltaPoint.y, duration.toFloat())
+                newX = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startPoint.x, this.deltaPoint.x, this.duration.toFloat())
+                newY = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startPoint.y, this.deltaPoint.y, this.duration.toFloat())
             }
             SKActionTimingMode.EaseInEaseOut -> {
-                newX = SKEaseCalculations.easeInOut(elapsed.toFloat(), startPoint.x, deltaPoint.x, duration.toFloat())
-                newY = SKEaseCalculations.easeInOut(elapsed.toFloat(), startPoint.y, deltaPoint.y, duration.toFloat())
+                newX = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startPoint.x, this.deltaPoint.x, this.duration.toFloat())
+                newY = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startPoint.y, this.deltaPoint.y, this.duration.toFloat())
             }
             SKActionTimingMode.EaseOut -> {
-                newX = SKEaseCalculations.easeOut(elapsed.toFloat(), startPoint.x, deltaPoint.x, duration.toFloat())
-                newY = SKEaseCalculations.easeOut(elapsed.toFloat(), startPoint.y, deltaPoint.y, duration.toFloat())
+                newX = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startPoint.x, this.deltaPoint.x, this.duration.toFloat())
+                newY = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startPoint.y, this.deltaPoint.y, this.duration.toFloat())
             }
             SKActionTimingMode.Linear -> {
-                newX = SKEaseCalculations.linear(elapsed.toFloat(), startPoint.x, deltaPoint.x, duration.toFloat())
-                newY = SKEaseCalculations.linear(elapsed.toFloat(), startPoint.y, deltaPoint.y, duration.toFloat())
+                newX = SKEaseCalculations.linear(elapsed.toFloat(), this.startPoint.x, this.deltaPoint.x, this.duration.toFloat())
+                newY = SKEaseCalculations.linear(elapsed.toFloat(), this.startPoint.y, this.deltaPoint.y, this.duration.toFloat())
             }
         }
-        parent?.setPosition(newX, newY)
+        node.position.x = newX
+        node.position.y = newY
     }
 
-    internal override fun computeFinish() {
-        parent?.setPosition(startPoint.x + deltaPoint.x, startPoint.y + deltaPoint.y)
+    override fun computeFinish(node: SKNode) {
+        node.position.x = this.startPoint.x + this.deltaPoint.x
+        node.position.y = this.startPoint.y + this.deltaPoint.y
     }
-
-
 }

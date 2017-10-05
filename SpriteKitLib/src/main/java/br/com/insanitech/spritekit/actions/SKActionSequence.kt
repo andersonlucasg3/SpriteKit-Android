@@ -1,12 +1,14 @@
 package br.com.insanitech.spritekit.actions
 
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.engine.SKActionEngine
 import java.util.*
 
 /**
  * Created by anderson on 05/01/17.
  */
 internal class SKActionSequence : SKAction {
-    private var sequence: Queue<SKAction>? = null
+    private var sequence: Queue<SKAction>
     private var computingAction: SKAction? = null
 
     constructor(sequence: Queue<SKAction>) {
@@ -14,39 +16,24 @@ internal class SKActionSequence : SKAction {
         this.duration = Long.MAX_VALUE
     }
 
-    constructor(other: SKActionSequence): this(other.sequence ?: LinkedList<SKAction>())
-
-    private fun setupNextAction() {
-        this.computingAction = this.sequence?.peek()
-        this.computingAction?.parent = parent
-        this.computingAction?.completion = {
-            this.completedAction()
-        }
+    override fun computeStart(node: SKNode) {
+        this.computingAction = this.sequence.first()
+        this.computingAction?.completion = { this.completedSequenceAction() }
+        this.computingAction?.computeStart(node)
     }
 
-    internal override fun computeStart() {
-        setupNextAction()
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        SKActionEngine.computeAction(this.computingAction!!, node)
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        this.computingAction?.computeAction()
-    }
-
-    internal override fun computeFinish() {
+    override fun computeFinish(node: SKNode) {
 
     }
 
-    private fun completedAction() {
-        val sequence = this.sequence
-        val action = this.computingAction
-        if (sequence != null && action != null) {
-            sequence.remove(action)
-            if (sequence.size > 0) {
-                setupNextAction()
-            } else {
-                this.removeFromParent()
-                this.dispatchCompletion()
-            }
-        }
+    override fun hasCompleted(elapsed: Long): Boolean = this.sequence.size == 0
+
+    private fun completedSequenceAction() {
+        this.restart()
+        this.sequence.remove(this.computingAction!!)
     }
 }

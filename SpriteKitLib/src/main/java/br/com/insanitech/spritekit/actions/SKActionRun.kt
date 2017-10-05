@@ -1,21 +1,21 @@
 package br.com.insanitech.spritekit.actions
 
-import br.com.insanitech.spritekit.SKBlock
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.core.SKBlock
 
 /**
  * Created by anderson on 06/01/17.
  */
 internal class SKActionRun(private val runnable: SKBlock?) : SKAction() {
-
-    internal override fun computeStart() {
-
-    }
-
-    internal override fun computeAction(elapsed: Long) {
+    override fun computeStart(node: SKNode) {
 
     }
 
-    internal override fun computeFinish() {
-        runnable?.invoke()
+    override fun computeAction(node: SKNode, elapsed: Long) {
+
+    }
+
+    override fun computeFinish(node: SKNode) {
+        this.runnable?.invoke()
     }
 }

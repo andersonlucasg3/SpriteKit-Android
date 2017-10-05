@@ -7,15 +7,17 @@ import android.view.View;
 
 import java.util.Arrays;
 
-import br.com.insanitech.spritekit.SKAction;
-import br.com.insanitech.spritekit.SKColor;
 import br.com.insanitech.spritekit.SKNode;
-import br.com.insanitech.spritekit.SKRect;
 import br.com.insanitech.spritekit.SKScene;
-import br.com.insanitech.spritekit.SKSize;
 import br.com.insanitech.spritekit.SKSpriteNode;
 import br.com.insanitech.spritekit.SKTexture;
 import br.com.insanitech.spritekit.SKView;
+import br.com.insanitech.spritekit.actions.SKAction;
+import br.com.insanitech.spritekit.graphics.SKColor;
+import br.com.insanitech.spritekit.graphics.SKRect;
+import br.com.insanitech.spritekit.graphics.SKSize;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 /**
  * Created by anderson on 24/06/15.
@@ -61,15 +63,15 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
         if (view == null) {
             view = (SKView) findViewById(R.id.skview);
             SKScene scene = new SKScene(new SKSize(320, 480));
-            scene.setBackgroundColor(SKColor.Companion.darkGrayColor());
+            scene.setBackgroundColor(SKColor.Companion.darkGray());
 
             texture = new SKTexture(this, R.drawable.card_deck);
 
-            SKSpriteNode swordA = SKSpriteNode.Companion.spriteNode(SKColor.Companion.whiteColor(), new SKSize(100, 200));
+            SKSpriteNode swordA = SKSpriteNode.Companion.spriteNode(SKColor.Companion.white(), new SKSize(100, 200));
             swordA.setTexture(new SKTexture(new SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
             swordA.setColorBlendFactor(0.5f);
 
-//            SKSpriteNode heartA = SKSpriteNode.spriteNode(SKColor.whiteColor(), new SKSize(320, 480));
+//            SKSpriteNode heartA = SKSpriteNode.spriteNode(SKColor.white(), new SKSize(320, 480));
 //            heartA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
 //            heartA.setColorBlendFactor(0.5f);
 
@@ -91,20 +93,21 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
 //            animateMovingCards(swordA);
 
             swordA.setZRotation(0);
-            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000), SKAction.Companion.rotateToAngle((float) (Math.PI / 2), 500))));
-            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(2000), SKAction.Companion.rotateToAngle((float) Math.PI, 500))));
-            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(3000), SKAction.Companion.rotateToAngle((float) (3 * Math.PI / 2), 500))));
-            swordA.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(4000), SKAction.Companion.rotateToAngle((float) (Math.PI * 2), 500))));
+            swordA.run(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000), SKAction.Companion.rotateToAngle((float) (Math.PI / 2), 500))));
+            swordA.run(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(2000), SKAction.Companion.rotateToAngle((float) Math.PI, 500))));
+            swordA.run(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(3000), SKAction.Companion.rotateToAngle((float) (3 * Math.PI / 2), 500))));
+            swordA.run(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(4000), SKAction.Companion.rotateToAngle((float) (Math.PI * 2), 500))));
         }
     }
 
     private void rotate(final SKNode nodeParent) {
-        nodeParent.runAction(SKAction.Companion.sequence(Arrays.asList(
+        nodeParent.run(SKAction.Companion.sequence(Arrays.asList(
                 SKAction.Companion.rotateByAngle(1, 50),
-                SKAction.Companion.run(new Runnable() {
+                SKAction.Companion.run(new Function0<Unit>() {
                     @Override
-                    public void run() {
+                    public Unit invoke() {
                         rotate(nodeParent);
+                        return null;
                     }
                 }))));
     }
@@ -138,12 +141,13 @@ public class TestAppActivity extends Activity implements View.OnTouchListener {
             spriteCoordY = 0.0f;
         }
 
-        sprite.runAction(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000),
+        sprite.run(SKAction.Companion.sequence(Arrays.asList(SKAction.Companion.waitFor(1000),
                 SKAction.Companion.setTexture(new SKTexture(new SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture)),
-                SKAction.Companion.run(new Runnable() {
+                SKAction.Companion.run(new Function0<Unit>() {
                     @Override
-                    public void run() {
+                    public Unit invoke() {
                         animateMovingCards(sprite);
+                        return null;
                     }
                 }))));
     }

@@ -1,39 +1,40 @@
 package br.com.insanitech.spritekit.actions
 
 import br.com.insanitech.spritekit.SKEaseCalculations
+import br.com.insanitech.spritekit.SKNode
 
 /**
  * Created by anderson on 06/01/17.
  */
 
 internal class SKActionRotateBy(private val radians: Float) : SKAction() {
-    private var startRadians: Float = 0.toFloat()
+    private var startRadians: Float = 0.0f
 
-    internal override fun computeStart() {
-        startRadians = parent?.zRotation ?: 0.0f
+    override fun computeStart(node: SKNode) {
+        this.startRadians = node.zRotation
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        when (timingMode) {
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        when (this.timingMode) {
             SKActionTimingMode.EaseIn -> {
-                parent?.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), startRadians, radians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startRadians, this.radians, this.duration.toFloat())
             }
 
             SKActionTimingMode.EaseOut -> {
-                parent?.zRotation = SKEaseCalculations.easeOut(elapsed.toFloat(), startRadians, radians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startRadians, this.radians, this.duration.toFloat())
             }
 
             SKActionTimingMode.EaseInEaseOut -> {
-                parent?.zRotation = SKEaseCalculations.easeInOut(elapsed.toFloat(), startRadians, radians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startRadians, this.radians, this.duration.toFloat())
             }
 
             SKActionTimingMode.Linear -> {
-                parent?.zRotation = SKEaseCalculations.linear(elapsed.toFloat(), startRadians, radians, duration.toFloat())
+                node.zRotation = SKEaseCalculations.linear(elapsed.toFloat(), this.startRadians, this.radians, this.duration.toFloat())
             }
         }
     }
 
-    internal override fun computeFinish() {
-        parent?.zRotation = startRadians + radians
+    override fun computeFinish(node: SKNode) {
+        node.zRotation = this.startRadians + this.radians
     }
 }

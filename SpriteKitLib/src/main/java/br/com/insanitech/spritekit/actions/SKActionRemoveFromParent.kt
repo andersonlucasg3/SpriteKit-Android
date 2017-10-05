@@ -1,19 +1,21 @@
 package br.com.insanitech.spritekit.actions
 
+import br.com.insanitech.spritekit.SKNode
+
 /**
  * Created by anderson on 06/01/17.
  */
 
 internal class SKActionRemoveFromParent : SKAction() {
-    internal override fun computeStart() {
+    override fun computeStart(node: SKNode) {
 
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        parent?.removeFromParent()
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        node.removeFromParent()
     }
 
-    internal override fun computeFinish() {
+    override fun computeFinish(node: SKNode) {
 
     }
 }

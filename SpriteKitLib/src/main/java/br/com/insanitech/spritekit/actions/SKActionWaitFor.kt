@@ -1,19 +1,21 @@
 package br.com.insanitech.spritekit.actions
 
+import br.com.insanitech.spritekit.SKNode
+
 /**
  * Created by anderson on 06/01/17.
  */
 
 internal class SKActionWaitFor : SKAction() {
-    internal override fun computeStart() {
+    override fun computeStart(node: SKNode) {
 
     }
 
-    internal override fun computeAction(elapsed: Long) {
+    override fun computeAction(node: SKNode, elapsed: Long) {
 
     }
 
-    internal override fun computeFinish() {
+    override fun computeFinish(node: SKNode) {
 
     }
 }

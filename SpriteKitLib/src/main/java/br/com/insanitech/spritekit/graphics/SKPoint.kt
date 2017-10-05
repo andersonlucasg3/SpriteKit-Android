@@ -29,4 +29,8 @@ class SKPoint {
     constructor(other: SKPoint) : this(other.point)
 
     override fun toString(): String = "{ x: ${this.x}, y: ${this.y} }"
+
+    internal fun assignByValue(point: SKPoint) {
+        this.point.assignByValue(point.point)
+    }
 }

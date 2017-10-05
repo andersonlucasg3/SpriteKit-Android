@@ -1,7 +1,7 @@
 package br.com.insanitech.spritekit.opengl.context
 
 import android.opengl.GLSurfaceView
-import br.com.insanitech.spritekit.SKBlock
+import br.com.insanitech.spritekit.core.SKBlock
 
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig

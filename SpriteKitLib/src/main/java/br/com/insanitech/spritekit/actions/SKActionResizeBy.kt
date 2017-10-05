@@ -1,8 +1,9 @@
 package br.com.insanitech.spritekit.actions
 
 import br.com.insanitech.spritekit.SKEaseCalculations
-import br.com.insanitech.spritekit.SKSize
+import br.com.insanitech.spritekit.SKNode
 import br.com.insanitech.spritekit.SKSpriteNode
+import br.com.insanitech.spritekit.graphics.SKSize
 
 /**
  * Created by anderson on 06/01/17.
@@ -16,42 +17,41 @@ internal class SKActionResizeBy(deltaSize: SKSize) : SKAction() {
         this.deltaSize.assignByValue(deltaSize)
     }
 
-    internal override fun computeStart() {
-        (parent as? SKSpriteNode ?: return).let { parent ->
-            startSize.assignByValue(parent.size)
+    override fun computeStart(node: SKNode) {
+        if (node is SKSpriteNode) {
+            this.startSize.assignByValue(node.size)
         }
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        if (parent is SKSpriteNode) {
-            val sNode = parent as SKSpriteNode
-            var newWidth = sNode.size.width
-            var newHeight = sNode.size.height
-            when (timingMode) {
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        if (node is SKSpriteNode) {
+            var newWidth = node.size.width
+            var newHeight = node.size.height
+            when (this.timingMode) {
                 SKActionTimingMode.Linear -> {
-                    newWidth = SKEaseCalculations.linear(elapsed.toFloat(), startSize.width, deltaSize.width, duration.toFloat())
-                    newHeight = SKEaseCalculations.linear(elapsed.toFloat(), startSize.height, deltaSize.height, duration.toFloat())
+                    newWidth = SKEaseCalculations.linear(elapsed.toFloat(), this.startSize.width, this.deltaSize.width, this.duration.toFloat())
+                    newHeight = SKEaseCalculations.linear(elapsed.toFloat(), this.startSize.height, this.deltaSize.height, this.duration.toFloat())
                 }
                 SKActionTimingMode.EaseIn -> {
-                    newWidth = SKEaseCalculations.easeIn(elapsed.toFloat(), startSize.width, deltaSize.width, duration.toFloat())
-                    newHeight = SKEaseCalculations.easeIn(elapsed.toFloat(), startSize.height, deltaSize.height, duration.toFloat())
+                    newWidth = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startSize.width, this.deltaSize.width, this.duration.toFloat())
+                    newHeight = SKEaseCalculations.easeIn(elapsed.toFloat(), this.startSize.height, this.deltaSize.height, this.duration.toFloat())
                 }
                 SKActionTimingMode.EaseOut -> {
-                    newWidth = SKEaseCalculations.easeOut(elapsed.toFloat(), startSize.width, deltaSize.width, duration.toFloat())
-                    newHeight = SKEaseCalculations.easeOut(elapsed.toFloat(), startSize.height, deltaSize.height, duration.toFloat())
+                    newWidth = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startSize.width, this.deltaSize.width, this.duration.toFloat())
+                    newHeight = SKEaseCalculations.easeOut(elapsed.toFloat(), this.startSize.height, this.deltaSize.height, this.duration.toFloat())
                 }
                 SKActionTimingMode.EaseInEaseOut -> {
-                    newWidth = SKEaseCalculations.easeInOut(elapsed.toFloat(), startSize.width, deltaSize.width, duration.toFloat())
-                    newHeight = SKEaseCalculations.easeInOut(elapsed.toFloat(), startSize.height, deltaSize.height, duration.toFloat())
+                    newWidth = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startSize.width, this.deltaSize.width, this.duration.toFloat())
+                    newHeight = SKEaseCalculations.easeInOut(elapsed.toFloat(), this.startSize.height, this.deltaSize.height, this.duration.toFloat())
                 }
             }
-            sNode.setSize(newWidth, newHeight)
+            node.setSize(newWidth, newHeight)
         }
     }
 
-    internal override fun computeFinish() {
-        if (parent is SKSpriteNode) {
-            (parent as SKSpriteNode).setSize(startSize.width + deltaSize.width, startSize.height + deltaSize.height)
+    override fun computeFinish(node: SKNode) {
+        if (node is SKSpriteNode) {
+            node.setSize(this.startSize.width + this.deltaSize.width, this.startSize.height + this.deltaSize.height)
         }
     }
 }

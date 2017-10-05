@@ -1,44 +1,38 @@
 package br.com.insanitech.spritekit.actions
 
-import java.util.ArrayList
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.engine.SKActionEngine
 
 /**
  * Created by anderson on 06/01/17.
  */
 
 internal class SKActionGroup : SKAction {
-    private var group: MutableList<SKAction>? = null
+    private val group: MutableList<SKAction>
 
     constructor(group: MutableList<SKAction>) {
         this.group = group
         this.duration = Long.MAX_VALUE
     }
 
-    constructor(other: SKActionGroup) : this(other.group ?: ArrayList<SKAction>())
-
-    internal override fun computeStart() {
-        for (i in this.group!!.indices) {
-            val action = group!![i]
-            action.parent = parent
-            action.completion = {
-                completedAction(action)
-            }
+    override fun computeStart(node: SKNode) {
+        this.group.forEach {
+            it.completion = { this.completedGroupAction(it) }
+            it.computeStart(node)
         }
     }
 
-    internal override fun computeAction(elapsed: Long) {
-        this.group?.forEach { it.computeAction() }
+    override fun computeAction(node: SKNode, elapsed: Long) {
+        this.group.forEach { SKActionEngine.computeAction(it, node) }
     }
 
-    internal override fun computeFinish() {
+    override fun computeFinish(node: SKNode) {
 
     }
 
-    private fun completedAction(action: SKAction) {
-        this.group?.remove(action)
-        if (this.group?.size == 0) {
-            this.removeFromParent()
-            this.dispatchCompletion()
-        }
+    override fun hasCompleted(elapsed: Long): Boolean = this.group.size == 0
+
+    private fun completedGroupAction(action: SKAction) {
+        this.group.remove(action)
     }
 }
