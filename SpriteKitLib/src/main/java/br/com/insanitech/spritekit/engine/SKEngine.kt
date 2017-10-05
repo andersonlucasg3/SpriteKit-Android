@@ -33,7 +33,10 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
                 synchronized(this) {
                     val sceneToBePresented = this.sceneToBePresented ?: return@synchronized
                     if (factory.isReady && !this.isPaused) {
+                        sceneToBePresented.update(this.currentTime)
                         SKActionEngine.evaluateActions(sceneToBePresented)
+                        sceneToBePresented.didEvaluateActions()
+                        sceneToBePresented.didFinishUpdate()
                     }
                 }
             }
