@@ -15,13 +15,13 @@ internal object SKActionEngine {
     }
 
     private fun updateActions(node: SKNode) {
-        node.actions.forEach {
+        ArrayList(node.actions).forEach {
             this.computeAction(it, node)
         }
     }
 
     private fun updateChildrenActions(node: SKNode) {
-        node.children.forEach {
+        ArrayList(node.children).forEach {
             this.evaluateActions(it)
         }
     }
@@ -39,7 +39,7 @@ internal object SKActionEngine {
         }
     }
 
-    fun completeAction(action: SKAction, node: SKNode) {
+    private fun completeAction(action: SKAction, node: SKNode) {
         action.computeFinish(node)
         node.actions.remove(action)
         action.dispatchCompletion()
