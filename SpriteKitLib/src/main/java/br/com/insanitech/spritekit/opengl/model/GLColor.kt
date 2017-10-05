@@ -1,16 +1,18 @@
 package br.com.insanitech.spritekit.opengl.model
 
+import br.com.insanitech.spritekit.core.ValueAssign
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.nio.FloatBuffer
-
-import br.com.insanitech.spritekit.core.ValueAssign
 
 /**
  * Created by anderson on 6/30/15.
  */
 internal class GLColor() : ValueAssign<GLColor> {
-    internal val buffer = FloatBuffer.allocate(4)
+    internal val buffer by lazy {
+        val bb = ByteBuffer.allocateDirect(4 * 4)
+        bb.order(ByteOrder.nativeOrder())
+        return@lazy bb.asFloatBuffer()
+    }
 
     var r: Float
         get() = this.get(0)
