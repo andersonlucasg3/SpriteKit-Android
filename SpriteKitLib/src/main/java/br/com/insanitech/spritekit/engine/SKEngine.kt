@@ -12,7 +12,6 @@ import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
  */
 internal class SKEngine private constructor() : GLRenderer.GLDrawer {
     private var beginOfTime = 0L
-    private var thread: Thread? = null
     private var factory: GLContextFactory? = null
 
     val currentTime: Long
@@ -25,28 +24,10 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
         this.factory = this.setupFactoryAndRenderer(view)
 
         this.beginOfTime = System.currentTimeMillis()
-
-        this.thread = Thread({
-            val thread = this.thread ?: return@Thread
-            val factory = this.factory ?: return@Thread
-            while (!thread.isInterrupted) {
-                synchronized(this) {
-                    val sceneToBePresented = this.sceneToBePresented ?: return@synchronized
-                    if (factory.isReady && !this.isPaused) {
-                        sceneToBePresented.update(this.currentTime)
-                        SKActionEngine.evaluateActions(sceneToBePresented)
-                        sceneToBePresented.didEvaluateActions()
-                        sceneToBePresented.didFinishUpdate()
-                    }
-                }
-            }
-        })
-        this.thread?.start()
     }
 
     fun stop() {
-        this.thread?.interrupt()
-        this.thread = null
+        // TODO: Do something to stop if needed
     }
 
     fun tryRender(view: SKView) {
@@ -55,7 +36,7 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
         }
     }
 
-    private fun setupFactoryAndRenderer(view: SKView) : GLContextFactory {
+    private fun setupFactoryAndRenderer(view: SKView): GLContextFactory {
         // TODO: testing GL 1.0, change to test other versions
         val factory = GL10ContextFactory()
         factory.renderer = GLGenericRenderer(this)
@@ -65,18 +46,29 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
         return factory
     }
 
-    override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
+    private fun doUpdateFlow(sceneToBePresented: SKScene) {
+        sceneToBePresented.update(this.currentTime)
         synchronized(this) {
-            val sceneToBePresented = this.sceneToBePresented ?: return
-
-            renderer.clear(sceneToBePresented.backgroundColor.color)
-            renderer.saveState()
-            // TODO: this is the scaling of the scene size compared to the view size.
-            // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
-            renderer.scale(width / sceneToBePresented.size.width, height / sceneToBePresented.size.height)
-            sceneToBePresented.drawer.drawFrame(renderer, width, height)
-            renderer.restoreState()
+            SKActionEngine.evaluateActions(sceneToBePresented)
         }
+        sceneToBePresented.didEvaluateActions()
+        sceneToBePresented.didFinishUpdate()
+    }
+
+    private fun doRendering(renderer: GLRenderer, width: Int, height: Int, sceneToBePresented: SKScene) {
+        renderer.clear(sceneToBePresented.backgroundColor.color)
+        renderer.saveState()
+        // TODO: this is the scaling of the scene size compared to the view size.
+        // TODO: it's making the Scale Aspect Fill, so the content fits the view no matter the size of the scene.
+        renderer.scale(width / sceneToBePresented.size.width, height / sceneToBePresented.size.height)
+        sceneToBePresented.drawer.drawFrame(renderer, width, height)
+        renderer.restoreState()
+    }
+
+    override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
+        val sceneToBePresented = this.sceneToBePresented ?: return
+        this.doUpdateFlow(sceneToBePresented)
+        this.doRendering(renderer, width, height, sceneToBePresented)
     }
 
     companion object {
