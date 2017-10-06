@@ -9,7 +9,7 @@ import java.nio.ByteOrder
  */
 internal class GLColor() : ValueAssign<GLColor> {
     internal val buffer by lazy {
-        val bb = ByteBuffer.allocateDirect(4 * 4)
+        val bb = ByteBuffer.allocateDirect(16 * 4)
         bb.order(ByteOrder.nativeOrder())
         bb.asFloatBuffer()
     }
@@ -38,7 +38,13 @@ internal class GLColor() : ValueAssign<GLColor> {
     }
 
     private fun get(index: Int) : Float = this.buffer.get(index)
-    private fun set(index: Int, value: Float) = this.buffer.put(index, value)
+
+    private fun set(index: Int, value: Float) {
+        this.buffer.put(index, value)
+        this.buffer.put(index + 4, value)
+        this.buffer.put(index + 8, value)
+        this.buffer.put(index + 12, value)
+    }
 
     override fun assignByValue(other: GLColor) {
         this.r = other.r

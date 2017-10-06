@@ -5,7 +5,12 @@ package br.com.insanitech.spritekit.opengl.model
  */
 internal class GLRectangle : GLGeometry() {
     init {
-        this.vertices = floatArrayOf(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f)
+        this.vertices = floatArrayOf(
+                0.0f, 0.0f, 0.0f,
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                1.0f, 1.0f, 0.0f
+        )
         this.componentsPerVertices = 2
         this.generateVertex()
     }

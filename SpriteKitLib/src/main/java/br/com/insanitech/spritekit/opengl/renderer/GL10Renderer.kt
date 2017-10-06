@@ -2,17 +2,14 @@ package br.com.insanitech.spritekit.opengl.renderer
 
 import android.opengl.GLES10
 import android.opengl.GLU
-
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-
-import javax.microedition.khronos.egl.EGLConfig
-import javax.microedition.khronos.opengles.GL10
-
 import br.com.insanitech.spritekit.logger.Logger
 import br.com.insanitech.spritekit.opengl.model.GLColor
 import br.com.insanitech.spritekit.opengl.model.GLTexture
 import br.com.insanitech.spritekit.opengl.model.GLUtils
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 /**
  * Created by anderson on 6/28/15.
