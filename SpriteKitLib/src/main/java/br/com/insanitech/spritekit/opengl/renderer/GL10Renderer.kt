@@ -152,6 +152,8 @@ internal open class GL10Renderer(drawer: GLDrawer) : GLRenderer(drawer) {
         GLES10.glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY)
         GLES10.glEnableClientState(GLES10.GL_COLOR_ARRAY)
 
+        GLES10.glTexEnvx(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_MODE, GLES10.GL_MODULATE)
+
         GLES10.glFrontFace(GLES10.GL_CCW)
 
         GLES10.glTexCoordPointer(2, GLES10.GL_FLOAT, 0, texture.texVertexBuffer)
@@ -160,8 +162,8 @@ internal open class GL10Renderer(drawer: GLDrawer) : GLRenderer(drawer) {
         GLES10.glDrawElements(GLES10.GL_TRIANGLES, rectangle.indicesCount, GLES10.GL_UNSIGNED_SHORT, rectangle.indicesBuff)
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY)
-        GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY)
         GLES10.glDisableClientState(GLES10.GL_TEXTURE_COORD_ARRAY)
+        GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY)
         GLES10.glDisable(GLES10.GL_TEXTURE_2D)
         GLES10.glDisable(GLES10.GL_BLEND)
 

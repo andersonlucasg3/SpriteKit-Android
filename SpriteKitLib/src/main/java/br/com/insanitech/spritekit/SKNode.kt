@@ -273,7 +273,7 @@ open class SKNode {
         }
 
         internal fun drawChildren(renderer: GLRenderer, width: Int, height: Int) {
-            ArrayList(this.node.children).forEach {
+            ArrayList(this.node.children).sortedBy { it.zPosition }.forEach {
                 it.drawer.drawFrame(renderer, width, height)
             }
         }
