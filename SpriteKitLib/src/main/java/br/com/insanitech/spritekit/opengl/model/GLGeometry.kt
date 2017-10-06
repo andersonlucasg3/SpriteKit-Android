@@ -18,6 +18,15 @@ internal abstract class GLGeometry : ValueAssign<GLGeometry> {
     lateinit var indicesBuff: ShortBuffer
         private set
 
+    val vertexBuffer: Buffer
+        get() = this.verticesBuff.asReadOnlyBuffer()
+
+    val vertexCount: Int
+        get() = this.vertices.size / this.componentsPerVertices
+
+    val indicesCount: Int
+        get() = this.indices.size
+
     protected fun generateVertex() {
         this.indices = shortArrayOf(0, 1, 2, 1, 3, 2)
         this.indicesBuff = ShortBuffer.allocate(this.indices.size)
@@ -31,15 +40,6 @@ internal abstract class GLGeometry : ValueAssign<GLGeometry> {
         this.verticesBuff.put(this.vertices)
         this.verticesBuff.position(0)
     }
-
-    val vertexBuffer: Buffer
-        get() = this.verticesBuff.asReadOnlyBuffer()
-
-    val vertexCount: Int
-        get() = this.vertices.size / this.componentsPerVertices
-
-    val indicesCount: Int
-        get() = this.indices.size
 
     override fun assignByValue(other: GLGeometry) {
         this.indices = other.indices.copyOf()
