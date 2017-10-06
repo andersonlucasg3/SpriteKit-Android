@@ -67,13 +67,13 @@ abstract class SKAction {
             return action
         }
 
-        fun rotateByAngle(radians: Float, duration: Long): SKAction {
+        fun rotateBy(radians: Float, duration: Long): SKAction {
             val action = SKActionRotateBy(radians)
             action.duration = duration
             return action
         }
 
-        fun rotateToAngle(radians: Float, duration: Long): SKAction {
+        fun rotateTo(radians: Float, duration: Long): SKAction {
             val action = SKActionRotateTo(radians)
             action.duration = duration
             return action
