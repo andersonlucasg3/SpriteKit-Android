@@ -56,4 +56,8 @@ open class SKScene : SKEffectNode {
 
     }
 
+    open fun convertPoint(fromViewPoint: SKPoint): SKPoint {
+        val newY = this.view!!.size.height - fromViewPoint.y
+        return SKPoint(fromViewPoint.x, newY)
+    }
 }
