@@ -1,5 +1,7 @@
 package br.com.insanitech.spritekit
 
+import android.graphics.Matrix
+import android.graphics.RectF
 import br.com.insanitech.spritekit.graphics.SKColor
 import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKRect
@@ -33,6 +35,24 @@ class SKSpriteNode : SKNode() {
     fun setSize(width: Float, height: Float) {
         this.size.width = width
         this.size.height = height
+    }
+
+    override fun calculateAccumulatedFrame(): SKRect {
+        var left = this.position.x - (this.size.width * this.anchorPoint.x)
+        var top = this.position.y - (this.size.height * this.anchorPoint.y)
+        val right = left + this.size.width
+        val bottom = top + this.size.height
+        val rect = RectF(left, top, right, bottom)
+        val matrix = Matrix()
+        matrix.setRotate(this.zRotation)
+        matrix.setScale(this.xScale, this.yScale)
+        matrix.mapRect(rect)
+
+        left = rect.left + rect.width() * this.anchorPoint.x
+        top = rect.top + rect.height() * this.anchorPoint.y
+        val accumulatedSelf = SKRect(left, top, rect.width(), rect.height())
+        this.accumulateFrame(super.calculateAccumulatedFrame(), accumulatedSelf)
+        return accumulatedSelf
     }
 
     override fun copy(): SKSpriteNode {

@@ -60,4 +60,14 @@ open class SKScene : SKEffectNode {
         val newY = this.view!!.size.height - fromViewPoint.y
         return SKPoint(fromViewPoint.x, newY)
     }
+
+    override fun addChild(node: SKNode) {
+        super.addChild(node, false)
+        this.movedToScene(this)
+    }
+
+    override fun insertChild(node: SKNode, index: Int) {
+        super.insertChild(node, index, false)
+        this.movedToScene(this)
+    }
 }

@@ -3,6 +3,7 @@ package br.com.insanitech.spritekit
 import br.com.insanitech.spritekit.actions.SKAction
 import br.com.insanitech.spritekit.core.SKBlock
 import br.com.insanitech.spritekit.graphics.SKPoint
+import br.com.insanitech.spritekit.graphics.SKRect
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
 open class SKNode {
@@ -42,43 +43,109 @@ open class SKNode {
         this.position.y = y
     }
 
-    fun addChild(node: SKNode) {
+    open fun atPoint(p: SKPoint): SKNode {
+        val filtered = this.childrenNodes.filter {
+            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame().containsPoint(it.convertPoint(p, this.scene!!))
+        }
+        val sorted = filtered.sortedWith(Comparator { o1, o2 ->
+            when {
+                o1.zPosition > o2.zPosition -> return@Comparator 1
+                o1.zPosition == o2.zPosition -> return@Comparator 0
+                o1.zPosition < o2.zPosition -> return@Comparator -1
+                else -> return@Comparator 0
+            }
+        })
+        return sorted.firstOrNull() ?: this
+    }
+
+
+    // TODO: Re-think this implementation
+    private fun convertPoint(p: SKPoint, node: SKNode): SKPoint {
+        var calculatedX = 0.0f
+        var calculatedY = 0.0f
+        node.forEachParent {
+            calculatedX += it.position.x
+            calculatedY += it.position.y
+        }
+        return SKPoint(p.x - calculatedX, p.y - calculatedY)
+    }
+
+    internal fun accumulateFrame(ofRect: SKRect, inRect: SKRect) {
+        if (inRect.x > ofRect.x) {
+            inRect.origin.x = ofRect.x
+        }
+        if (inRect.y > ofRect.y) {
+            inRect.origin.y = ofRect.y
+        }
+        if (inRect.width < ofRect.x + ofRect.width) {
+            inRect.size.width = ofRect.x + ofRect.width
+        }
+        if (inRect.height < ofRect.y + ofRect.height) {
+            inRect.size.height = ofRect.y + ofRect.height
+        }
+    }
+
+    open fun calculateAccumulatedFrame(): SKRect {
+        val rect = SKRect()
+        this.childrenNodes.forEach { this.accumulateFrame(it.calculateAccumulatedFrame(), rect) }
+        return rect
+    }
+
+    open fun addChild(node: SKNode) {
+        this.addChild(node, true)
+    }
+
+    internal fun addChild(node: SKNode, move: Boolean) {
         this.childrenNodes.add(node)
         node.parent = this
+        if (move) {
+            node.movedToScene(this.scene)
+        }
     }
 
-    fun insertChild(node: SKNode, index: Int) {
+    open fun insertChild(node: SKNode, index: Int) {
+        this.insertChild(node, index, true)
+    }
+
+    internal fun insertChild(node: SKNode, index: Int, move: Boolean) {
         this.childrenNodes.add(index, node)
         node.parent = this
+        if (move) {
+            node.movedToScene(this.scene)
+        }
     }
 
-    fun removeFromParent() {
+    open fun removeFromParent() {
         this.parent?.childrenNodes?.remove(this)
         this.parent = null
+        this.movedToScene(null)
     }
 
-    fun removeAllChildren() {
+    open fun removeAllChildren() {
         val children = ArrayList<SKNode>(this.childrenNodes)
         children.forEach(SKNode::removeFromParent)
     }
 
-    fun removeChildren(nodes: List<SKNode>) {
+    open fun removeChildren(nodes: List<SKNode>) {
         val list = ArrayList<SKNode>(nodes)
         list.forEach { if (it.parent == this) it.removeFromParent() }
     }
 
-    fun inParentHierarchy(parent: SKNode): Boolean {
+    internal fun forEachParent(block: (parent: SKNode) -> Unit) : Unit {
         var myParent = this.parent
         while (myParent != null) {
-            if (myParent == parent) {
-                return true
-            }
+            block(myParent)
             myParent = myParent.parent
         }
-        return false
     }
 
-    internal fun movedToScene(scene: SKScene?) {
+    fun inParentHierarchy(parent: SKNode): Boolean {
+        var status = false
+        this.forEachParent { if (it == parent) { status = true; return@forEachParent } }
+        return status
+    }
+
+    internal open fun movedToScene(scene: SKScene?) {
         this.scene = scene
         this.childrenNodes.forEach {
             it.movedToScene(scene)
