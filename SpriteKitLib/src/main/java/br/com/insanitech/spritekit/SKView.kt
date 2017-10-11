@@ -59,7 +59,6 @@ class SKView : GLSurfaceView {
         this.scene?.view = this
         this.scene?.didMove(this)
 
-        setOnTouchListener(scene)
         this.presentScene()
     }
 
