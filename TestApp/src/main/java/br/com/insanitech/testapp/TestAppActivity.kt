@@ -7,6 +7,7 @@ import android.view.View
 import br.com.insanitech.spritekit.*
 import br.com.insanitech.spritekit.actions.SKAction
 import br.com.insanitech.spritekit.graphics.SKColor
+import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKRect
 import br.com.insanitech.spritekit.graphics.SKSize
 import kotlinx.android.synthetic.main.activity_main.*
@@ -62,18 +63,18 @@ class TestAppActivity : Activity(), View.OnTouchListener {
             swordA.texture = SKTexture(SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture!!)
             swordA.colorBlendFactor = 0.5f
 
-            //            SKSpriteNode heartA = SKSpriteNode.spriteNode(SKColor.white(), new SKSize(320, 480));
-            //            heartA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
-            //            heartA.setColorBlendFactor(0.5f);
+            val heartA = SKSpriteNode.spriteNode(SKColor.white(), SKSize(100f, 200f))
+            heartA.texture = SKTexture(SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture!!)
+            heartA.colorBlendFactor = 0.5f
 
             val nodeParent = SKNode.node()
             nodeParent.position.x = scene.size.width / 2.0f
             nodeParent.position.y = scene.size.height / 2.0f
 
             nodeParent.addChild(swordA)
-            //            nodeParent.addChild(heartA);
+            nodeParent.addChild(heartA)
 
-            //            heartA.zPosition = -1;
+            heartA.zPosition = -1f
 
             scene.addChild(nodeParent)
 
@@ -81,13 +82,8 @@ class TestAppActivity : Activity(), View.OnTouchListener {
 
             view!!.setOnTouchListener(this)
 
-            //            animateMovingCards(swordA);
-
-            swordA.zRotation = 0.0f
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle((Math.PI / 2).toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle(Math.PI.toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle((3 * Math.PI / 2).toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle((Math.PI * 2).toFloat(), 500))))
+            swordA.position.x -= 20f
+            heartA.position.x += 20f
         }
     }
 
@@ -100,15 +96,18 @@ class TestAppActivity : Activity(), View.OnTouchListener {
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_MOVE ->
-
-                return true
-
-            else -> {
+        System.out.println(event.toString())
+        when (event.actionMasked) {
+            MotionEvent.ACTION_UP -> {
+                val touchLocation = SKPoint(event.x, event.y)
+                val sceneLocation = this.view!!.scene!!.convertPoint(touchLocation)
+                val touchNode = this.view!!.scene!!.atPoint(sceneLocation) as? SKSpriteNode
+                System.out.println("Node position: ${touchNode?.position}, size: ${touchNode?.size}")
+                System.out.println("Node's accumulated frame: ${touchNode?.calculateAccumulatedFrame()}")
             }
+            else -> { }
         }
-        return false
+        return true
     }
 
     private fun animateMovingCards(sprite: SKSpriteNode) {
