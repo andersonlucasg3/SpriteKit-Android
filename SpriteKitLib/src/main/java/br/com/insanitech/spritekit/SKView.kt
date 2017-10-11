@@ -51,11 +51,13 @@ class SKView : GLSurfaceView {
     }
 
     fun presentScene(scene: SKScene?) {
-        if (this.engine.sceneToBePresented != scene) {
-            this.engine.sceneToBePresented?.willMove(this)
+        if (this.scene != scene) {
+            this.scene?.willMove(this)
+            this.scene?.view = null
         }
-        this.engine.sceneToBePresented = scene
-        this.engine.sceneToBePresented?.didMove(this)
+        this.scene = scene
+        this.scene?.view = this
+        this.scene?.didMove(this)
 
         setOnTouchListener(scene)
         this.presentScene()
