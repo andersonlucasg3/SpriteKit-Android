@@ -12,8 +12,9 @@ class SKView : GLSurfaceView {
 
     val size: SKSize = SKSize()
 
-    val scene: SKScene?
+    var scene: SKScene?
         get() = this.engine.sceneToBePresented
+        private set(value) { this.engine.sceneToBePresented = value }
 
     var isPaused: Boolean
         get() = this.engine.isPaused
