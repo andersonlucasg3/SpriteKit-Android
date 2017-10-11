@@ -17,6 +17,7 @@ internal class SKEngine private constructor() : GLRenderer.GLDrawer {
     val currentTime: Long
         get() = System.currentTimeMillis() - this.beginOfTime
 
+    // TODO: implement pausing the engine when isPaused == true
     var isPaused: Boolean = false
     var sceneToBePresented: SKScene? = null
 
