@@ -37,9 +37,9 @@ class SKSpriteNode : SKNode() {
         this.size.height = height
     }
 
-    override fun calculateAccumulatedFrame(): SKRect {
-        var left = this.position.x - (this.size.width * this.anchorPoint.x)
-        var top = this.position.y - (this.size.height * this.anchorPoint.y)
+    override fun calculateAccumulatedFrame(adjustParent: Boolean): SKRect {
+        val left = this.position.x - (this.size.width * this.anchorPoint.x)
+        val top = this.position.y - (this.size.height * this.anchorPoint.y)
         val right = left + this.size.width
         val bottom = top + this.size.height
         val rect = RectF(left, top, right, bottom)
@@ -48,10 +48,8 @@ class SKSpriteNode : SKNode() {
         matrix.setScale(this.xScale, this.yScale)
         matrix.mapRect(rect)
 
-        left = rect.left + rect.width() * this.anchorPoint.x
-        top = rect.top + rect.height() * this.anchorPoint.y
-        val accumulatedSelf = SKRect(left, top, rect.width(), rect.height())
-        this.accumulateFrame(super.calculateAccumulatedFrame(), accumulatedSelf)
+        val accumulatedSelf = SKRect(rect.left, rect.top, rect.width(), rect.height())
+        this.accumulateFrame(super.calculateAccumulatedFrame(false), accumulatedSelf)
         return accumulatedSelf
     }
 

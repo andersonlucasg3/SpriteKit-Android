@@ -45,13 +45,13 @@ open class SKNode {
 
     open fun atPoint(p: SKPoint): SKNode {
         val filtered = this.childrenNodes.filter {
-            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame().containsPoint(it.convertFrom(p, this.scene!!))
+            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame(false).containsPoint(p)
         }
         val sorted = filtered.sortedWith(Comparator { o1, o2 ->
             when {
-                o1.zPosition > o2.zPosition -> return@Comparator 1
+                o1.zPosition > o2.zPosition -> return@Comparator -1
                 o1.zPosition == o2.zPosition -> return@Comparator 0
-                o1.zPosition < o2.zPosition -> return@Comparator -1
+                o1.zPosition < o2.zPosition -> return@Comparator 1
                 else -> return@Comparator 0
             }
         })
@@ -103,19 +103,28 @@ open class SKNode {
         if (inRect.y > ofRect.y) {
             inRect.origin.y = ofRect.y
         }
-        if (inRect.width < ofRect.x + ofRect.width) {
-            inRect.size.width = ofRect.x + ofRect.width
+        if (inRect.width == 0f) {
+            inRect.size.width = ofRect.width
+        } else if (inRect.x + inRect.width < ofRect.x + ofRect.width) {
+            inRect.size.width += (ofRect.x + ofRect.width) - (inRect.x + inRect.width)
         }
-        if (inRect.height < ofRect.y + ofRect.height) {
-            inRect.size.height = ofRect.y + ofRect.height
+        if (inRect.height == 0f) {
+            inRect.size.height = ofRect.height
+        } else if (inRect.y + inRect.height < ofRect.y + ofRect.height) {
+            inRect.size.height += (ofRect.y + ofRect.height) - (inRect.y + inRect.width)
         }
     }
 
-    open fun calculateAccumulatedFrame(): SKRect {
+    internal open fun calculateAccumulatedFrame(adjustParent: Boolean): SKRect {
         val rect = SKRect()
-        this.childrenNodes.forEach { this.accumulateFrame(it.calculateAccumulatedFrame(), rect) }
+        this.childrenNodes.forEach { this.accumulateFrame(it.calculateAccumulatedFrame(false), rect) }
+        if (adjustParent && this.parent != null) {
+            rect.origin = this.convertTo(rect.origin, this.parent!!)
+        }
         return rect
     }
+
+    open fun calculateAccumulatedFrame(): SKRect = this.calculateAccumulatedFrame(true)
 
     open fun addChild(node: SKNode) {
         this.addChild(node, true)
