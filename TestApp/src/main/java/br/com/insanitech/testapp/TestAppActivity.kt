@@ -49,7 +49,7 @@ class TestAppActivity : Activity(), View.OnTouchListener {
     }
 
     private fun initializeScene() {
-        val scene = SKScene(SKSize(this.view.size.width, this.view.size.height))
+        val scene = SKScene(SKSize(320f, 568f))
         scene.name = "Scene"
         scene.scaleMode = AspectFill
         scene.backgroundColor = SKColor.darkGray()
@@ -62,27 +62,44 @@ class TestAppActivity : Activity(), View.OnTouchListener {
         parentNode.position = SKPoint(scene.size.width / 2.0f, scene.size.height / 2.0f)
         scene.addChild(parentNode)
 
-        val spriteNode = SKSpriteNode.spriteNode(SKColor.red(), SKSize(50f, 50f))
+        var spriteNode = SKSpriteNode.spriteNode(SKColor.red(), SKSize(50f, 50f))
+        spriteNode.position.x -= 20
         spriteNode.name = "Red SpriteNode"
         parentNode.addChild(spriteNode)
+
+        System.out.println("accum frame red: ${spriteNode.calculateAccumulatedFrame()}")
+
+        spriteNode = SKSpriteNode.Companion.spriteNode(SKColor.blue(), SKSize(50f, 50f))
+        spriteNode.position.x += 20
+        spriteNode.name = "Blue SpriteNode"
+        spriteNode.zPosition = -1f
+        parentNode.addChild(spriteNode)
+
+        System.out.println("accum frame blue: ${spriteNode.calculateAccumulatedFrame()}")
+
+        System.out.println("accum frame parent: ${parentNode.calculateAccumulatedFrame()}")
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         System.out.println(event.toString())
         when (event.actionMasked) {
             MotionEvent.ACTION_UP -> {
-                val touchPosition = SKPoint(event.x, event.y)
-                val scenePosition = this.view.convertTo(touchPosition, this.view.scene!!)
+                this.view.queueEvent {
+                    val touchPosition = SKPoint(event.x, event.y)
+                    val scenePosition = this.view.convertTo(touchPosition, this.view.scene!!)
 
-                val parent = this.view.scene!!.children[0]
-                var convertedPoint = parent.convertFrom(scenePosition, this.view.scene!!)
+                    val parent = this.view.scene!!.children[0]
+                    var convertedPoint = parent.convertFrom(scenePosition, this.view.scene!!)
 
-                val nodeFromParent = parent.atPoint(convertedPoint)
+                    val nodeFromParent = parent.atPoint(convertedPoint)
 
-                convertedPoint = this.view.scene!!.convertFrom(convertedPoint, parent)
-                val nodeFromScene = this.view.scene!!.atPoint(convertedPoint)
+                    convertedPoint = this.view.scene!!.convertFrom(convertedPoint, parent)
+                    val nodeFromScene = this.view.scene!!.atPoint(convertedPoint)
 
-                assert(nodeFromParent == nodeFromScene)
+                    assert(nodeFromParent == nodeFromScene)
+                    System.out.println(nodeFromParent.name)
+                    System.out.println(nodeFromScene.name)
+                }
             }
             else -> { }
         }
