@@ -68,14 +68,21 @@ class SKView : GLSurfaceView {
     }
 
     open fun convertTo(point: SKPoint, scene: SKScene): SKPoint {
-        val newX = point.x - scene.position.x
-        val newY = this.size.height - point.y - scene.position.y
+        // The point needs to be converted to the scene scale, because the scene may be smaller than the view.
+        val realPoint = SKPoint((point.x * scene.size.width) / this.size.width,
+                (point.y * scene.size.height) / this.size.height)
+
+        val newX = realPoint.x - scene.position.x
+        val newY = scene.size.height - realPoint.y - scene.position.y
         return SKPoint(newX, newY)
     }
 
     open fun convertFrom(point: SKPoint, scene: SKScene): SKPoint {
-        val newX = point.x + scene.position.x
-        val newY = this.size.height - point.y + scene.position.y
+        val realPoint = SKPoint((point.x * this.size.width) / scene.size.width,
+                (point.y * this.size.height) / scene.size.height)
+
+        val newX = realPoint.x + scene.position.x
+        val newY = this.size.height - realPoint.y + scene.position.y
         return SKPoint(newX, newY)
     }
 }
