@@ -239,6 +239,9 @@ open class SKNode {
         return newNode
     }
 
+    override fun toString(): String =
+            "[${this.javaClass.simpleName}] name: ${this.name}, position: ${this.position}, scale: ${SKPoint(this.xScale, this.yScale)}, rotation: ${this.zRotation}"
+
     // MARK: Drawer implementations
 
     internal open val drawer: SKNodeDrawer by lazy { SKNodeDrawer(this) }

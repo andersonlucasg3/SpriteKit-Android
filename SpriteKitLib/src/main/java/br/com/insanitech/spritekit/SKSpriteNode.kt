@@ -65,6 +65,11 @@ class SKSpriteNode : SKNode() {
         return node
     }
 
+    override fun toString(): String =
+            "[${this.javaClass.simpleName}] name: ${this.name}, texture: ${this.texture}, position: ${this.position}, scale: ${SKPoint(this.xScale, this.yScale)}, size: ${this.size}, anchor: ${this.anchorPoint}, rotation: ${this.zRotation}"
+
+    // MARK: Drawer implementations
+
     override val drawer: SKNodeDrawer by lazy {
         object: SKNodeDrawer(this) {
             override val node: SKSpriteNode = super.node as SKSpriteNode
