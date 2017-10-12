@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.ViewGroup
 import br.com.insanitech.spritekit.engine.SKEngine
+import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKSize
 
 class SKView : GLSurfaceView {
@@ -64,5 +65,17 @@ class SKView : GLSurfaceView {
 
     private fun presentScene() {
         this.engine.tryRender(this)
+    }
+
+    open fun convertTo(point: SKPoint, scene: SKScene): SKPoint {
+        val newX = point.x - scene.position.x
+        val newY = this.size.height - point.y - scene.position.y
+        return SKPoint(newX, newY)
+    }
+
+    open fun convertFrom(point: SKPoint, scene: SKScene): SKPoint {
+        val newX = point.x + scene.position.x
+        val newY = this.size.height - point.y + scene.position.y
+        return SKPoint(newX, newY)
     }
 }
