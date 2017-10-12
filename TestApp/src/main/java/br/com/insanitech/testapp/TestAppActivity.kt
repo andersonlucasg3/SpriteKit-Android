@@ -13,6 +13,7 @@ import br.com.insanitech.spritekit.graphics.SKColor
 import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKSize
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.system.exitProcess
 
 /**
  * Created by anderson on 24/06/15.
@@ -96,7 +97,9 @@ class TestAppActivity : Activity(), View.OnTouchListener {
                     convertedPoint = this.view.scene!!.convertFrom(convertedPoint, parent)
                     val nodeFromScene = this.view.scene!!.atPoint(convertedPoint)
 
-                    assert(nodeFromParent == nodeFromScene)
+                    if (nodeFromParent != nodeFromScene) {
+                        exitProcess(1)
+                    }
                     System.out.println(nodeFromParent.name)
                     System.out.println(nodeFromScene.name)
                 }
