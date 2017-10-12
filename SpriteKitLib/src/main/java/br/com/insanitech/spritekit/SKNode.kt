@@ -45,7 +45,7 @@ open class SKNode {
 
     open fun atPoint(p: SKPoint): SKNode {
         val filtered = this.childrenNodes.filter {
-            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame().containsPoint(it.convertPoint(p, this.scene!!))
+            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame().containsPoint(it.convertFrom(p, this.scene!!))
         }
         val sorted = filtered.sortedWith(Comparator { o1, o2 ->
             when {
@@ -58,16 +58,42 @@ open class SKNode {
         return sorted.firstOrNull() ?: this
     }
 
+    open fun convertFrom(point: SKPoint, node: SKNode): SKPoint {
+        var xParentRelated = 0.0f
+        var yParentRelated = 0.0f
+        var xNodeRelated = 0.0f
+        var yNodeRelated = 0.0f
 
-    // TODO: Re-think this implementation
-    private fun convertPoint(p: SKPoint, node: SKNode): SKPoint {
-        var calculatedX = 0.0f
-        var calculatedY = 0.0f
-        node.forEachParent {
-            calculatedX += it.position.x
-            calculatedY += it.position.y
+        this.forEachParent {
+            xParentRelated += it.position.x
+            yParentRelated += it.position.y
         }
-        return SKPoint(p.x - calculatedX, p.y - calculatedY)
+        node.forEachParent {
+            xNodeRelated += it.position.x
+            yNodeRelated += it.position.y
+        }
+
+        return SKPoint(point.x - xParentRelated + xNodeRelated,
+                point.y - yParentRelated + yNodeRelated)
+    }
+
+    open fun convertTo(point: SKPoint, node: SKNode): SKPoint {
+        var xParentRelated = 0.0f
+        var yParentRelated = 0.0f
+        var xNodeRelated = 0.0f
+        var yNodeRelated = 0.0f
+
+        this.forEachParent {
+            xParentRelated += it.position.x
+            yParentRelated += it.position.y
+        }
+        node.forEachParent {
+            xNodeRelated += it.position.x
+            yNodeRelated += it.position.y
+        }
+
+        return SKPoint(point.x + xParentRelated + xNodeRelated,
+                point.y + yParentRelated + yNodeRelated)
     }
 
     internal fun accumulateFrame(ofRect: SKRect, inRect: SKRect) {
@@ -131,8 +157,8 @@ open class SKNode {
         list.forEach { if (it.parent == this) it.removeFromParent() }
     }
 
-    internal fun forEachParent(block: (parent: SKNode) -> Unit) : Unit {
-        var myParent = this.parent
+    internal fun forEachParent(block: (parent: SKNode) -> Unit) {
+        var myParent: SKNode? = this
         while (myParent != null) {
             block(myParent)
             myParent = myParent.parent
@@ -141,7 +167,11 @@ open class SKNode {
 
     fun inParentHierarchy(parent: SKNode): Boolean {
         var status = false
-        this.forEachParent { if (it == parent) { status = true; return@forEachParent } }
+        this.forEachParent {
+            if (it == parent) {
+                status = true; return@forEachParent
+            }
+        }
         return status
     }
 
@@ -177,7 +207,8 @@ open class SKNode {
 
     fun removeAction(key: String) {
         val action = this.action(key)
-        when { action != null -> this.actions.remove(action)
+        when {
+            action != null -> this.actions.remove(action)
         }
     }
 
@@ -204,7 +235,6 @@ open class SKNode {
     internal open val drawer: SKNodeDrawer by lazy { SKNodeDrawer(this) }
 
     internal open class SKNodeDrawer(protected open val node: SKNode) : GLRenderer.GLDrawer {
-
         override fun drawFrame(renderer: GLRenderer, width: Int, height: Int) {
             renderer.translate(this.node.position.x, this.node.position.y, this.node.zPosition)
             renderer.rotate(0f, 0f, this.node.zRotation)
@@ -217,7 +247,6 @@ open class SKNode {
                 it.drawer.drawFrame(renderer, width, height)
             }
         }
-
     }
 
     companion object {
