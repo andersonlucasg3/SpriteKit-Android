@@ -38,15 +38,17 @@ class SKRect {
 
     constructor() {
         this.rect = GLRect()
-        this.orig = SKPoint()
-        this.sz = SKSize()
+        this.orig = SKPoint(this.rect.origin, reference = true)
+        this.sz = SKSize(this.rect.size, reference = true)
     }
 
     constructor(x: Float, y: Float, width: Float, height: Float) {
         this.rect = GLRect(x, y, width, height)
-        this.orig = SKPoint(x, y)
-        this.sz = SKSize(width, height)
+        this.orig = SKPoint(this.rect.origin, reference = true)
+        this.sz = SKSize(this.rect.size, reference = true)
     }
+
+    constructor(origin: SKPoint, size: SKSize) : this(origin.x, origin.y, size.width, size.height)
 
     internal constructor(other: GLRect) : this(other.x, other.y, other.width, other.height)
 

@@ -28,6 +28,11 @@ class SKSize {
 
     internal constructor(other: GLSize) : this(other.width, other.height)
 
+    internal constructor(other: GLSize, reference: Boolean) {
+        if (reference) this.size = other
+        else this.size = GLSize(other.width, other.height)
+    }
+
     override fun toString(): String = "{ w: ${this.width}, h: ${this.height} }"
 
     internal fun assignByValue(size: SKSize) {

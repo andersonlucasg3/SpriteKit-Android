@@ -26,6 +26,11 @@ class SKPoint {
 
     internal constructor(other: GLPoint) : this(other.x, other.y)
 
+    internal constructor(other: GLPoint, reference: Boolean) {
+        if (reference) this.point = other
+        else this.point = GLPoint(other.x, other.y)
+    }
+
     constructor(other: SKPoint) : this(other.point)
 
     override fun toString(): String = "{ x: ${this.x}, y: ${this.y} }"

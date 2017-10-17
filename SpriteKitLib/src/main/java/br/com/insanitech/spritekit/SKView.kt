@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.ViewGroup
 import br.com.insanitech.spritekit.engine.SKEngine
+import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKSize
 
 class SKView : GLSurfaceView {
@@ -12,8 +13,9 @@ class SKView : GLSurfaceView {
 
     val size: SKSize = SKSize()
 
-    val scene: SKScene?
+    var scene: SKScene?
         get() = this.engine.sceneToBePresented
+        private set(value) { this.engine.sceneToBePresented = value }
 
     var isPaused: Boolean
         get() = this.engine.isPaused
@@ -50,17 +52,37 @@ class SKView : GLSurfaceView {
     }
 
     fun presentScene(scene: SKScene?) {
-        if (this.engine.sceneToBePresented != scene) {
-            this.engine.sceneToBePresented?.willMove(this)
+        if (this.scene != scene) {
+            this.scene?.willMove(this)
+            this.scene?.view = null
         }
-        this.engine.sceneToBePresented = scene
-        this.engine.sceneToBePresented?.didMove(this)
+        this.scene = scene
+        this.scene?.view = this
+        this.scene?.didMove(this)
 
-        setOnTouchListener(scene)
         this.presentScene()
     }
 
     private fun presentScene() {
         this.engine.tryRender(this)
+    }
+
+    open fun convertTo(point: SKPoint, scene: SKScene): SKPoint {
+        // The point needs to be converted to the scene scale, because the scene may be smaller than the view.
+        val realPoint = SKPoint((point.x * scene.size.width) / this.size.width,
+                (point.y * scene.size.height) / this.size.height)
+
+        val newX = realPoint.x - scene.position.x
+        val newY = scene.size.height - realPoint.y - scene.position.y
+        return SKPoint(newX, newY)
+    }
+
+    open fun convertFrom(point: SKPoint, scene: SKScene): SKPoint {
+        val realPoint = SKPoint((point.x * this.size.width) / scene.size.width,
+                (point.y * this.size.height) / scene.size.height)
+
+        val newX = realPoint.x + scene.position.x
+        val newY = this.size.height - realPoint.y + scene.position.y
+        return SKPoint(newX, newY)
     }
 }

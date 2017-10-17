@@ -47,7 +47,7 @@ abstract class SKAction {
     }
 
     companion object {
-        private var defaultTiming = SKActionTimingMode.Linear
+        private var defaultTiming = SKActionTimingMode.EaseOut
 
         fun moveBy(deltaPosition: SKPoint, duration: Long): SKAction =
                 moveBy(deltaPosition.x, deltaPosition.y, duration)

@@ -4,20 +4,23 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import br.com.insanitech.spritekit.*
-import br.com.insanitech.spritekit.actions.SKAction
+import br.com.insanitech.spritekit.SKNode
+import br.com.insanitech.spritekit.SKScene
+import br.com.insanitech.spritekit.SKSceneScaleMode.AspectFill
+import br.com.insanitech.spritekit.SKSpriteNode
+import br.com.insanitech.spritekit.SKView
 import br.com.insanitech.spritekit.graphics.SKColor
-import br.com.insanitech.spritekit.graphics.SKRect
+import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKSize
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import kotlin.system.exitProcess
 
 /**
  * Created by anderson on 24/06/15.
  */
 class TestAppActivity : Activity(), View.OnTouchListener {
-    private var view: SKView? = null
-    private var texture: SKTexture? = null
+    val view: SKView
+        get() = this.skView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +30,13 @@ class TestAppActivity : Activity(), View.OnTouchListener {
     override fun onPause() {
         super.onPause()
 
-        if (view != null) {
-            view!!.onPause()
-        }
+        this.view.onPause()
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (view != null) {
-            view!!.onResume()
-        }
+        this.view.onResume()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -45,92 +44,68 @@ class TestAppActivity : Activity(), View.OnTouchListener {
 
         // call this method here so the views are ready,
         // otherwise the width and height properties of all components will return 0;
-        this.skview.queueEvent {
+        this.skView.queueEvent {
             this.initializeScene()
         }
     }
 
     private fun initializeScene() {
-        if (view == null) {
-            view = findViewById(R.id.skview) as SKView
-            val scene = SKScene(SKSize(320f, 480f))
-            scene.backgroundColor = SKColor.darkGray()
+        val scene = SKScene(SKSize(320f, 568f))
+        scene.name = "Scene"
+        scene.scaleMode = AspectFill
+        scene.backgroundColor = SKColor.darkGray()
 
-            texture = SKTexture(this, R.drawable.card_deck)
+        this.view.presentScene(scene)
+        this.view.setOnTouchListener(this)
 
-            val swordA = SKSpriteNode.spriteNode(SKColor.white(), SKSize(100f, 200f))
-            swordA.texture = SKTexture(SKRect(0.0f, 0.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture!!)
-            swordA.colorBlendFactor = 0.5f
+        val parentNode = SKNode.node()
+        parentNode.name = "Parent"
+        parentNode.position = SKPoint(scene.size.width / 2.0f, scene.size.height / 2.0f)
+        scene.addChild(parentNode)
 
-            //            SKSpriteNode heartA = SKSpriteNode.spriteNode(SKColor.white(), new SKSize(320, 480));
-            //            heartA.setTexture(new SKTexture(new SKRect(0.0f, 2.0f / 4.0f, 1.0f / 14.0f, 1.0f / 4.0f), texture));
-            //            heartA.setColorBlendFactor(0.5f);
+        var spriteNode = SKSpriteNode.spriteNode(SKColor.red(), SKSize(50f, 50f))
+        spriteNode.position.x -= 20
+        spriteNode.name = "Red SpriteNode"
+        parentNode.addChild(spriteNode)
 
-            val nodeParent = SKNode.node()
-            nodeParent.position.x = scene.size.width / 2.0f
-            nodeParent.position.y = scene.size.height / 2.0f
+        System.out.println("accum frame red: ${spriteNode.calculateAccumulatedFrame()}")
 
-            nodeParent.addChild(swordA)
-            //            nodeParent.addChild(heartA);
+        spriteNode = SKSpriteNode.Companion.spriteNode(SKColor.blue(), SKSize(50f, 50f))
+        spriteNode.position.x += 20
+        spriteNode.name = "Blue SpriteNode"
+        spriteNode.zPosition = -1f
+        parentNode.addChild(spriteNode)
 
-            //            heartA.zPosition = -1;
+        System.out.println("accum frame blue: ${spriteNode.calculateAccumulatedFrame()}")
 
-            scene.addChild(nodeParent)
-
-            view!!.presentScene(scene)
-
-            view!!.setOnTouchListener(this)
-
-            //            animateMovingCards(swordA);
-
-            swordA.zRotation = 0.0f
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000), SKAction.rotateToAngle((Math.PI / 2).toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(2000), SKAction.rotateToAngle(Math.PI.toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(3000), SKAction.rotateToAngle((3 * Math.PI / 2).toFloat(), 500))))
-            swordA.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(4000), SKAction.rotateToAngle((Math.PI * 2).toFloat(), 500))))
-        }
-    }
-
-    private fun rotate(nodeParent: SKNode) {
-        nodeParent.run(SKAction.sequence(Arrays.asList(
-                SKAction.rotateByAngle(1f, 50),
-                SKAction.run {
-                    rotate(nodeParent)
-                })))
+        System.out.println("accum frame parent: ${parentNode.calculateAccumulatedFrame()}")
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_MOVE ->
+        System.out.println(event.toString())
+        when (event.actionMasked) {
+            MotionEvent.ACTION_UP -> {
+                this.view.queueEvent {
+                    val touchPosition = SKPoint(event.x, event.y)
+                    val scenePosition = this.view.convertTo(touchPosition, this.view.scene!!)
 
-                return true
+                    val parent = this.view.scene!!.children[0]
+                    var convertedPoint = parent.convertFrom(scenePosition, this.view.scene!!)
 
-            else -> {
+                    val nodeFromParent = parent.atPoint(convertedPoint)
+
+                    convertedPoint = this.view.scene!!.convertFrom(convertedPoint, parent)
+                    val nodeFromScene = this.view.scene!!.atPoint(convertedPoint)
+
+                    if (nodeFromParent != nodeFromScene) {
+                        exitProcess(1)
+                    }
+                    System.out.println(nodeFromParent.name)
+                    System.out.println(nodeFromScene.name)
+                }
             }
+            else -> { }
         }
-        return false
-    }
-
-    private fun animateMovingCards(sprite: SKSpriteNode) {
-        var spriteCoordX = sprite.texture!!.textureRect().x
-        var spriteCoordY = sprite.texture!!.textureRect().y
-
-        spriteCoordX += 1.0f / 14.0f
-
-        if (spriteCoordX >= 1.0f) {
-            spriteCoordX = 0.0f
-            spriteCoordY += 1.0f / 4.0f
-        }
-
-        if (spriteCoordY >= 1.0f) {
-            spriteCoordX = 0.0f
-            spriteCoordY = 0.0f
-        }
-
-        sprite.run(SKAction.sequence(Arrays.asList(SKAction.waitFor(1000),
-                SKAction.setTexture(SKTexture(SKRect(spriteCoordX, spriteCoordY, 1.0f / 14.0f, 1.0f / 4.0f), texture!!)),
-                SKAction.run {
-                    animateMovingCards(sprite)
-                })))
+        return true
     }
 }

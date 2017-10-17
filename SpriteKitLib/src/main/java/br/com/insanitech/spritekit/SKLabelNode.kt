@@ -4,7 +4,9 @@ import android.graphics.Typeface
 import br.com.insanitech.spritekit.graphics.SKColor
 import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
-class SKLabelNode(fontName: String, style: Int) : SKNode() {
+internal class SKLabelNode(fontName: String, style: Int) : SKNode() {
+    override val isSurface: Boolean = true
+
     var verticalAlignmentMode: SKLabelVerticalAlignmentMode? = null
     var horizontalAlignmentMode: SKLabelHorizontalAlignmentMode? = null
 
@@ -44,8 +46,15 @@ class SKLabelNode(fontName: String, style: Int) : SKNode() {
         }
     }
 
-
     companion object {
         fun labelNode(fontName: String, style: Int): SKLabelNode = SKLabelNode(fontName, style)
     }
+}
+
+internal enum class SKLabelHorizontalAlignmentMode {
+    Center, Left, Right
+}
+
+internal enum class SKLabelVerticalAlignmentMode {
+    Baseline, Center, Top, Bottom
 }

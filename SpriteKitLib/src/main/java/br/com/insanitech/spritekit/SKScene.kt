@@ -1,13 +1,10 @@
 package br.com.insanitech.spritekit
 
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
 import br.com.insanitech.spritekit.graphics.SKColor
 import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKSize
 
-open class SKScene : SKEffectNode, OnTouchListener {
+open class SKScene : SKEffectNode {
     var anchorPoint: SKPoint = SKPoint()
         set(value) { field.point.assignByValue(value.point) }
 
@@ -31,37 +28,45 @@ open class SKScene : SKEffectNode, OnTouchListener {
         this.sceneDidLoad()
     }
 
-    fun didChangeSize(oldSize: SKSize) {
+    open fun didChangeSize(oldSize: SKSize) {
 
     }
 
-    fun sceneDidLoad() {
+    open fun sceneDidLoad() {
 
     }
 
-    fun willMove(fromView: SKView) {
+    open fun willMove(fromView: SKView) {
 
     }
 
-    fun didMove(toView: SKView) {
+    open fun didMove(toView: SKView) {
 
     }
 
-    fun update(currentTime: Long) {
+    open fun update(currentTime: Long) {
 
     }
 
-    fun didEvaluateActions() {
+    open fun didEvaluateActions() {
 
     }
 
-    fun didFinishUpdate() {
+    open fun didFinishUpdate() {
 
     }
 
-    // MARK: OnTouchListener implementations
+    override fun addChild(node: SKNode) {
+        super.addChild(node, false)
+        this.movedToScene(this)
+    }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        return false
+    override fun insertChild(node: SKNode, index: Int) {
+        super.insertChild(node, index, false)
+        this.movedToScene(this)
+    }
+
+    override fun convertPointForCandidateParentIfNeeded(p: SKPoint, parent: SKNode): SKPoint {
+        return if (parent == this) p else parent.convertFrom(p, this)
     }
 }

@@ -1,5 +1,7 @@
 package br.com.insanitech.spritekit
 
+import android.graphics.Matrix
+import android.graphics.RectF
 import br.com.insanitech.spritekit.graphics.SKColor
 import br.com.insanitech.spritekit.graphics.SKPoint
 import br.com.insanitech.spritekit.graphics.SKRect
@@ -8,6 +10,8 @@ import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 
 class SKSpriteNode : SKNode() {
     private var textureToUnload: SKTexture? = null
+
+    override val isSurface: Boolean = true
 
     var blendMode = SKBlendMode.SKBlendModeAlpha
     var colorBlendFactor = 0.0f
@@ -35,6 +39,22 @@ class SKSpriteNode : SKNode() {
         this.size.height = height
     }
 
+    override fun calculateAccumulatedFrame(adjustParent: Boolean): SKRect {
+        val left = this.position.x - (this.size.width * this.anchorPoint.x)
+        val top = this.position.y - (this.size.height * this.anchorPoint.y)
+        val right = left + this.size.width
+        val bottom = top + this.size.height
+        val rect = RectF(left, top, right, bottom)
+        val matrix = Matrix()
+        matrix.setRotate(this.zRotation)
+        matrix.setScale(this.xScale, this.yScale)
+        matrix.mapRect(rect)
+
+        val accumulatedSelf = SKRect(rect.left, rect.top, rect.width(), rect.height())
+        this.accumulateFrame(super.calculateAccumulatedFrame(false), accumulatedSelf)
+        return accumulatedSelf
+    }
+
     override fun copy(): SKSpriteNode {
         val node = super.copy(SKSpriteNode())
         node.blendMode = this.blendMode
@@ -46,6 +66,11 @@ class SKSpriteNode : SKNode() {
         node.size = this.size
         return node
     }
+
+    override fun toString(): String =
+            "[${this.javaClass.simpleName}] name: ${this.name}, texture: ${this.texture}, position: ${this.position}, scale: ${SKPoint(this.xScale, this.yScale)}, size: ${this.size}, anchor: ${this.anchorPoint}, rotation: ${this.zRotation}"
+
+    // MARK: Drawer implementations
 
     override val drawer: SKNodeDrawer by lazy {
         object: SKNodeDrawer(this) {
