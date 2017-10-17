@@ -2,7 +2,7 @@
 
 ## About:
     This project is an intention of porting all the API from iOS's SpriteKit framwork to Android.
-    I'm a iOS and Android developer, and I think iOS has a great framework for building apps, compared to Android's SDK that lets us with some difficulties and in certain cases like native game engines, with empty hands.
+    I'm an iOS and Android developer, and I think that iOS has a great framework for building apps, compared to Android's SDK that lets us with some difficulties and, in certain cases, like native game engines, empty-handed.
     So I've decided to port the SK's API to the Java (initially). Now, with the Kotlin launch, and (good) support, that is more similar to Swift, it has been easier.
 
     If you intend to use this API, be aware that it's still in development, very limited, but it already works.
@@ -10,6 +10,27 @@
     With the GLES 2.0 update, it'll be possible to use shaders just like we use in iOS.
 
     Well, let's get to work.
+
+## **The Setup:**
+
+First of all, we need to import the SpriteKit dependency with gradle:
+```gradle
+allprojects {
+    repositories {
+        //...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+    //...
+
+    compile 'com.github.andersonlucasg3:SpriteKit-Android:+' // change '+' to specify the latest version
+}
+```
+I like to use JitPack.io that allows to import gradle repositories right from GitHub public repo.
+
+## **The Example:**
 
 SpriteKit for Android is very similar to iOS version. With some slight differences: \
 You will need to add an SKView to your layout, as you wish. `Activity` eg:
@@ -27,17 +48,16 @@ You will need to add an SKView to your layout, as you wish. `Activity` eg:
 </LinearLayout>
 ```
 
-Now that we have a `SKView` in the activity's XML we can focus on the code (Note that you can create the `SKView` programmatically too).
+Now that we have a `SKView` in the activity's XML we can focus on the code (Note that you can create the `SKView` programmatically also).
 
 We need to override the `onPause()` and `onResume()` methods from the `Activity`.\
-And most important information about of all.\
-Any code that you write, coming from the main thread, **MUST** be written inside a \
+And most important information of all: any code that you write, coming from the main thread, **MUST** be written inside a queueEvent method.
 ```kotlin
 this.skView.queueEvent {
     // your code to SpriteKit API here
 }
 ```
-it will make the code changing the structure of the nodes or anything else to be run in the thread that the rendering is running, avoiding **Concurrent-Exceptions**.
+This call will ensure that any code that changes the structure of the nodes or anything else, will be run from the same thread that the rendering is running, avoiding **Concurrent-Exceptions**.
 
 Below some example of a basic implementation:
 
@@ -85,6 +105,8 @@ class GameActivity : Activity() {
 
 Continuing...
 
+## **Concluding...**
+
 This example is very simple, just to show that the code is VERY SIMILAR.\
 You have plenty of `SKAction`'s to use with the sprites.
 
@@ -93,3 +115,5 @@ I'll be updating, fixing and adding more functionalities, whenever possible.
 Hope you like it.
 
 ❣️
+
+**Obs: Any constribution is welcome.**
