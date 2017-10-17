@@ -11,6 +11,8 @@ import br.com.insanitech.spritekit.opengl.renderer.GLRenderer
 class SKSpriteNode : SKNode() {
     private var textureToUnload: SKTexture? = null
 
+    override val isSurface: Boolean = true
+
     var blendMode = SKBlendMode.SKBlendModeAlpha
     var colorBlendFactor = 0.0f
 

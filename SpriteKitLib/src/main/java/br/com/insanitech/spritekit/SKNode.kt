@@ -33,6 +33,8 @@ open class SKNode {
     var speed: Float = 1.0f
     var isPaused: Boolean = false
 
+    internal open val isSurface: Boolean = false
+
     fun setScale(scale: Float) {
         this.xScale = scale
         this.yScale = scale
