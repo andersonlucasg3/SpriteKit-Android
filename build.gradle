@@ -17,14 +17,17 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
     }
 }
 
 rootProject.ext {
-    compileSdkVersion = 25
-    buildToolsVersion = "25.0.0"
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.2"
 
-    targetSdkVersion = 25
-    supportLibVersion = "25.3.1"
-    crashlyticsLibVersion = "2.6.5"
+    targetSdkVersion = 26
+    minSdkVersion = 15
+
+    supportLibVersion = "26.1.0"
 }
