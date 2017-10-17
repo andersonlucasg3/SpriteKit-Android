@@ -45,10 +45,24 @@ open class SKNode {
         this.position.y = y
     }
 
-    open fun atPoint(p: SKPoint): SKNode {
-        val filtered = this.childrenNodes.filter {
-            !it.isHidden && it.alpha > 0.0f && it.calculateAccumulatedFrame(false).containsPoint(p)
+    private fun isNodeAtPointCandidate(p: SKPoint, node: SKNode): Boolean =
+            !node.isHidden && node.alpha > 0.0f && node.isSurface &&
+                    node.calculateAccumulatedFrame().containsPoint(p)
+
+    internal open fun convertPointForCandidateParentIfNeeded(p: SKPoint, parent: SKNode) : SKPoint = p
+
+    private fun forEachAtPointCandidateChildren(p: SKPoint, node: SKNode) : List<SKNode> {
+        val possibleNodes = mutableListOf<SKNode>()
+        node.childrenNodes.forEach {
+            val point = this.convertPointForCandidateParentIfNeeded(p, node)
+            if (this.isNodeAtPointCandidate(point, it)) possibleNodes.add(it)
+            possibleNodes.addAll(this.forEachAtPointCandidateChildren(p, it))
         }
+        return possibleNodes
+    }
+
+    private fun atPoint(p: SKPoint, node: SKNode) : SKNode {
+        val filtered = this.forEachAtPointCandidateChildren(p, node)
         val sorted = filtered.sortedWith(Comparator { o1, o2 ->
             when {
                 o1.zPosition > o2.zPosition -> return@Comparator -1
@@ -59,6 +73,8 @@ open class SKNode {
         })
         return sorted.firstOrNull() ?: this
     }
+
+    open fun atPoint(p: SKPoint): SKNode = this.atPoint(p, this)
 
     open fun convertFrom(point: SKPoint, node: SKNode): SKPoint {
         var xParentRelated = 0.0f

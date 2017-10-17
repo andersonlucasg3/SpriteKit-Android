@@ -65,4 +65,8 @@ open class SKScene : SKEffectNode {
         super.insertChild(node, index, false)
         this.movedToScene(this)
     }
+
+    override fun convertPointForCandidateParentIfNeeded(p: SKPoint, parent: SKNode): SKPoint {
+        return if (parent == this) p else parent.convertFrom(p, this)
+    }
 }
