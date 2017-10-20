@@ -46,7 +46,7 @@ open class SKNode {
     }
 
     private fun isNodeAtPointCandidate(p: SKPoint, node: SKNode): Boolean {
-        val basicCondition = !node.isHidden && node.isUserInteractionEnabled && node.alpha > 0.0f && node.isSurface
+        val basicCondition = !node.isHidden && node.alpha > 0.0f && node.isSurface
         val accumulatedFrameContainsPoint = basicCondition && node.calculateAccumulatedFrame().containsPoint(p)
         return basicCondition && accumulatedFrameContainsPoint
     }
