@@ -45,9 +45,11 @@ open class SKNode {
         this.position.y = y
     }
 
-    private fun isNodeAtPointCandidate(p: SKPoint, node: SKNode): Boolean =
-            !node.isHidden && node.alpha > 0.0f && node.isSurface &&
-                    node.calculateAccumulatedFrame().containsPoint(p)
+    private fun isNodeAtPointCandidate(p: SKPoint, node: SKNode): Boolean {
+        val basicCondition = !node.isHidden && node.isUserInteractionEnabled && node.alpha > 0.0f && node.isSurface
+        val accumulatedFrameContainsPoint = basicCondition && node.calculateAccumulatedFrame().containsPoint(p)
+        return basicCondition && accumulatedFrameContainsPoint
+    }
 
     internal open fun convertPointForCandidateParentIfNeeded(p: SKPoint, parent: SKNode) : SKPoint = p
 
