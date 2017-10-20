@@ -23,6 +23,10 @@ open class SKScene : SKEffectNode {
     var view: SKView? = null
         internal set
 
+    init {
+        this.isUserInteractionEnabled = true
+    }
+
     constructor(size: SKSize) {
         this.size = size
         this.sceneDidLoad()
