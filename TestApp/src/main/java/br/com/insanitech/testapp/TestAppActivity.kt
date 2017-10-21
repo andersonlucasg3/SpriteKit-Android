@@ -76,6 +76,12 @@ class TestAppActivity : Activity(), View.OnTouchListener {
         spriteNode.zPosition = -1f
         parentNode.addChild(spriteNode)
 
+        spriteNode = SKSpriteNode.Companion.spriteNode(SKColor.white(), scene.size)
+        spriteNode.name = "Background Node"
+        spriteNode.zPosition = -100f
+        spriteNode.anchorPoint = SKPoint(0f, 0f)
+        scene.addChild(spriteNode)
+
         System.out.println("accum frame blue: ${spriteNode.calculateAccumulatedFrame()}")
 
         System.out.println("accum frame parent: ${parentNode.calculateAccumulatedFrame()}")
