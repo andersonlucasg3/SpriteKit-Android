@@ -46,16 +46,27 @@ open class SKNode {
     }
 
     private fun isNodeAtPointCandidate(p: SKPoint, node: SKNode): Boolean {
-        val basicCondition = !node.isHidden && node.isUserInteractionEnabled && node.alpha > 0.0f && node.isSurface
+        val basicCondition = !node.isHidden && node.alpha > 0.0f && node.isSurface
         val accumulatedFrameContainsPoint = basicCondition && node.calculateAccumulatedFrame().containsPoint(p)
         return basicCondition && accumulatedFrameContainsPoint
     }
 
     internal open fun convertPointForCandidateParentIfNeeded(p: SKPoint, parent: SKNode) : SKPoint = p
 
+    private fun sort(nodes: List<SKNode>) : List<SKNode> {
+        return nodes.sortedWith(Comparator { o1, o2 ->
+            when {
+                o1.zPosition > o2.zPosition -> return@Comparator -1
+                o1.zPosition == o2.zPosition -> return@Comparator 0
+                o1.zPosition < o2.zPosition -> return@Comparator 1
+                else -> return@Comparator 0
+            }
+        })
+    }
+
     private fun forEachAtPointCandidateChildren(p: SKPoint, node: SKNode) : List<SKNode> {
         val possibleNodes = mutableListOf<SKNode>()
-        node.childrenNodes.forEach {
+        this.sort(node.childrenNodes).forEach {
             val point = this.convertPointForCandidateParentIfNeeded(p, node)
             if (this.isNodeAtPointCandidate(point, it)) possibleNodes.add(it)
             possibleNodes.addAll(this.forEachAtPointCandidateChildren(p, it))
@@ -65,14 +76,7 @@ open class SKNode {
 
     private fun atPoint(p: SKPoint, node: SKNode) : SKNode {
         val filtered = this.forEachAtPointCandidateChildren(p, node)
-        val sorted = filtered.sortedWith(Comparator { o1, o2 ->
-            when {
-                o1.zPosition > o2.zPosition -> return@Comparator -1
-                o1.zPosition == o2.zPosition -> return@Comparator 0
-                o1.zPosition < o2.zPosition -> return@Comparator 1
-                else -> return@Comparator 0
-            }
-        })
+        val sorted = this.sort(filtered)
         return sorted.firstOrNull() ?: this
     }
 
