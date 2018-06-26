@@ -51,6 +51,7 @@ class SKSpriteNode : SKNode() {
         matrix.mapRect(rect)
 
         val accumulatedSelf = SKRect(rect.left, rect.top, rect.width(), rect.height())
+        // TODO: erro está aqui.
         this.accumulateFrame(super.calculateAccumulatedFrame(false), accumulatedSelf)
         return accumulatedSelf
     }
