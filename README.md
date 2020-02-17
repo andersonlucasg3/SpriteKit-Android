@@ -1,4 +1,4 @@
-# **SpriteKit for Android**
+# **(DISCONTINUED) SpriteKit for Android**
 
 ## About:
     This project is an intention of porting all the API from iOS's SpriteKit framwork to Android.
